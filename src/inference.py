@@ -3,6 +3,7 @@ import json
 from PIL import Image
 from io import BytesIO
 import matplotlib.pyplot as plt
+import os
 
 import torch
 import torchvision.transforms as transforms
@@ -43,13 +44,19 @@ def img_from_CHO(CHO):
 
 def load_pytorch_model(device = None):
 
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    root_path = os.path.split(dir_path)[0]
+
+    model = ResNet(34,20)
+
     if not device:
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
+        if not torch.cuda.is_available():
+            model.load_state_dict(torch.load(os.path.join('','checkpoint.pth'),map_location=torch.device('cpu')))
+        else:
+            model.load_state_dict(torch.load(os.path.join('','checkpoint.pth')))
 
-
-    model = ResNet(34,20)
-    model.load_state_dict(torch.load('../checkpoint.pth'))
     model = model.to(device)
     model.eval()
 
