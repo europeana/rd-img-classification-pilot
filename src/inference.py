@@ -53,14 +53,14 @@ def load_pytorch_model(device = None):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
         if not torch.cuda.is_available():
-            model.load_state_dict(torch.load(os.path.join('','checkpoint.pth'),map_location=torch.device('cpu')))
+            model.load_state_dict(torch.load(os.path.join(root_path,'checkpoint.pth'),map_location=torch.device('cpu')))
         else:
-            model.load_state_dict(torch.load(os.path.join('','checkpoint.pth')))
+            model.load_state_dict(torch.load(os.path.join(root_path,'checkpoint.pth')))
 
     model = model.to(device)
     model.eval()
 
-    with open('../class_index.json','r') as f:
+    with open(os.path.join(root_path,'class_index.json'),'r') as f:
         class_index_dict = json.load(f)
 
     return model, class_index_dict
