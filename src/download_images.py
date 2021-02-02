@@ -17,46 +17,49 @@ def url2img(url):
         print('Failed to get media image')
         pass
 
-data = 'ec'
-data_path = os.path.join('/home/jcejudo/rd-img-classification-pilot/data_sample',data)
-dest_path = '/home/jcejudo/rd-img-classification-pilot/training_sample'
-create_dir(dest_path)
-dest_path = os.path.join(dest_path,data)
-create_dir(dest_path)
 
-exclude_cat = os.listdir(dest_path)
+if __name__ == "__main__":
 
-if data == 'getty':
-    exclude_cat += ['print','tapestry','drawing','tool','jewellery','photograph','poster','painting','ceramics','textile','specimen','woodwork','machinery','building','furniture','cartoon','toy','map','postcard','sculpture','food','glassware','metalwork','medal','memorabilia','mineral','musical_instrument','tableware','stamp']
+    data = 'ec'
+    data_path = os.path.join('/home/jcejudo/rd-img-classification-pilot/data_sample',data)
+    dest_path = '/home/jcejudo/rd-img-classification-pilot/training_sample'
+    create_dir(dest_path)
+    dest_path = os.path.join(dest_path,data)
+    create_dir(dest_path)
 
-for cat in os.listdir(data_path):
+    exclude_cat = os.listdir(dest_path)
 
-    if cat.replace('.csv','') in exclude_cat:
-        continue
+    if data == 'getty':
+        exclude_cat += ['print','tapestry','drawing','tool','jewellery','photograph','poster','painting','ceramics','textile','specimen','woodwork','machinery','building','furniture','cartoon','toy','map','postcard','sculpture','food','glassware','metalwork','medal','memorabilia','mineral','musical_instrument','tableware','stamp']
 
-    print(cat)
-    
-    cat_path = os.path.join(data_path,cat)
-    
-    df = pd.read_csv(cat_path)
-    
-    # if cat.replace('.csv','') in ['ceramics_data','map_data']:
-    #     continue
-    
-    dest_cat_path = os.path.join(dest_path,cat.replace('.csv',''))
-    create_dir(dest_cat_path)
-    for i in range(df.shape[0]):
-        ID = df['ID'].iloc[i]
-        url = df['URL'].iloc[i]
-        img = url2img(url)
+    for cat in os.listdir(data_path):
+
+        if cat.replace('.csv','') in exclude_cat:
+            continue
+
+        print(cat)
         
-        #replacement = "%2F"
-        replacement = "__placeholder__"
-        filename = f'{ID}.jpg'.replace("/",replacement)
-        if img:
-            try:
-                img.save(os.path.join(dest_cat_path,filename))
-            except:
-                pass
+        cat_path = os.path.join(data_path,cat)
+        
+        df = pd.read_csv(cat_path)
+        
+        # if cat.replace('.csv','') in ['ceramics_data','map_data']:
+        #     continue
+        
+        dest_cat_path = os.path.join(dest_path,cat.replace('.csv',''))
+        create_dir(dest_cat_path)
+        for i in range(df.shape[0]):
+            ID = df['ID'].iloc[i]
+            url = df['URL'].iloc[i]
+            img = url2img(url)
+            
+            #replacement = "%2F"
+            replacement = "__placeholder__"
+            filename = f'{ID}.jpg'.replace("/",replacement)
+            if img:
+                try:
+                    img.save(os.path.join(dest_cat_path,filename))
+                except:
+                    pass
     
     
