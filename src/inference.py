@@ -42,20 +42,20 @@ def img_from_CHO(CHO):
   except:
     return None
 
-def load_pytorch_model(device = None):
+def load_pytorch_model(device):
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     root_path = os.path.split(dir_path)[0]
 
     model = ResNet(34,20)
 
-    if not device:
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # if not device:
+    #     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-        if not torch.cuda.is_available():
-            model.load_state_dict(torch.load(os.path.join(root_path,'checkpoint.pth'),map_location=torch.device('cpu')))
-        else:
-            model.load_state_dict(torch.load(os.path.join(root_path,'checkpoint.pth')))
+    if not torch.cuda.is_available():
+        model.load_state_dict(torch.load(os.path.join(root_path,'checkpoint.pth'),map_location=torch.device('cpu')))
+    else:
+        model.load_state_dict(torch.load(os.path.join(root_path,'checkpoint.pth')))
 
     model = model.to(device)
     model.eval()
@@ -69,10 +69,9 @@ def load_pytorch_model(device = None):
  
 
 
-def make_prediction(model,img,device = None):
+def make_prediction(model,img,device):
 
-    if not device:
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
     transform = transforms.Compose([
         transforms.Resize((224,224)),
