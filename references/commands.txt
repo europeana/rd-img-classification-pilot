@@ -2,3 +2,14 @@ conda activate class_env
 
 export PATH=/home/jcejudo/.local/bin
 jupyter notebook --ip 0.0.0.0 --port 8888
+
+
+conda activate django_env
+python manage.py runserver 0:8001
+
+conda activate depl_env
+python flask_api.py
+
+export FLASK_APP=flask_api.py
+export FLASK_ENV=development
+flask run --host=0.0.0.0
