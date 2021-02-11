@@ -1,3 +1,5 @@
+#to do: clean dependencies
+
 from notebook_env import *
 from ds_utils import *
 import models
@@ -15,7 +17,6 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
-import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
 from gradcam import *
@@ -214,6 +215,8 @@ def train(**kwargs):
     trainloader = kwargs.get('trainloader',None)
     valloader = kwargs.get('valloader',None)
     callback = kwargs.get('callback',CallBack())
+
+    best_loss = 1e6
 
     experiment_path = callback.path
     if callback.save_best:

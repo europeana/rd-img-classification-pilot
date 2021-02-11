@@ -29,7 +29,7 @@ if __name__ == '__main__':
     experiment_path = os.path.join(results_path,experiment_name)
     create_dir(experiment_path)
 
-
+    #to do: load from a unique directory
     data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/ec'
     ec_df = path2DataFrame(data_path)
 
@@ -37,7 +37,8 @@ if __name__ == '__main__':
     getty_df = path2DataFrame(data_path)
 
     df = pd.concat((ec_df,getty_df))
-
+    
+    #remove after testing
     df = df.sample(frac=0.1)
 
     X = df['file_path'].values
@@ -86,7 +87,7 @@ if __name__ == '__main__':
                             return_best = True,
                             path = split_path)
         
-        
+        #include saving_path instead of callback
         net, history = train(
                             epochs = epochs, 
                             trainloader = trainloader, 
@@ -131,9 +132,7 @@ if __name__ == '__main__':
         experiment.add('learning_rate',learning_rate)
         experiment.add('optimizer',optimizer)
         experiment.add('loss_function',loss_function)
-        #experiment.add('train_data',train_data)
-        #experiment.add('val_data',val_data)
-        #experiment.add('test_data',test_data)
+
         experiment.add('epochs',epochs)
         experiment.add('encoding_dict',encoding_dict)
         experiment.add('weights',weights)
@@ -155,7 +154,6 @@ if __name__ == '__main__':
         experiment.add('confusion_matrix_test',confusion_matrix_test)
         for k,v in history.items():
             experiment.add(k,v)
-        #experiment.show()
         experiment.save(split_path)
         
 
