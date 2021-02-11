@@ -1,7 +1,3 @@
-  File "train.py", line 112
-    print(f'acc_test: {metrics_dict['accuracy']}')
-                                     ^
-SyntaxError: invalid syntax
 split 0
 
 size train: 1508
@@ -9,70 +5,51 @@ size val: 168
 size test: 187
 Training for 5 epochs 
 
-Traceback (most recent call last):
-  File "train.py", line 85, in <module>
-    model, history = train(
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 219, in train
-    optimizer.step()
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/autograd/grad_mode.py", line 26, in decorate_context
-    return func(*args, **kwargs)
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/optim/adam.py", line 108, in step
-    F.adam(params_with_grad,
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/optim/functional.py", line 86, in adam
-    exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
-KeyboardInterrupt
-split 0
+[1,    23] loss: 67.956 validation loss: 51.309 acc: 0.148 f1: 0.122 precision: 0.160 recall: 0.149
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[2,    23] loss: 65.263 validation loss: 49.200 acc: 0.273 f1: 0.200 precision: 0.246 recall: 0.243
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[3,    23] loss: 63.187 validation loss: 47.964 acc: 0.344 f1: 0.295 precision: 0.401 recall: 0.334
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[4,    23] loss: 61.906 validation loss: 48.638 acc: 0.406 f1: 0.327 precision: 0.387 recall: 0.370
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[5,    23] loss: 60.664 validation loss: 46.373 acc: 0.477 f1: 0.418 precision: 0.523 recall: 0.452
 
-size train: 1508
-size val: 168
-size test: 187
-Training for 5 epochs 
-
-[1,    23] loss: 66.894 validation loss: 51.550 acc: 0.188 f1: 0.134 precision: 0.202 recall: 0.184
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[2,    23] loss: 64.500 validation loss: 50.054 acc: 0.320 f1: 0.257 precision: 0.310 recall: 0.323
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[3,    23] loss: 62.297 validation loss: 48.184 acc: 0.367 f1: 0.294 precision: 0.388 recall: 0.378
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[4,    23] loss: 60.607 validation loss: 48.005 acc: 0.359 f1: 0.304 precision: 0.335 recall: 0.381
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[5,    23] loss: 59.121 validation loss: 45.444 acc: 0.438 f1: 0.392 precision: 0.465 recall: 0.445
-
-training finished, it took 1.0927500089009603 minutes
+training finished, it took 1.0460067431131999 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-accuracy_test: 0.4140625
-f1_test: 0.3448794766502398
-precision_test: 0.3400691791868263
-recall_test: 0.4406547619047618
-loss_test: 40.761037245153744
-sensitivity_test: 0.4406547619047618
-specificity_test: 0.9692537689056607
-confusion_matrix_test: [[4 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 0 7 0 0 0 0 0 2 1 0 0 0 0 0 0]
- [2 0 3 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 2 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0]
- [0 0 0 0 0 1 0 0 0 3 0 0 1 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 6 0 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 2 0 0 4 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 1 0 0 1 0 0 2 0 0 0 0 0 0 1]
- [0 0 0 0 0 0 1 0 0 2 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 0 0 0 0 3 0 1 2 0 0 0 0 0 0 0]
- [2 0 0 1 0 0 1 0 0 2 0 0 0 0 0 0 0 0 1 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 4 0 0 1 0 3 0 0 0 0 0 0 0 0 0 0 2]
- [1 0 0 0 0 0 4 0 2 0 1 1 0 0 0 0 0 0 0 1]
- [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 7]]
+loss_test: 43.69457616143048
+accuracy_test: 0.4609375
+f1_test: 0.38785457189868955
+precision_test: 0.41311484409310495
+recall_test: 0.4283730158730158
+sensitivity_test: 0.4283730158730158
+specificity_test: 0.9715235048305375
+confusion_matrix_test: [[0 3 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 2]
+ [0 3 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1]
+ [0 0 4 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1]
+ [0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1]
+ [0 0 0 0 5 0 0 0 0 1 0 0 0 0 0 0 0 2 0 1]
+ [0 0 0 0 0 5 0 0 0 1 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 2]
+ [0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 3]
+ [0 1 0 0 0 1 0 0 0 4 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 1 4 0 0 0 0 0 0 0 0 1]
+ [0 2 0 0 0 1 0 0 1 0 2 0 0 0 0 0 0 1 0 0]
+ [0 1 0 0 0 0 0 0 0 0 5 0 2 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 1 3 0 0 0 0 0 0 3 0 2]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 2 0 1]
+ [0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 4 0 1]
+ [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 6 0]
+ [0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 6]]
 split 1
 
 size train: 1508
@@ -82,16 +59,15 @@ Training for 5 epochs
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:366: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:374: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
   fig,ax = plt.subplots(1,2,figsize=(20,20))
-[1,    23] loss: 67.161 validation loss: 51.996 acc: 0.117 f1: 0.076 precision: 0.074 recall: 0.140
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
 Traceback (most recent call last):
   File "train.py", line 85, in <module>
     model, history = train(
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 211, in train
-    for i, (inputs,labels) in enumerate(trainloader):
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 233, in train
+    val_metrics_dict, _, _ = validate_test(model,valloader,device,loss_function,encoding_dict)
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 307, in validate_test
+    for i,(images, labels) in enumerate(testloader):
   File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 435, in __next__
     data = self._next_data()
   File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1068, in _next_data

@@ -164,11 +164,7 @@ def prepare_dataset(**kwargs):
 
 
 def train(**kwargs):
-    # todo: sample train data for metrics
-    # https://discuss.pytorch.org/t/balanced-sampling-between-classes-with-torchvision-dataloader/2703/3
 
-
-    
     model = kwargs.get('model',None)
     trainloader = kwargs.get('trainloader',None)
     valloader = kwargs.get('valloader',None)
@@ -177,83 +173,60 @@ def train(**kwargs):
     device = kwargs.get('device',None)
     encoding_dict = kwargs.get('encoding_dict',None)
     saving_dir = kwargs.get('saving_dir',None)
-
     epochs = kwargs.get('epochs',100)
     patience = kwargs.get('patience',10)
 
-
     best_loss = 1e6
     counter = 0
-
     experiment_path = saving_dir
     create_dir(experiment_path) 
          
-
     #initialize metrics
-    loss_train_list = []
-    loss_test_list = []
-    acc_test_list = []
-    f1_test_list = []
-    precision_test_list = []
-    recall_test_list = []
-    specificity_test_list = []
-    sensitivity_test_list = []
-    recall_test_list = []
-    cm_test_list = []
-        
+    history = {
+        'loss_train':[],
+        'loss_val':[],
+        'accuracy_val':[],
+        'confusion_matrix_val':[],
+        'f1_val':[],
+        'precision_val':[],
+        'recall_val':[],
+        'sensitivity_val':[],
+        'specificity_val':[], 
+               }
+    
     print(f'Training for {epochs} epochs \n')
     start_train = time.time()
     # loop over epochs 
     for epoch in range(epochs):
-
         train_loss = 0.0
         # loop over batches
         for i, (inputs,labels) in enumerate(trainloader):
             inputs, labels = inputs.to(device), labels.to(device)
             # zero the parameter gradients
             optimizer.zero_grad()
-            #print(inputs.shape[0])
             loss = loss_function(model(inputs), labels.long())/inputs.shape[0]
             #backpropagate and update
             loss.backward()
             optimizer.step()
             train_loss += loss.item()*inputs.shape[0]
+
         train_loss /= len(trainloader.dataset)
-
-
-        loss_train_list.append(train_loss)
-        
-        #val_metrics_dict = validate_test(model,valloader,device,loss_function,encoding_dict)
-        
+    
         val_metrics_dict, _, _ = validate_test(model,valloader,device,loss_function,encoding_dict)
-        
-        acc_test = val_metrics_dict['accuracy']
-        f1_test = val_metrics_dict['f1']
-        precision_test = val_metrics_dict['precision']
-        recall_test = val_metrics_dict['recall']
-        sensitivity_test = val_metrics_dict['sensitivity']
-        specificity_test = val_metrics_dict['specificity']
-        cm = val_metrics_dict['confusion_matrix']
-        test_loss = val_metrics_dict['loss']
-        
-        #update test metrics
-        loss_test_list.append(test_loss)
-        acc_test_list.append(acc_test)
-        f1_test_list.append(f1_test)
-        precision_test_list.append(precision_test)
-        recall_test_list.append(recall_test)
-        specificity_test_list.append(specificity_test)
-        sensitivity_test_list.append(sensitivity_test)
-        cm_test_list.append(cm)
 
-        print('[%d, %5d] loss: %.3f validation loss: %.3f acc: %.3f f1: %.3f precision: %.3f recall: %.3f' %
-        (epoch + 1, i + 1, train_loss,test_loss,acc_test,f1_test,precision_test,recall_test))
+        history['loss_train'].append(train_loss)
+        for k,v in val_metrics_dict.items():
+            history[f'{k}_val'].append(v)
         
+        print('[%d, %5d] loss: %.3f validation loss: %.3f acc: %.3f f1: %.3f precision: %.3f recall: %.3f' %
+        (epoch + 1, i + 1, history['loss_train'][-1],history['loss_val'][-1],history['accuracy_val'][-1],history['f1_val'][-1],history['precision_val'][-1],history['recall_val'][-1]))
+        val_loss = history['loss_val'][-1]
+
         #save checkpoint if model improves
-        if test_loss < best_loss:
+        if  val_loss < best_loss:
             checkpoint_path = os.path.join(experiment_path,'checkpoint.pth')
             torch.save(model.state_dict(),checkpoint_path)
-            best_loss = test_loss
+            best_loss = val_loss
             counter = 0
         else:
             counter += 1
@@ -268,12 +241,6 @@ def train(**kwargs):
     print(f'\ntraining finished, it took {time_train} minutes\n')
     #load best model
     model.load_state_dict(torch.load(checkpoint_path))
-
-    history = {'loss_train':loss_train_list,'loss_val':loss_test_list,
-               'acc_val':acc_test_list,'confusion_matrix_val':cm_test_list,
-               'f1_val':f1_test_list,'precision_val':precision_test_list,
-               'recall_val':recall_test_list,'sensitivity_val':sensitivity_test_list,
-               'specificity_val':specificity_test_list, }
 
     return model, history
 
@@ -299,24 +266,15 @@ def validate_test(model,testloader,device,loss_function,encoding_dict):
 
     loss /= len(testloader.dataset)
 
-        
-    acc = sklearn.metrics.accuracy_score(ground_truth_list,predictions_list)
-    f1 = sklearn.metrics.f1_score(ground_truth_list,predictions_list,average='macro')
-    precision = sklearn.metrics.precision_score(ground_truth_list,predictions_list,average='macro')
-    recall = sklearn.metrics.recall_score(ground_truth_list,predictions_list,average='macro')
-    sensitivity = imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list, average='macro')
-    specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list, average='macro')
-    cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
-
     metrics_dict = {
-        'accuracy':acc,
-        'f1':f1,
-        'precision':precision, 
-        'recall':recall,  
         'loss':loss,
-        'sensitivity':sensitivity,
-        'specificity':specificity,
-        'confusion_matrix': cm, 
+        'accuracy':sklearn.metrics.accuracy_score(ground_truth_list,predictions_list),
+        'f1':sklearn.metrics.f1_score(ground_truth_list,predictions_list,average='macro'),
+        'precision':sklearn.metrics.precision_score(ground_truth_list,predictions_list,average='macro'), 
+        'recall':sklearn.metrics.recall_score(ground_truth_list,predictions_list,average='macro'),  
+        'sensitivity':imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list, average='macro'),
+        'specificity':imblearn.metrics.specificity_score(ground_truth_list, predictions_list, average='macro'),
+        'confusion_matrix': sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels)), 
         }
 
     return metrics_dict, ground_truth_list, predictions_list
@@ -376,33 +334,33 @@ def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path
 def save_model(net,model_path):
     torch.save(net.state_dict(), model_path)
 
-def predict(net,dataloader,device,encoding_dict,dest_path=None):
-    img_path_list = []
-    predicted_label_list = []
-    confidence_list = []
-    with torch.no_grad():
-        for i,(images, img_path) in enumerate(dataloader):
-            images = images.to(device)
-            outputs = net(images)
-            conf, predicted = torch.max(outputs.data, 1)
+# def predict(net,dataloader,device,encoding_dict,dest_path=None):
+#     img_path_list = []
+#     predicted_label_list = []
+#     confidence_list = []
+#     with torch.no_grad():
+#         for i,(images, img_path) in enumerate(dataloader):
+#             images = images.to(device)
+#             outputs = net(images)
+#             conf, predicted = torch.max(outputs.data, 1)
 
-            img_path_list += list(img_path)
-            predicted_label_list += list(predicted.cpu().numpy())
-            confidence_list += list(conf.cpu().numpy())
+#             img_path_list += list(img_path)
+#             predicted_label_list += list(predicted.cpu().numpy())
+#             confidence_list += list(conf.cpu().numpy())
 
-    predicted_cat_list = [encoding_dict[label] for label in predicted_label_list]         
-    df = pd.DataFrame(
-        {'img_path':img_path_list,
-        'category':predicted_cat_list,
-        'label':predicted_label_list, 
-        'confidence':confidence_list}
-        )
+#     predicted_cat_list = [encoding_dict[label] for label in predicted_label_list]         
+#     df = pd.DataFrame(
+#         {'img_path':img_path_list,
+#         'category':predicted_cat_list,
+#         'label':predicted_label_list, 
+#         'confidence':confidence_list}
+#         )
     
-    if dest_path:
-        #save dataframe
-        filename = 'predictions'+time_stamp()+'.csv'
-        file_path = os.path.join(dest_path,filename)
-        df.to_csv(file_path,index=False)
-        print(f'Results at {file_path}')
+#     if dest_path:
+#         #save dataframe
+#         filename = 'predictions'+time_stamp()+'.csv'
+#         file_path = os.path.join(dest_path,filename)
+#         df.to_csv(file_path,index=False)
+#         print(f'Results at {file_path}')
 
-    return df
+#     return df

@@ -93,34 +93,30 @@ if __name__ == '__main__':
             saving_dir = split_path,
             encoding_dict = encoding_dict)
 
-
+        # evaluate on test data
         metrics_dict, ground_truth_list, predictions_list = validate_test(model,testloader,device,loss_function,encoding_dict)
-
-
         #generate heatmaps using GradCAM for some test images
         test_image_list = testloader.dataset.X
         save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict)
 
-        
+        #print test metrics
         for k,v in metrics_dict.items():
             print(f'{k}_test: {v}')
 
         
         experiment = Experiment()
-        experiment.add('learning_rate',learning_rate)
-        experiment.add('optimizer',optimizer)
-        experiment.add('loss_function',loss_function)
+        #experiment.add('learning_rate',learning_rate)
+        #experiment.add('optimizer',optimizer)
+        #experiment.add('loss_function',loss_function)
 
-        experiment.add('batch_size',batch_size)
-        experiment.add('num_workers',num_workers)
+        #experiment.add('batch_size',batch_size)
+        #experiment.add('num_workers',num_workers)
 
-        experiment.add('epochs',epochs)
+        #experiment.add('epochs',epochs)
+        #experiment.add('weights',weights)
+
         experiment.add('encoding_dict',encoding_dict)
-        experiment.add('weights',weights)
-
         experiment.add('model',model)
-        experiment.add('optimizer',optimizer)
-        experiment.add('loss_function',loss_function)
         experiment.add('resnet_size',resnet_size)
 
 
