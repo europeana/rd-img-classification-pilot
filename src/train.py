@@ -120,7 +120,6 @@ if __name__ == '__main__':
         experiment.add('model',model)
         experiment.add('resnet_size',resnet_size)
 
-
         for k,v in metrics_dict.items():
             experiment.add(f'{k}_test',v)
 

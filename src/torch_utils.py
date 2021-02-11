@@ -24,6 +24,10 @@ from sklearn import preprocessing
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import confusion_matrix
 
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 class ImgAugTransform:
     """Class for including image augmentation in pytorch transforms"""
@@ -332,3 +336,63 @@ def save_model(net,model_path):
 #         print(f'Results at {file_path}')
 
 #     return df
+
+
+#plotting
+def mean_std_metric(metric):
+    mean = np.mean(metric,axis=0)
+    std = np.std(metric,axis=0)
+    return mean, std
+
+def plot_mean_std(metrics_dict,title,fontsize=20,y_lim = 100):
+        
+    fig,ax = plt.subplots(figsize = (10,10))
+    for k,v in metrics_dict.items():
+        mean, std = mean_std_metric(v)
+        ax.plot(mean,label = k)
+        ax.fill_between(range(mean.shape[0]), mean-std, mean+std, alpha = 0.5)
+        ax.set_title(title,fontsize=fontsize)
+        ax.set_ylim((0.0,y_lim))
+        ax.set_xlabel('epochs',fontsize=fontsize)
+        plt.xticks(fontsize=fontsize)
+        plt.yticks(fontsize=fontsize)
+        plt.legend(fontsize=fontsize)
+        ax.grid()
+        
+def plot_conf_matrix(array,columns,font_scale=2):
+
+    df_cm = pd.DataFrame(array, index = columns,
+                      columns = columns)
+
+    sn.set(font_scale=font_scale)  
+    plt.figure(figsize = (10,10))
+    sn.heatmap(df_cm, annot=True,cmap="YlGnBu",fmt="d",annot_kws={"size": 16})
+    plt.xlabel('predicted')
+    plt.ylabel('ground truth')
+    
+def read_train_history(results_path,metrics_list,max_epochs):
+
+    metrics_dict = {k:[] for k in metrics_list}
+    metrics_dict.update({f'{k}_test':[] for k in metrics_list})
+    metrics_dict['loss_val'] = []
+    metrics_dict['loss_train'] = []
+
+    for split in os.listdir(results_path):
+        training_info_path = os.path.join(results_path,split,'training_info.pth')
+        training_info = torch.load(training_info_path)
+        encoding_dict = training_info['encoding_dict']
+
+        for metric in ['loss_val','loss_train']:
+            loss_arr = np.array(training_info[metric])
+            loss_arr = np.pad(loss_arr,(0,max_epochs-loss_arr.shape[0]),'edge')
+            metrics_dict[metric].append(list(loss_arr))  
+
+        for metric in metrics_list:
+            metric_arr = np.array(training_info[f'{metric}_val'])
+            metric_arr = np.pad(metric_arr,(0,max_epochs-metric_arr.shape[0]),'edge')
+            metrics_dict[metric].append(list(metric_arr))
+
+            test_metric = training_info[f'{metric}_test']
+            metrics_dict[f'{metric}_test'].append(test_metric)
+            
+    return metrics_dict
