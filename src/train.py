@@ -55,9 +55,9 @@ if __name__ == '__main__':
     else:
         loss_function = nn.CrossEntropyLoss(reduction='sum')
 
-    splits = prepare_dataset(
-        X = X,
-        y = y_encoded,
+    data_splits = make_train_val_test_splits(
+        X,
+        y_encoded,
         img_aug = img_aug,
         num_workers = num_workers,
         batch_size = batch_size,
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     )
 
     #crossvalidation
-    for i,split in enumerate(splits):
+    for i,split in enumerate(data_splits):
         print(f'split {i}\n')
         split_path = os.path.join(experiment_path,f'split_{i}')
         
@@ -83,18 +83,19 @@ if __name__ == '__main__':
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
         
         model, history = train(
-            model = model,
-            loss_function = loss_function,
-            optimizer = optimizer,
-            epochs = epochs, 
-            trainloader = trainloader, 
-            valloader = valloader,
-            device = device,
-            saving_dir = split_path,
-            encoding_dict = encoding_dict)
+            model,
+            loss_function,
+            optimizer,
+            trainloader,
+            valloader,
+            device,
+            split_path,
+            encoding_dict,
+            epochs = 10,
+            patience = 1)
 
         # evaluate on test data
-        metrics_dict, ground_truth_list, predictions_list = validate_test(model,testloader,device,loss_function,encoding_dict)
+        metrics_dict, ground_truth_list, predictions_list = validate(model,testloader,device,loss_function,encoding_dict)
         #generate heatmaps using GradCAM for some test images
         test_image_list = testloader.dataset.X
         save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict)

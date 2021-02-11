@@ -59,46 +59,42 @@ class TrainingDataset(Dataset):
 
         return img,label
 
-class InferenceDataset(Dataset):
-    """
-    Pytorch inference dataset class
-    X: Numpy array containing the paths to the images
-    """
-    def __init__(self, X, transform=None):
-        self.transform = transform
-        self.X = X
-        self.N = X.shape[0]   
+# class InferenceDataset(Dataset):
+#     """
+#     Pytorch inference dataset class
+#     X: Numpy array containing the paths to the images
+#     """
+#     def __init__(self, X, transform=None):
+#         self.transform = transform
+#         self.X = X
+#         self.N = X.shape[0]   
 
-    def __len__(self):
-        return self.N
+#     def __len__(self):
+#         return self.N
 
-    def __getitem__(self, idx):
-        if torch.is_tensor(idx):
-            idx = idx.tolist()
+#     def __getitem__(self, idx):
+#         if torch.is_tensor(idx):
+#             idx = idx.tolist()
 
-        img_path = str(self.X[idx])
-        img = Image.open(img_path).convert('RGB')
+#         img_path = str(self.X[idx])
+#         img = Image.open(img_path).convert('RGB')
                 
-        if self.transform:
-            img = self.transform(img)
+#         if self.transform:
+#             img = self.transform(img)
 
-        return img,img_path
+#         return img,img_path
 
 
 
-def prepare_dataset(**kwargs):
+def make_train_val_test_splits(X,y,**kwargs):
     
-    X = kwargs.get('X',None)
-    y = kwargs.get('y',None)
     input_size = kwargs.get('input_size',224)
     batch_size = kwargs.get('batch_size',16)
-    num_workers = kwargs.get('num_workers',8)
+    num_workers = kwargs.get('num_workers',4)
     img_aug = kwargs.get('img_aug',None)
-    splits = kwargs.get('splits',True)
+    splits = kwargs.get('splits',10)
 
-    if X is None:
-        raise Exception('X needs to be provided')
-        
+  
     base_transform = transforms.Compose([
         transforms.Resize((input_size, input_size)),
         transforms.ToTensor(),
@@ -106,13 +102,6 @@ def prepare_dataset(**kwargs):
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
     ])
 
-    # if y is None:
-    #     test_dataset = InferenceDataset(X,transform=base_transform)
-    #     testloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=False, num_workers=num_workers,drop_last=False)
-    #     trainloader = None
-    #     return [{'trainloader':trainloader, 'testloader':testloader}]
-
-    
     if img_aug:
         train_transform = transforms.Compose([
             transforms.Resize((input_size, input_size)),
@@ -124,13 +113,6 @@ def prepare_dataset(**kwargs):
     else:
         train_transform = base_transform
 
-    if not splits:
-        train_dataset = TrainingDataset(X,y,transform=train_transform)
-        trainloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True, num_workers=num_workers,drop_last=True)
-        testloader = None
-        return [{'trainloader':trainloader, 'testloader':testloader}]
-
-    
     #train-validation-test splits
     skf = StratifiedKFold(n_splits=splits)
     sk_splits = skf.split(X, y)
@@ -140,8 +122,7 @@ def prepare_dataset(**kwargs):
         X_train_val, X_test = X[train_val_index], X[test_index]
         y_train_val, y_test = y[train_val_index], y[test_index]
         
-        val_skf = StratifiedKFold(n_splits=splits)
-        val_sk_splits = val_skf.split(X_train_val, y_train_val)
+        val_sk_splits = skf.split(X_train_val, y_train_val)
         train_index,val_index = next(val_sk_splits)
         
         X_train, X_val = X_train_val[train_index], X_train_val[val_index]
@@ -161,20 +142,7 @@ def prepare_dataset(**kwargs):
     return splits_list
     
 
-
-
-def train(**kwargs):
-
-    model = kwargs.get('model',None)
-    trainloader = kwargs.get('trainloader',None)
-    valloader = kwargs.get('valloader',None)
-    loss_function = kwargs.get('loss_function',None)
-    optimizer = kwargs.get('optimizer',None)
-    device = kwargs.get('device',None)
-    encoding_dict = kwargs.get('encoding_dict',None)
-    saving_dir = kwargs.get('saving_dir',None)
-    epochs = kwargs.get('epochs',100)
-    patience = kwargs.get('patience',10)
+def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,encoding_dict,epochs = 100, patience = 10):
 
     best_loss = 1e6
     counter = 0
@@ -212,7 +180,7 @@ def train(**kwargs):
 
         train_loss /= len(trainloader.dataset)
     
-        val_metrics_dict, _, _ = validate_test(model,valloader,device,loss_function,encoding_dict)
+        val_metrics_dict, _, _ = validate(model,valloader,device,loss_function,encoding_dict)
 
         history['loss_train'].append(train_loss)
         for k,v in val_metrics_dict.items():
@@ -245,7 +213,7 @@ def train(**kwargs):
     return model, history
 
 
-def validate_test(model,testloader,device,loss_function,encoding_dict):
+def validate(model,testloader,device,loss_function,encoding_dict):
     """Returns metrics of predictions on test data"""
 
     n_labels = len(list(set(testloader.dataset.y)))
