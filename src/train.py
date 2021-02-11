@@ -14,12 +14,14 @@ if __name__ == '__main__':
 
     experiment_name = 'testing'
     learning_rate = 0.00001
-    epochs = 20
+    epochs = 5
     resnet_size = 34 # allowed sizes: 18,34,50,101,152
     num_workers = 4
     batch_size = 64
     weighted_loss = True
     img_aug = None
+
+    patience = 1
 
     device = torch.device('cuda:0')
 
@@ -79,28 +81,20 @@ if __name__ == '__main__':
         model = models.ResNet(resnet_size,n_classes).to(device)
         #set optimizer
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-
-        callback = CallBack(
-                            validate = True,
-                            early_stopping = True,
-                            save_best = True,
-                            return_best = True,
-                            path = split_path)
         
-        #include saving_path instead of callback
-        net, history = train(
-                            epochs = epochs, 
-                            trainloader = trainloader, 
-                            valloader = valloader,
-                            loss_function = loss_function,
-                            model = model,
-                            optimizer = optimizer,
-                            device = device,
-                            callback = callback,
-                            encoding_dict = encoding_dict)
+        model, history = train(
+            model = model,
+            loss_function = loss_function,
+            optimizer = optimizer,
+            epochs = epochs, 
+            trainloader = trainloader, 
+            valloader = valloader,
+            device = device,
+            saving_dir = split_path,
+            encoding_dict = encoding_dict)
 
 
-        metrics_dict = validate_test(model,testloader,device,loss_function,encoding_dict)
+        metrics_dict, ground_truth_list, predictions_list = validate_test(model,testloader,device,loss_function,encoding_dict)
 
         acc_test = metrics_dict['accuracy']
         f1_test = metrics_dict['f1']
@@ -111,12 +105,8 @@ if __name__ == '__main__':
         confusion_matrix_test = metrics_dict['confusion_matrix']
         loss_test = metrics_dict['loss']
 
-
-        ground_truth_list = metrics_dict['ground_truth_list']
-        predictions_list = metrics_dict['predictions_list']
-
         #generate heatmaps using GradCAM for some test images
-        save_XAI(net,testloader.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+        save_XAI(model,testloader.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
 
         print(f'acc_test: {acc_test}')
         print(f'f1_test: {f1_test}')

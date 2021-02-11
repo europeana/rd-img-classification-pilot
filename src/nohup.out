@@ -3,264 +3,131 @@ split 0
 size train: 1508
 size val: 168
 size test: 187
-Training for 20 epochs 
+Training for 5 epochs 
 
-[1,    23] loss: 65.776 validation loss: 50.151 acc: 0.188 f1: 0.124 precision: 0.120 recall: 0.157
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
+[1,    23] loss: 65.710 validation loss: 50.012 acc: 0.219 f1: 0.142 precision: 0.197 recall: 0.201
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[2,    23] loss: 63.133 validation loss: 47.202 acc: 0.234 f1: 0.168 precision: 0.190 recall: 0.228
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
+[2,    23] loss: 63.260 validation loss: 48.545 acc: 0.266 f1: 0.213 precision: 0.220 recall: 0.291
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[3,    23] loss: 61.212 validation loss: 48.584 acc: 0.328 f1: 0.222 precision: 0.213 recall: 0.291
+[3,    23] loss: 61.175 validation loss: 47.718 acc: 0.336 f1: 0.267 precision: 0.261 recall: 0.345
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[4,    23] loss: 59.578 validation loss: 46.276 acc: 0.406 f1: 0.306 precision: 0.347 recall: 0.370
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
+[4,    23] loss: 59.506 validation loss: 46.553 acc: 0.391 f1: 0.315 precision: 0.306 recall: 0.409
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[5,    23] loss: 58.175 validation loss: 45.909 acc: 0.438 f1: 0.328 precision: 0.353 recall: 0.399
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[6,    23] loss: 57.112 validation loss: 47.592 acc: 0.477 f1: 0.361 precision: 0.405 recall: 0.424
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[7,    23] loss: 56.185 validation loss: 45.963 acc: 0.531 f1: 0.408 precision: 0.432 recall: 0.462
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[8,    23] loss: 55.172 validation loss: 44.801 acc: 0.484 f1: 0.403 precision: 0.452 recall: 0.448
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[9,    23] loss: 54.439 validation loss: 44.710 acc: 0.555 f1: 0.450 precision: 0.463 recall: 0.515
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[10,    23] loss: 53.610 validation loss: 44.252 acc: 0.531 f1: 0.452 precision: 0.442 recall: 0.501
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[11,    23] loss: 53.028 validation loss: 43.959 acc: 0.570 f1: 0.520 precision: 0.553 recall: 0.564
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[12,    23] loss: 52.388 validation loss: 43.990 acc: 0.617 f1: 0.553 precision: 0.575 recall: 0.595
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[13,    23] loss: 51.701 validation loss: 44.093 acc: 0.609 f1: 0.554 precision: 0.596 recall: 0.584
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[14,    23] loss: 51.136 validation loss: 44.206 acc: 0.672 f1: 0.612 precision: 0.614 recall: 0.646
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[15,    23] loss: 50.719 validation loss: 42.891 acc: 0.633 f1: 0.586 precision: 0.588 recall: 0.624
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[16,    23] loss: 50.380 validation loss: 42.528 acc: 0.617 f1: 0.579 precision: 0.564 recall: 0.621
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[17,    23] loss: 49.993 validation loss: 42.031 acc: 0.633 f1: 0.588 precision: 0.584 recall: 0.633
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[18,    23] loss: 49.682 validation loss: 41.777 acc: 0.695 f1: 0.635 precision: 0.622 recall: 0.671
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[19,    23] loss: 49.602 validation loss: 40.884 acc: 0.680 f1: 0.627 precision: 0.616 recall: 0.673
-checkpoint saved at ../results/testing/split_0/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[20,    23] loss: 49.352 validation loss: 41.343 acc: 0.742 f1: 0.668 precision: 0.650 recall: 0.715
+[5,    23] loss: 58.274 validation loss: 45.857 acc: 0.445 f1: 0.381 precision: 0.362 recall: 0.465
 
-training finished, it took 4.007824842135111 minutes
+training finished, it took 1.097640057404836 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-acc_test: 0.7109375
-f1_test: 0.6444984255510571
-precision_test: 0.6273051948051948
-recall_test: 0.6950396825396825
-sensitivity_test: 0.6950396825396825
-specificity_test: 0.9847938096599981
-loss_test: 38.57551256475602
+acc_test: 0.4375
+f1_test: 0.3603880220656536
+precision_test: 0.34278846153846154
+recall_test: 0.4404166666666667
+sensitivity_test: 0.4404166666666667
+specificity_test: 0.9702677868013275
+loss_test: 42.45904573654746
 confusion_matrix_test 
 
-[[8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 1 5 0 0 0 1 0 0 0 0 0 0 1 0 0 1 0 0 0]
- [0 0 0 6 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 5 1 0 0 0 0 1 0 0 0 0 0 0 0 0]
- [0 1 0 0 0 0 4 0 0 1 0 0 0 0 0 0 0 0 0 0]
+[[0 0 0 0 0 1 0 0 0 0 0 3 1 0 0 0 0 1 0 2]
+ [0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 1 1]
+ [0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 1]
+ [0 0 0 5 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0]
+ [0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 1]
+ [0 0 0 0 0 7 0 0 0 1 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 2]
  [0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 1 0 5 0 0 2 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0]
- [2 1 0 0 0 1 1 0 0 0 0 0 0 1 0 0 1 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0]
- [1 1 0 0 1 0 0 0 0 1 0 1 0 0 0 0 1 0 0 0]
- [0 1 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 1 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 6 0 1 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 1]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 1]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 4]]
+ [0 0 0 0 0 0 0 0 0 0 0 2 1 0 0 0 1 0 0 2]
+ [0 0 0 0 0 0 2 0 0 1 0 2 2 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0 0 3 2 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 4 3 0 0 0 0 2 0 1]
+ [0 0 0 1 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0 0 0]
+ [0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 3]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 1]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 1]
+ [0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 7]]
 split 1
 
 size train: 1508
 size val: 168
 size test: 187
-Training for 20 epochs 
+Training for 5 epochs 
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:403: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:371: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
   fig,ax = plt.subplots(1,2,figsize=(20,20))
-[1,    23] loss: 65.889 validation loss: 50.620 acc: 0.109 f1: 0.091 precision: 0.115 recall: 0.138
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
+[1,    23] loss: 65.842 validation loss: 49.903 acc: 0.266 f1: 0.164 precision: 0.132 recall: 0.267
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[2,    23] loss: 63.842 validation loss: 49.992 acc: 0.164 f1: 0.136 precision: 0.202 recall: 0.190
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
+[2,    23] loss: 63.732 validation loss: 47.985 acc: 0.375 f1: 0.249 precision: 0.216 recall: 0.364
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[3,    23] loss: 62.203 validation loss: 48.390 acc: 0.250 f1: 0.201 precision: 0.264 recall: 0.260
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
+[3,    23] loss: 61.360 validation loss: 46.651 acc: 0.344 f1: 0.229 precision: 0.221 recall: 0.358
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[4,    23] loss: 60.465 validation loss: 48.325 acc: 0.430 f1: 0.376 precision: 0.486 recall: 0.419
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
+[4,    23] loss: 59.905 validation loss: 46.735 acc: 0.414 f1: 0.278 precision: 0.248 recall: 0.383
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[5,    23] loss: 58.343 validation loss: 46.806 acc: 0.477 f1: 0.438 precision: 0.582 recall: 0.486
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[6,    23] loss: 57.179 validation loss: 44.314 acc: 0.445 f1: 0.355 precision: 0.374 recall: 0.427
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[7,    23] loss: 56.287 validation loss: 45.992 acc: 0.406 f1: 0.360 precision: 0.401 recall: 0.421
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[8,    23] loss: 55.564 validation loss: 45.609 acc: 0.508 f1: 0.450 precision: 0.503 recall: 0.489
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[9,    23] loss: 54.861 validation loss: 46.505 acc: 0.547 f1: 0.478 precision: 0.510 recall: 0.523
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[10,    23] loss: 53.964 validation loss: 43.327 acc: 0.578 f1: 0.517 precision: 0.508 recall: 0.571
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[11,    23] loss: 53.410 validation loss: 46.161 acc: 0.586 f1: 0.517 precision: 0.512 recall: 0.577
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[12,    23] loss: 52.671 validation loss: 44.926 acc: 0.617 f1: 0.546 precision: 0.555 recall: 0.590
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[13,    23] loss: 52.024 validation loss: 44.117 acc: 0.648 f1: 0.579 precision: 0.599 recall: 0.611
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[14,    23] loss: 51.664 validation loss: 43.303 acc: 0.664 f1: 0.650 precision: 0.635 recall: 0.708
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[15,    23] loss: 51.149 validation loss: 42.721 acc: 0.672 f1: 0.604 precision: 0.597 recall: 0.635
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[16,    23] loss: 50.657 validation loss: 44.392 acc: 0.648 f1: 0.608 precision: 0.605 recall: 0.648
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[17,    23] loss: 50.404 validation loss: 43.444 acc: 0.648 f1: 0.601 precision: 0.600 recall: 0.643
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[18,    23] loss: 50.183 validation loss: 41.821 acc: 0.633 f1: 0.600 precision: 0.606 recall: 0.644
-checkpoint saved at ../results/testing/split_1/checkpoint.pth
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[19,    23] loss: 49.978 validation loss: 42.315 acc: 0.672 f1: 0.654 precision: 0.669 recall: 0.676
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-[20,    23] loss: 49.690 validation loss: 43.034 acc: 0.742 f1: 0.704 precision: 0.719 recall: 0.729
+[5,    23] loss: 58.899 validation loss: 45.684 acc: 0.453 f1: 0.350 precision: 0.350 recall: 0.444
 
-training finished, it took 4.1090924620628355 minutes
+training finished, it took 1.0216793934504191 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-acc_test: 0.6796875
-f1_test: 0.6417947442134749
-precision_test: 0.639455266955267
-recall_test: 0.6918452380952382
-sensitivity_test: 0.6918452380952382
-specificity_test: 0.983056426627367
-loss_test: 38.48604612299465
+acc_test: 0.4453125
+f1_test: 0.3509632741985683
+precision_test: 0.41252917975744074
+recall_test: 0.45073412698412696
+sensitivity_test: 0.45073412698412696
+specificity_test: 0.970858890603538
+loss_test: 40.664601698278744
 confusion_matrix_test 
 
-[[ 4  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0]
- [ 0  7  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0]
- [ 0  0 10  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
- [ 0  0  0  5  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
- [ 0  0  0  0  5  0  0  0  1  0  0  0  0  1  0  0  0  0  0  0]
- [ 0  0  0  0  0  6  0  0  0  0  1  0  0  0  0  0  0  0  0  0]
- [ 0  0  0  0  0  0  3  0  0  1  0  1  0  0  0  0  0  0  0  0]
- [ 0  0  0  0  0  0  0  3  0  0  0  0  0  0  0  0  0  0  0  0]
- [ 0  0  0  0  0  0  0  0  6  0  0  1  0  0  0  0  0  1  1  0]
- [ 0  0  0  0  0  0  1  0  0  4  0  1  0  0  0  0  0  0  0  0]
- [ 0  2  1  0  0  0  0  0  0  2  3  0  0  1  0  0  0  0  0  1]
- [ 0  0  0  0  0  0  0  0  0  0  0  7  0  0  0  0  0  0  0  0]
- [ 1  1  0  0  0  1  0  0  0  0  2  2  0  0  0  0  0  0  0  0]
- [ 0  1  0  0  1  0  0  0  0  0  1  1  0  2  0  0  0  0  0  0]
- [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  8  0  0  0  0  0]
- [ 0  0  0  0  0  0  0  0  0  0  2  0  0  0  0  1  0  0  0  0]
- [ 0  0  0  1  2  0  0  0  1  0  0  1  0  0  0  0  0  1  0  1]
- [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  6  0  1]
- [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  5  0]
- [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  2]]
+[[6 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 4 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 5]
+ [0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 1 4 0 0 0 0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3]
+ [3 1 0 0 0 1 1 0 0 0 0 0 2 0 0 0 0 0 0 0]
+ [1 2 1 0 0 1 0 0 0 0 0 0 2 0 0 0 0 0 0 0]
+ [1 1 0 3 0 1 2 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 1 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0]
+ [0 7 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0]
+ [0 0 1 3 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1]
+ [1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 2]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 5]
+ [0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 4]]
 split 2
 
 size train: 1508
 size val: 168
 size test: 187
-Training for 20 epochs 
+Training for 5 epochs 
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-[1,    23] loss: 65.713 validation loss: 48.698 acc: 0.234 f1: 0.164 precision: 0.180 recall: 0.196
-checkpoint saved at ../results/testing/split_2/checkpoint.pth
+[1,    23] loss: 65.993 validation loss: 52.796 acc: 0.188 f1: 0.110 precision: 0.126 recall: 0.171
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Sensitivity is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+[2,    23] loss: 64.468 validation loss: 49.004 acc: 0.289 f1: 0.186 precision: 0.209 recall: 0.259
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
 Traceback (most recent call last):
-  File "train.py", line 91, in <module>
-    epochs = epochs, 
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 241, in train
-    for i, (inputs,labels) in enumerate(trainloader):
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 435, in __next__
-    data = self._next_data()
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1068, in _next_data
-    idx, data = self._get_data()
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1034, in _get_data
-    success, data = self._try_get_data()
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 872, in _try_get_data
-    data = self._data_queue.get(timeout=timeout)
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/queues.py", line 107, in get
-    if not self._poll(timeout):
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/connection.py", line 257, in poll
-    return self._poll(timeout)
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/connection.py", line 424, in _poll
-    r = wait([self], timeout)
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/connection.py", line 931, in wait
-    ready = selector.select(timeout)
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/selectors.py", line 415, in select
-    fd_event_list = self._selector.poll(timeout)
+  File "train.py", line 85, in <module>
+    model, history = train(
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 220, in train
+    train_loss += loss.item()*inputs.shape[0]
 KeyboardInterrupt

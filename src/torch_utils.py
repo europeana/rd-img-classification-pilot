@@ -163,64 +163,31 @@ def prepare_dataset(**kwargs):
 
 
 
-class CallBack():
-    def __init__(self,**kwargs):
-        self.validate = kwargs.get('validate',False)
-        self.early_stopping = kwargs.get('early_stopping',False)
-        self.save_best = kwargs.get('save_best',False)
-        self.return_best = kwargs.get('return_best',False)
-        self.path = kwargs.get('path',None)
-        if self.path is not None:
-            create_dir(self.path)
-
-        self.test_loss_thres = kwargs.get('test_loss_thres',1e6)
-        self.patience = kwargs.get('patience',5)
-        self.stop = False
-        self.save = False
-        self.counter = 0
-         
-    def check(self,test_loss):
-
-        if test_loss < self.test_loss_thres:
-            self.test_loss_thres = test_loss
-            self.counter = 0
-            if self.save_best:
-                self.save = True
-        else:
-            self.counter += 1
-            self.save = False
-        
-        if self.early_stopping:
-            if self.counter > self.patience:
-                self.stop = True
-
-        return self
-
-
 def train(**kwargs):
     # todo: sample train data for metrics
     # https://discuss.pytorch.org/t/balanced-sampling-between-classes-with-torchvision-dataloader/2703/3
 
 
-    #to do: add assertions
-    epochs = kwargs.get('epochs',10)
-    weighted_loss = kwargs.get('weighted_loss',True)
-    learning_rate = kwargs.get('learning_rate',0.0001)
+    
     model = kwargs.get('model',None)
+    trainloader = kwargs.get('trainloader',None)
+    valloader = kwargs.get('valloader',None)
     loss_function = kwargs.get('loss_function',None)
     optimizer = kwargs.get('optimizer',None)
     device = kwargs.get('device',None)
     encoding_dict = kwargs.get('encoding_dict',None)
-    model_name = kwargs.get('model_name',None)
-    trainloader = kwargs.get('trainloader',None)
-    valloader = kwargs.get('valloader',None)
-    callback = kwargs.get('callback',CallBack())
+    saving_dir = kwargs.get('saving_dir',None)
+
+    epochs = kwargs.get('epochs',100)
+    patience = kwargs.get('patience',10)
+
 
     best_loss = 1e6
+    counter = 0
 
-    experiment_path = callback.path
-    if callback.save_best:
-        create_dir(experiment_path)  
+    experiment_path = saving_dir
+    create_dir(experiment_path) 
+         
 
     #initialize metrics
     loss_train_list = []
@@ -250,59 +217,57 @@ def train(**kwargs):
             #backpropagate and update
             loss.backward()
             optimizer.step()
-
             train_loss += loss.item()*inputs.shape[0]
-                
         train_loss /= len(trainloader.dataset)
+
+
         loss_train_list.append(train_loss)
         
-        if callback.validate:
-            val_metrics_dict = validate_test(model,valloader,device,loss_function,encoding_dict)
-            
-            acc_test = val_metrics_dict['accuracy']
-            f1_test = val_metrics_dict['f1']
-            precision_test = val_metrics_dict['precision']
-            recall_test = val_metrics_dict['recall']
-            sensitivity_test = val_metrics_dict['sensitivity']
-            specificity_test = val_metrics_dict['specificity']
-            cm = val_metrics_dict['confusion_matrix']
-            test_loss = val_metrics_dict['loss']
-            
-            #update test metrics
-            loss_test_list.append(test_loss)
-            acc_test_list.append(acc_test)
-            f1_test_list.append(f1_test)
-            precision_test_list.append(precision_test)
-            recall_test_list.append(recall_test)
-            specificity_test_list.append(specificity_test)
-            sensitivity_test_list.append(sensitivity_test)
-            cm_test_list.append(cm)
+        #val_metrics_dict = validate_test(model,valloader,device,loss_function,encoding_dict)
+        
+        val_metrics_dict, _, _ = validate_test(model,valloader,device,loss_function,encoding_dict)
+        
+        acc_test = val_metrics_dict['accuracy']
+        f1_test = val_metrics_dict['f1']
+        precision_test = val_metrics_dict['precision']
+        recall_test = val_metrics_dict['recall']
+        sensitivity_test = val_metrics_dict['sensitivity']
+        specificity_test = val_metrics_dict['specificity']
+        cm = val_metrics_dict['confusion_matrix']
+        test_loss = val_metrics_dict['loss']
+        
+        #update test metrics
+        loss_test_list.append(test_loss)
+        acc_test_list.append(acc_test)
+        f1_test_list.append(f1_test)
+        precision_test_list.append(precision_test)
+        recall_test_list.append(recall_test)
+        specificity_test_list.append(specificity_test)
+        sensitivity_test_list.append(sensitivity_test)
+        cm_test_list.append(cm)
 
-            print('[%d, %5d] loss: %.3f validation loss: %.3f acc: %.3f f1: %.3f precision: %.3f recall: %.3f' %
-            (epoch + 1, i + 1, train_loss,test_loss,acc_test,f1_test,precision_test,recall_test))
-
-            #callback
-            callback = callback.check(test_loss)
-            #save best model
-            if callback.save:
-                checkpoint_filename = 'checkpoint.pth'
-                best_model_path = save_checkpoint(model,experiment_path,checkpoint_filename)
-            if callback.stop:
-                print(f'Early stopping at epoch {epoch}')
-                if callback.return_best:
-                    print(f'Loading best model from {best_model_path}')
-                    model.load_state_dict(torch.load(best_model_path))
-
-                break
-
+        print('[%d, %5d] loss: %.3f validation loss: %.3f acc: %.3f f1: %.3f precision: %.3f recall: %.3f' %
+        (epoch + 1, i + 1, train_loss,test_loss,acc_test,f1_test,precision_test,recall_test))
+        
+        #save checkpoint if model improves
+        if test_loss < best_loss:
+            checkpoint_path = os.path.join(experiment_path,'checkpoint.pth')
+            torch.save(model.state_dict(),checkpoint_path)
+            best_loss = test_loss
+            counter = 0
         else:
-            print('[%d, %5d] loss: %.3f ' %
-            (epoch + 1, i + 1, 0))
+            counter += 1
+        #early stopping
+        if counter > patience:
+            print(f'Early stopping at epoch: {epoch}')
+            break
 
-
+    
     end_train = time.time()
     time_train = (end_train-start_train)/60.0
     print(f'\ntraining finished, it took {time_train} minutes\n')
+    #load best model
+    model.load_state_dict(torch.load(checkpoint_path))
 
     history = {'loss_train':loss_train_list,'loss_val':loss_test_list,
                'acc_val':acc_test_list,'confusion_matrix_val':cm_test_list,
@@ -343,7 +308,7 @@ def validate_test(net,testloader,device,loss_function,encoding_dict):
     specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list, average='macro')
     cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
 
-    return {
+    metrics_dict = {
         'accuracy':acc,
         'f1':f1,
         'precision':precision, 
@@ -352,13 +317,11 @@ def validate_test(net,testloader,device,loss_function,encoding_dict):
         'sensitivity':sensitivity,
         'specificity':specificity,
         'confusion_matrix': cm, 
-        'ground_truth_list':ground_truth_list,
-        'predictions_list':predictions_list}
+        }
 
-    #return metrics_dict
+    return metrics_dict, ground_truth_list, predictions_list
 
-
-    
+  
 
 def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,encoding_dict):
     
@@ -412,21 +375,6 @@ def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,e
 
         else:
             continue
-
-
-
-
-
-    
-
-
-
-
-def save_checkpoint(net,dest_path,checkpoint_filename):
-    model_path = os.path.join(dest_path, checkpoint_filename)
-    print(f'checkpoint saved at {model_path}')
-    save_model(net,model_path)
-    return model_path
 
 def save_model(net,model_path):
     torch.save(net.state_dict(), model_path)
