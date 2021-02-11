@@ -181,9 +181,7 @@ def build_model(model_name, device, multi_gpu, output_size=None, show=False):
 
     elif model_name.startswith("resnet"):
         size = int(model_name.replace("resnet",""))
-        #print(size,output_size)
         net = models.ResNet(size,output_size)
-        #net = models.ResNetExperimental(size,output_size)
 
     #multiprocessing model
     if multi_gpu:
@@ -241,7 +239,7 @@ class CallBack():
         self.return_best = kwargs.get('return_best',False)
         self.path = kwargs.get('path',None)
         if self.path is not None:
-            check_path(self.path)
+            create_dir(self.path)
 
         self.test_loss_thres = kwargs.get('test_loss_thres',1e6)
         self.patience = kwargs.get('patience',5)
@@ -289,7 +287,7 @@ def train(**kwargs):
 
     experiment_path = callback.path
     if callback.save_best:
-        check_path(experiment_path)  
+        create_dir(experiment_path)  
 
     #initialize metrics
     loss_train_list = []
@@ -398,7 +396,6 @@ def train(**kwargs):
 def validate_test(net,testloader,device,loss_function,encoding_dict):
     """Returns metrics of predictions on test data"""
 
-    #from sklearn.metrics import roc_curve, auc
     n_labels = len(list(set(testloader.dataset.y)))
 
     ground_truth_list = []
@@ -426,141 +423,137 @@ def validate_test(net,testloader,device,loss_function,encoding_dict):
         sensitivity = imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list, average='macro')
         specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list, average='macro')
         cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
-        ppv = None
-        npv = None
+        #ppv = None
+        #npv = None
     else:
-        f1 = sklearn.metrics.f1_score(ground_truth_list,predictions_list)
-        precision = sklearn.metrics.precision_score(ground_truth_list,predictions_list)
-        recall = sklearn.metrics.recall_score(ground_truth_list,predictions_list)
-        sensitivity = imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list)
-        specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list)
-        cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
-        ppv = cm[1,1]/(cm[1,1]+cm[0,1])
-        npv = cm[0,0]/(cm[0,0]+cm[1,0])
+        pass
+        # f1 = sklearn.metrics.f1_score(ground_truth_list,predictions_list)
+        # precision = sklearn.metrics.precision_score(ground_truth_list,predictions_list)
+        # recall = sklearn.metrics.recall_score(ground_truth_list,predictions_list)
+        # sensitivity = imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list)
+        # specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list)
+        # cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
+        #ppv = cm[1,1]/(cm[1,1]+cm[0,1])
+        #npv = cm[0,0]/(cm[0,0]+cm[1,0])
 
-    ROC_fig,auc = compute_ROC(ground_truth_list, predictions_list,encoding_dict)
+    #ROC_fig,auc = compute_ROC(ground_truth_list, predictions_list,encoding_dict)
     
-    metrics_dict = {'accuracy':acc, 'auc':auc,'ppv':ppv,'npv':npv,'f1':f1,'precision':precision, 'recall':recall,  'loss':loss,
-                    'sensitivity':sensitivity,'specificity':specificity,'confusion_matrix': cm, 'ROC_fig':ROC_fig,
+    metrics_dict = {'accuracy':acc,'f1':f1,'precision':precision, 'recall':recall,  'loss':loss,
+                    'sensitivity':sensitivity,'specificity':specificity,'confusion_matrix': cm, 
                     'ground_truth_list':ground_truth_list,'predictions_list':predictions_list}
 
     return metrics_dict
 
-def compute_ROC(ground_truth_list, predictions_list,encoding_dict):
-    # code adapted from https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
+# def compute_ROC(ground_truth_list, predictions_list,encoding_dict):
+#     # code adapted from https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
 
-    n_labels = len(encoding_dict)
-    #print(n_labels)
+#     n_labels = len(encoding_dict)
+#     #print(n_labels)
 
-    ground_truth_list_binarized = label_binarize(ground_truth_list, classes=range(n_labels))
-    predictions_list_binarized = label_binarize(predictions_list, classes=range(n_labels))
+#     ground_truth_list_binarized = label_binarize(ground_truth_list, classes=range(n_labels))
+#     predictions_list_binarized = label_binarize(predictions_list, classes=range(n_labels))
 
-    #print(predictions_list_binarized.shape)
+#     #print(predictions_list_binarized.shape)
 
-    if n_labels == 2:
-        fpr = dict()
-        tpr = dict()
-        roc_auc = dict()
-        fpr[0], tpr[0], _ = roc_curve(ground_truth_list_binarized, predictions_list_binarized)
-        roc_auc[0] = auc(fpr[0], tpr[0])
+#     if n_labels == 2:
+#         fpr = dict()
+#         tpr = dict()
+#         roc_auc = dict()
+#         fpr[0], tpr[0], _ = roc_curve(ground_truth_list_binarized, predictions_list_binarized)
+#         roc_auc[0] = auc(fpr[0], tpr[0])
 
-        auc_value = roc_auc[0]
+#         auc_value = roc_auc[0]
 
-        fpr["micro"], tpr["micro"], _ = roc_curve(ground_truth_list_binarized.ravel(), predictions_list_binarized.ravel())
-        roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+#         fpr["micro"], tpr["micro"], _ = roc_curve(ground_truth_list_binarized.ravel(), predictions_list_binarized.ravel())
+#         roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
 
-        fig,ax = plt.subplots(figsize = (7,7))
-        fontsize = 20
+#         fig,ax = plt.subplots(figsize = (7,7))
+#         fontsize = 20
 
-        lw = 2
-        ax.plot(fpr[0], tpr[0], color='darkorange',
-                lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[0])
-        ax.plot([0, 1], [0, 1], 'k--', lw=lw)
-        ax.set_xlim([0.0, 1.0])
-        ax.set_ylim([0.0, 1.05])
-        ax.set_xlabel('False Positive Rate',fontsize = fontsize)
-        ax.set_ylabel('True Positive Rate',fontsize = fontsize)
-        ax.set_title('Receiver Operating Characteristic',fontsize = fontsize)
-        ax.legend(loc="lower right",fontsize = fontsize)
-        ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-        ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-        #plt.show()
-        return fig,auc_value
+#         lw = 2
+#         ax.plot(fpr[0], tpr[0], color='darkorange',
+#                 lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[0])
+#         ax.plot([0, 1], [0, 1], 'k--', lw=lw)
+#         ax.set_xlim([0.0, 1.0])
+#         ax.set_ylim([0.0, 1.05])
+#         ax.set_xlabel('False Positive Rate',fontsize = fontsize)
+#         ax.set_ylabel('True Positive Rate',fontsize = fontsize)
+#         ax.set_title('Receiver Operating Characteristic',fontsize = fontsize)
+#         ax.legend(loc="lower right",fontsize = fontsize)
+#         ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+#         ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+#         #plt.show()
+#         return fig,auc_value
 
-    else:
+#     else:
 
-        # Compute ROC curve and ROC area for each class
-        fpr = dict()
-        tpr = dict()
-        roc_auc = dict()
+#         # Compute ROC curve and ROC area for each class
+#         fpr = dict()
+#         tpr = dict()
+#         roc_auc = dict()
         
-        for i in range(n_labels):
-            fpr[i], tpr[i], _ = roc_curve(ground_truth_list_binarized[:,i], predictions_list_binarized[:,i])
-            roc_auc[i] = auc(fpr[i], tpr[i])
+#         for i in range(n_labels):
+#             fpr[i], tpr[i], _ = roc_curve(ground_truth_list_binarized[:,i], predictions_list_binarized[:,i])
+#             roc_auc[i] = auc(fpr[i], tpr[i])
 
-        # Compute micro-average ROC curve and ROC area
-        fpr["micro"], tpr["micro"], _ = roc_curve(ground_truth_list_binarized.ravel(), predictions_list_binarized.ravel())
-        roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
-        auc_value = roc_auc["micro"]
-        # First aggregate all false positive rates
-        all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_labels)]))
+#         # Compute micro-average ROC curve and ROC area
+#         fpr["micro"], tpr["micro"], _ = roc_curve(ground_truth_list_binarized.ravel(), predictions_list_binarized.ravel())
+#         roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+#         auc_value = roc_auc["micro"]
+#         # First aggregate all false positive rates
+#         all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_labels)]))
 
-        # Then interpolate all ROC curves at this points
-        mean_tpr = np.zeros_like(all_fpr)
-        for i in range(n_labels):
-            mean_tpr += np.interp(all_fpr, fpr[i], tpr[i])
+#         # Then interpolate all ROC curves at this points
+#         mean_tpr = np.zeros_like(all_fpr)
+#         for i in range(n_labels):
+#             mean_tpr += np.interp(all_fpr, fpr[i], tpr[i])
 
-        # Finally average it and compute AUC
-        mean_tpr /= n_labels
+#         # Finally average it and compute AUC
+#         mean_tpr /= n_labels
 
-        fpr["macro"] = all_fpr
-        tpr["macro"] = mean_tpr
-        roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
+#         fpr["macro"] = all_fpr
+#         tpr["macro"] = mean_tpr
+#         roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
 
-        # Plot all ROC curves
-        lw = 2
-        fontsize = 20
-        #plt.figure()
+#         # Plot all ROC curves
+#         lw = 2
+#         fontsize = 20
+#         #plt.figure()
         
-        fig,ax = plt.subplots()
-        ax.plot(fpr["micro"], tpr["micro"],
-                label='micro-average ROC curve (area = {0:0.2f})'
-                    ''.format(roc_auc["micro"]),
-                color='deeppink', linestyle=':', linewidth=4)
+#         fig,ax = plt.subplots()
+#         ax.plot(fpr["micro"], tpr["micro"],
+#                 label='micro-average ROC curve (area = {0:0.2f})'
+#                     ''.format(roc_auc["micro"]),
+#                 color='deeppink', linestyle=':', linewidth=4)
 
-        ax.plot(fpr["macro"], tpr["macro"],
-                label='macro-average ROC curve (area = {0:0.2f})'
-                    ''.format(roc_auc["macro"]),
-                color='navy', linestyle=':', linewidth=4)
+#         ax.plot(fpr["macro"], tpr["macro"],
+#                 label='macro-average ROC curve (area = {0:0.2f})'
+#                     ''.format(roc_auc["macro"]),
+#                 color='navy', linestyle=':', linewidth=4)
 
-        colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
-        for i, color in zip(range(n_labels), colors):
-            ax.plot(fpr[i], tpr[i], color=color, lw=lw,
-                    label='ROC curve of class {0} (area = {1:0.2f})'
-                    ''.format(encoding_dict[i], roc_auc[i]))
+#         colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
+#         for i, color in zip(range(n_labels), colors):
+#             ax.plot(fpr[i], tpr[i], color=color, lw=lw,
+#                     label='ROC curve of class {0} (area = {1:0.2f})'
+#                     ''.format(encoding_dict[i], roc_auc[i]))
 
-        ax.plot([0, 1], [0, 1], 'k--', lw=lw)
-        ax.set_xlim([0.0, 1.0])
-        ax.set_ylim([0.0, 1.05])
-        ax.set_xlabel('False Positive Rate',fontsize = fontsize)
-        ax.set_ylabel('True Positive Rate',fontsize = fontsize)
-        ax.set_title('ROC multi-class',fontsize = fontsize)
-        ax.legend(loc="lower right",fontsize = fontsize)
-        ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-        ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-        #plt.show()
-        return fig,auc_value
+#         ax.plot([0, 1], [0, 1], 'k--', lw=lw)
+#         ax.set_xlim([0.0, 1.0])
+#         ax.set_ylim([0.0, 1.05])
+#         ax.set_xlabel('False Positive Rate',fontsize = fontsize)
+#         ax.set_ylabel('True Positive Rate',fontsize = fontsize)
+#         ax.set_title('ROC multi-class',fontsize = fontsize)
+#         ax.legend(loc="lower right",fontsize = fontsize)
+#         ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+#         ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+#         #plt.show()
+#         return fig,auc_value
     
 
 def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,encoding_dict):
     
-    examples_path = os.path.join(split_path,'XAI')
-    check_path(examples_path)
-
-    n_tp = 0
-    n_tn = 0
-    n_fp = 0
-    n_fn = 0
+    XAI_path = os.path.join(split_path,'XAI')
+    create_dir(XAI_path)
 
     N = 20
     n_correct = 0
@@ -597,20 +590,16 @@ def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,e
                 ])
 
             heatmap_layer = model.net.layer4[2].conv2
-            #print(heatmap_layer)
-            image_interpretable = grad_cam(model, image, heatmap_layer, transform,device)
+            image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
+
 
             fig,ax = plt.subplots(1,2,figsize=(20,20))
-
             ax[0].imshow(image)
-            #ax[0].set_title('input',fontsize=25)
             ax[0].axis('off')
-
             ax[1].imshow(image_interpretable)
-            #ax[1].set_title('input',fontsize=25)
             ax[1].axis('off')
-            
-            plt.savefig(os.path.join(examples_path,fname))
+            plt.savefig(os.path.join(XAI_path,fname))
+
         else:
             continue
 

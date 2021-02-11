@@ -1,7 +1,6 @@
 from notebook_env import *
 
 from ds_utils import *
-from data_wrangling import *
 from torch_utils import *
 from imgaug import augmenters as iaa
 
@@ -9,11 +8,7 @@ if __name__ == '__main__':
 
     root_results_path = '/home/jcejudo/rd-img-classification-pilot/results'
 
-    # data_path = '/projects/sortifier/interim/bite_pan_other_training_data'
-    # root_results_path = '/projects/sortifier/bite_pan_other_results'
-
-    experiment_name = 'sample'
-
+    experiment_name = 'testing'
     learning_rate = 0.00001
     epochs = 1
     model_name = 'resnet34'
@@ -23,9 +18,9 @@ if __name__ == '__main__':
     weighted_loss = True
     img_aug = None
     
-    check_path(root_results_path)
+    create_dir(root_results_path)
     results_path = os.path.join(root_results_path,experiment_name)
-    check_path(results_path)
+    create_dir(results_path)
 
 
     data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/ec'
@@ -36,10 +31,7 @@ if __name__ == '__main__':
 
     df = pd.concat((ec_df,getty_df))
 
-    #df = df.sample(frac=0.1)
-
-
-
+    df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values
@@ -72,10 +64,7 @@ if __name__ == '__main__':
         net = build_model(model_name,device, multi_gpu, output_size = len(encoding_dict))
         
         #set optimizer
-        if optimizer_name == 'SGD':
-            optimizer = optim.SGD(net.parameters(), lr=learning_rate, momentum=0.9)
-        elif optimizer_name == 'Adam':
-            optimizer = optim.Adam(net.parameters(), lr=learning_rate)
+        optimizer = optim.Adam(net.parameters(), lr=learning_rate)
         #set loss
         if weighted_loss:
             loss_function = nn.CrossEntropyLoss(reduction ='sum',weight=torch.FloatTensor(weights).to(device))           

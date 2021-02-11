@@ -1,29 +1,3 @@
-Percentage of images in each category:
-
-archaeological_site: 5.20666 %
-building: 5.68975 %
-ceramics: 5.04563 %
-clothing: 5.36769 %
-costume_accessories: 5.0993 %
-drawing: 5.42136 %
-furniture: 5.47504 %
-inscription: 2.30811 %
-jewellery: 4.88459 %
-map: 4.72356 %
-painting: 6.22652 %
-photograph: 5.74342 %
-postcard: 5.52872 %
-sculpture: 5.42136 %
-specimen: 5.31401 %
-tapestry: 1.77134 %
-textile: 5.47504 %
-toy: 5.68975 %
-weaponry: 4.50886 %
-woodwork: 5.0993 %
-Weights: [19.20618556701031, 17.57547169811321, 19.819148936170212, 18.63, 19.610526315789475, 18.445544554455445, 18.264705882352942, 43.325581395348834, 20.47252747252747, 21.170454545454547, 16.060344827586206, 17.411214953271028, 18.0873786407767, 18.445544554455445, 18.818181818181817, 56.45454545454545, 18.264705882352942, 17.57547169811321, 22.178571428571427, 19.610526315789475]
-
-
-
 split 0
 
 size train: 1508
@@ -34,10 +8,10 @@ Using a single device
 Building model resnet34
 Training for 1 epochs 
 
-[1,    23] loss: 58.026 validation loss: 45.338 acc: 0.188 f1: 0.125 precision: 0.116 recall: 0.184
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/sample/split_0/checkpoint.pth
+[1,    23] loss: 67.714 validation loss: 52.924 acc: 0.156 f1: 0.055 precision: 0.037 recall: 0.131
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
 
-training finished, it took 0.23914313316345215 minutes
+training finished, it took 0.2083797772725423 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
@@ -45,35 +19,179 @@ training finished, it took 0.23914313316345215 minutes
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
 /home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.21875
-f1_test: 0.17123785020011437
-precision_test: 0.18934633301481124
-recall_test: 0.22817460317460317
-sensitivity_test: 0.22817460317460317
-specificity_test: 0.9585791913917567
-loss_test: 41.307656354445186
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/cbook/__init__.py:682: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
+  x = np.array(x, subok=True, copy=copy)
+Traceback (most recent call last):
+  File "train.py", line 112, in <module>
+    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 609, in save_XAI
+    ax[1].imshow(image_interpretable)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/__init__.py", line 1447, in inner
+    return func(ax, *map(sanitize_sequence, args), **kwargs)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/axes/_axes.py", line 5523, in imshow
+    im.set_data(X)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 702, in set_data
+    raise TypeError("Image data of dtype {} cannot be converted to "
+TypeError: Image data of dtype object cannot be converted to float
+split 0
+
+size train: 1508
+size val: 168
+size test: 187
+Using a single device 
+
+Building model resnet34
+Training for 1 epochs 
+
+[1,    23] loss: 67.202 validation loss: 50.457 acc: 0.266 f1: 0.176 precision: 0.178 recall: 0.269
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
+
+training finished, it took 0.20885566075642903 minutes
+
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+TypeError: only size-1 arrays can be converted to Python scalars
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "train.py", line 112, in <module>
+    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 607, in save_XAI
+    ax[1].imshow(np.array(image_interpretable,dtype=float))
+ValueError: setting an array element with a sequence.
+split 0
+
+size train: 1508
+size val: 168
+size test: 187
+Using a single device 
+
+Building model resnet34
+Training for 1 epochs 
+
+[1,    23] loss: 67.900 validation loss: 54.542 acc: 0.125 f1: 0.082 precision: 0.160 recall: 0.124
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
+
+training finished, it took 0.19802997509638467 minutes
+
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+Traceback (most recent call last):
+  File "train.py", line 112, in <module>
+    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 607, in save_XAI
+    ax[1].imshow(image_interpretable.astype(float))
+AttributeError: 'tuple' object has no attribute 'astype'
+split 0
+
+size train: 1508
+size val: 168
+size test: 187
+Using a single device 
+
+Building model resnet34
+Training for 1 epochs 
+
+[1,    23] loss: 67.978 validation loss: 55.266 acc: 0.195 f1: 0.135 precision: 0.146 recall: 0.205
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
+
+training finished, it took 0.20060874223709108 minutes
+
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+Traceback (most recent call last):
+  File "train.py", line 112, in <module>
+    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 599, in save_XAI
+    image_interpretable,pred = grad_cam(model, image, heatmap_layer, transform,device)
+ValueError: too many values to unpack (expected 2)
+split 0
+
+size train: 1508
+size val: 168
+size test: 187
+Using a single device 
+
+Building model resnet34
+Training for 1 epochs 
+
+[1,    23] loss: 66.293 validation loss: 50.546 acc: 0.250 f1: 0.159 precision: 0.175 recall: 0.239
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
+
+training finished, it took 0.23321853478749593 minutes
+
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
+acc_test: 0.2109375
+f1_test: 0.13996503496503496
+precision_test: 0.13718644509085684
+recall_test: 0.20839285714285713
+sensitivity_test: 0.20839285714285713
+specificity_test: 0.9586315057643521
+loss_test: 47.112163686497325
 confusion_matrix_test 
 
-[[2 0 0 0 0 3 0 0 1 0 0 1 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 3 0 0 0 1 0 1 0 0 0 0 0 0 0 0]
- [0 0 4 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0]
- [1 0 0 1 0 0 0 1 0 0 0 2 0 0 0 0 0 0 0 0]
- [1 0 1 0 0 0 1 1 0 0 0 2 0 0 1 0 0 0 0 0]
- [0 0 0 0 0 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 1 3 0 1 0 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 2 0 0 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 1 0 0 5 0 0 3 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 2 1 0 0 0 0 0 1 0 0 0 0 0 0 0]
- [0 0 0 0 0 3 2 0 0 0 0 1 0 0 1 0 0 0 0 0]
- [0 0 0 0 0 3 4 0 0 0 0 2 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 3 0 0 0 0 0 3 0 1 0 0 0 0 0 0]
- [1 0 0 0 0 3 1 0 1 1 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 4 0 0 0 0 0 0 0 0 2 0 0 0 0 0]
- [1 0 0 0 0 2 1 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 2 1 2 0 0 2 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 4 0 0 2 1 0 2 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 4 0 0 1 0 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 3 1 0 0 0 0 2 0 0 0 0 0 0 0 0]]
+[[1 0 2 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 3]
+ [0 0 1 0 0 1 1 0 0 2 0 3 0 0 0 0 0 1 0 1]
+ [0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 4 0 1 0 0 1 0 0 1 0 0]
+ [0 0 0 0 1 0 0 0 0 1 0 1 0 0 1 0 0 0 0 2]
+ [0 0 2 0 0 5 1 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 1 0 0 4 0 0 0 0 1 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 2 0 0 0 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1 0 4 0 0 0 0 0 1 0 1]
+ [0 0 0 0 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1]
+ [1 0 2 0 0 1 0 0 0 4 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 4 0 1 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 1 0 0 0 2 0 3 0 0 0 0 0 1 0 2]
+ [0 0 0 0 0 0 1 0 0 2 0 2 0 0 0 0 0 0 0 2]
+ [0 0 2 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0]
+ [0 0 0 0 1 0 1 0 0 2 0 1 0 0 0 0 0 1 0 3]
+ [1 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 1]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 7]]
 split 1
 
 size train: 1508
@@ -86,52 +204,52 @@ Training for 1 epochs
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:603: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:601: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
   fig,ax = plt.subplots(1,2,figsize=(20,20))
-[1,    23] loss: 57.962 validation loss: 45.030 acc: 0.164 f1: 0.127 precision: 0.129 recall: 0.195
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/sample/split_1/checkpoint.pth
+[1,    23] loss: 67.098 validation loss: 53.935 acc: 0.164 f1: 0.102 precision: 0.096 recall: 0.146
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_1/checkpoint.pth
 
-training finished, it took 0.21740748087565104 minutes
+training finished, it took 0.21714588801066081 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.171875
-f1_test: 0.11822049973835688
-precision_test: 0.10822259136212624
-recall_test: 0.21547619047619046
-sensitivity_test: 0.21547619047619046
-specificity_test: 0.9566530672497058
-loss_test: 40.77539584725936
+acc_test: 0.2421875
+f1_test: 0.17197438224207734
+precision_test: 0.16365291571173926
+recall_test: 0.22130952380952382
+sensitivity_test: 0.22130952380952382
+specificity_test: 0.9600307236061358
+loss_test: 48.312849891377006
 confusion_matrix_test 
 
-[[4 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0]
- [3 0 0 0 0 1 3 0 0 0 0 0 0 1 0 0 1 0 0 0]
- [0 0 3 0 0 1 0 1 0 0 0 0 0 0 0 0 1 0 0 0]
- [1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 7 0 0 0]
- [3 0 0 0 0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [5 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0]
- [3 0 0 0 0 0 0 0 4 0 0 0 0 0 1 0 0 0 0 0]
- [1 0 0 0 0 2 0 2 0 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 3 0 0 0 0 0 0 0 0 1 0 1 0 0 0]
- [4 0 0 0 0 2 0 1 0 0 0 0 0 0 0 0 1 0 0 0]
- [1 0 0 0 0 4 0 2 0 0 0 0 0 0 0 0 0 0 0 0]
- [5 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0]
- [3 0 0 0 0 0 0 0 2 0 0 0 0 0 1 0 0 0 1 0]
- [1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 1 0 0 0]
- [2 0 0 0 0 0 0 1 0 0 0 0 0 0 2 0 1 0 0 0]
- [3 0 0 0 0 2 0 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 3 0]
- [1 0 1 0 0 2 0 0 1 0 0 0 0 0 0 0 0 0 2 0]]
+[[3 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0]
+ [1 4 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 7 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 1 0 0 0 3 0 0 0 0 0 0 1 0 0 1 0]
+ [0 0 0 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 0 0 0 0 1 1 0 0 0 3 0 0 0 1 0 0]
+ [0 0 2 0 0 0 0 0 2 0 0 0 0 0 0 3 0 0 0 0]
+ [0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0]
+ [0 0 0 0 1 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 5 0 1 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
+ [0 2 0 0 0 0 0 0 2 0 0 2 0 0 0 0 1 1 1 0]
+ [1 0 0 0 0 0 0 2 2 1 0 1 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0]
+ [1 0 0 0 1 0 0 0 2 0 0 1 0 0 0 0 0 0 1 0]
+ [0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 2 0 1 1 0]
+ [0 0 0 0 1 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 3 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0]]
 split 2
 
 size train: 1508
@@ -144,50 +262,50 @@ Training for 1 epochs
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-[1,    23] loss: 58.139 validation loss: 44.858 acc: 0.227 f1: 0.166 precision: 0.170 recall: 0.224
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/sample/split_2/checkpoint.pth
+[1,    23] loss: 66.582 validation loss: 51.850 acc: 0.250 f1: 0.168 precision: 0.167 recall: 0.237
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_2/checkpoint.pth
 
-training finished, it took 0.22311846415201822 minutes
+training finished, it took 0.22147886355717977 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.1171875
-f1_test: 0.09624861090378331
-precision_test: 0.08632723112128146
-recall_test: 0.15936507936507935
-sensitivity_test: 0.15936507936507935
-specificity_test: 0.9535714976303928
-loss_test: 40.81288644719251
+acc_test: 0.3125
+f1_test: 0.22920746933931518
+precision_test: 0.2416666666666667
+recall_test: 0.3031150793650793
+sensitivity_test: 0.3031150793650793
+specificity_test: 0.9636970426347189
+loss_test: 44.44192717037099
 confusion_matrix_test 
 
-[[2 0 0 0 2 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [3 1 0 0 0 2 0 0 0 0 0 0 0 0 0 0 1 0 0 0]
- [2 0 0 0 0 0 0 0 0 3 0 1 0 0 0 0 0 0 0 0]
- [1 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0]
- [0 0 0 0 1 2 0 0 0 1 0 0 0 0 0 0 2 0 3 0]
- [2 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 3 0 0 0 3 0 0 0 0 0 0 1 0 0 0]
- [0 0 0 0 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 0]
- [2 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0]
- [1 0 0 0 2 1 0 0 0 2 0 0 0 0 0 0 0 0 0 0]
- [3 0 0 0 0 3 0 0 0 1 0 0 0 0 0 0 0 0 0 0]
- [5 1 0 0 0 1 0 0 0 1 0 0 0 0 0 0 1 0 0 0]
- [3 0 0 0 1 1 0 0 0 1 0 0 0 0 0 2 0 0 0 0]
- [4 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0]
- [6 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0]
- [0 0 0 0 3 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 5 0 0 0 0 1 0 0 0 0 0 0 2 0 1 0]
- [1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0]
- [2 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 3 0 0 0]]
+[[0 0 0 0 0 2 0 0 0 1 1 0 0 1 1 0 0 0 1 0]
+ [0 0 0 0 0 0 0 0 0 1 2 0 0 1 0 1 0 0 2 0]
+ [0 0 3 0 0 0 0 0 0 0 2 0 0 0 0 0 1 0 1 0]
+ [0 0 0 4 0 0 0 0 0 0 0 0 0 1 0 1 1 0 0 0]
+ [0 0 0 0 0 1 0 1 0 0 1 0 0 2 1 1 0 0 1 0]
+ [0 0 0 0 0 7 0 0 0 0 1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 4 0 0 1 1 0 0 2 0 1 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 1 0 0 3 0 0 0 0 2 0 0 1 0 0 1 0 0 0]
+ [0 0 0 0 0 1 1 0 0 1 2 0 0 0 0 0 0 0 2 0]
+ [0 0 0 0 0 2 0 0 0 0 6 0 0 1 0 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0 5 0 0 0 2 0 1 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0 2 0 0 0 3 1 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 1 0 0 4 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0]
+ [0 0 0 2 0 0 0 1 0 1 1 0 0 1 1 0 0 0 0 0]
+ [0 0 0 0 0 1 0 0 0 1 1 0 0 2 0 0 0 0 1 0]
+ [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0]
+ [0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1]]
 split 3
 
 size train: 1509
@@ -200,243 +318,60 @@ Training for 1 epochs
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-[1,    23] loss: 58.175 validation loss: 45.579 acc: 0.156 f1: 0.092 precision: 0.086 recall: 0.152
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/sample/split_3/checkpoint.pth
+[1,    23] loss: 66.818 validation loss: 52.359 acc: 0.156 f1: 0.064 precision: 0.046 recall: 0.136
+checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_3/checkpoint.pth
 
-training finished, it took 0.20565162499745687 minutes
+training finished, it took 0.23759289185206095 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.1640625
-f1_test: 0.12527736152736152
-precision_test: 0.17615348399246705
-recall_test: 0.1775
-sensitivity_test: 0.1775
-specificity_test: 0.9559770582125277
-loss_test: 41.20359490507393
-confusion_matrix_test 
-
-[[0 0 0 0 0 0 3 0 4 0 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 3 0 3 0 2 0 0 0 0 0 0 0 0 1]
- [1 0 1 1 0 0 1 0 1 0 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 6 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 2 0 0 1 0 2 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 1 0 0 2 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 2 0 0 0 0 3 0 0 1 0 0 0 0 0 0 0 0]
- [0 0 0 1 0 0 3 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 1 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 1 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 1]
- [0 0 0 0 0 0 2 0 4 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 1 0 0 0 0 2 0 1 0 0 0 0 0 0 0 0 0]
- [0 0 0 4 0 0 2 0 2 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0 0 0]
- [1 0 0 1 0 0 2 0 4 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 2 0 0 1 0 6 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0]
- [0 0 0 0 0 0 0 0 6 0 0 1 0 0 0 0 0 0 0 0]]
-split 4
-
-size train: 1509
-size val: 168
-size test: 186
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-[1,    23] loss: 58.284 validation loss: 45.946 acc: 0.203 f1: 0.174 precision: 0.172 recall: 0.220
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/sample/split_4/checkpoint.pth
-
-training finished, it took 0.2159854809443156 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.234375
-f1_test: 0.19400660742766004
-precision_test: 0.21115612648221344
-recall_test: 0.2567063492063492
-sensitivity_test: 0.2567063492063492
-specificity_test: 0.9593133032854798
-loss_test: 40.766409925235216
-confusion_matrix_test 
-
-[[1 0 0 0 1 0 0 0 0 4 0 0 0 3 1 0 0 0 0 0]
- [1 0 0 0 0 0 0 0 0 0 1 0 0 6 0 0 0 0 0 0]
- [0 1 0 0 1 0 0 0 1 0 4 0 0 1 0 0 0 0 0 0]
- [0 0 0 1 1 0 0 1 0 0 0 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 2 0 0 0 2 1 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 4 0 0 0 0 1 0 0 0 0 0]
- [0 0 0 0 1 0 1 0 0 0 0 0 0 2 1 0 0 0 0 0]
- [0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 1 0 0 1 0 0 0 0 0 3 0 0 1 0 0 0]
- [0 0 0 0 0 0 0 0 0 5 0 1 0 1 0 0 0 0 0 0]
- [0 0 0 0 1 0 0 0 0 2 2 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 1 0 0 0 2 0 0 0 0 0 0]
- [1 0 0 0 1 0 0 0 0 1 2 0 0 2 0 1 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 1 0 8 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 1 0 0 0 0 5 0 0 1 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0]
- [1 0 0 0 0 0 0 0 0 1 1 1 0 2 1 0 0 0 0 0]
- [0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 3 0 0]
- [0 0 2 0 0 0 0 0 0 0 0 0 0 4 1 0 0 1 0 0]
- [0 0 0 0 0 0 1 0 0 2 1 0 0 3 0 0 0 0 0 0]]
-split 5
-
-size train: 1509
-size val: 168
-size test: 186
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-[1,    23] loss: 57.838 validation loss: 46.042 acc: 0.188 f1: 0.142 precision: 0.135 recall: 0.184
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/sample/split_5/checkpoint.pth
-
-training finished, it took 0.21534435749053954 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.2421875
-f1_test: 0.17990168636395049
-precision_test: 0.15911663216011043
-recall_test: 0.239265873015873
-sensitivity_test: 0.239265873015873
-specificity_test: 0.9598539292425718
-loss_test: 41.01282132056452
-confusion_matrix_test 
-
-[[0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 4 0 0]
- [0 5 0 0 0 0 0 0 0 0 0 0 2 1 0 0 0 1 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 6 0 0]
- [0 0 0 4 0 0 0 0 0 0 0 1 0 0 0 0 0 2 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 5 0 0]
- [0 1 0 0 1 3 0 0 0 0 0 0 0 0 1 0 0 2 0 0]
- [0 2 0 0 1 0 0 0 0 0 2 3 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 4 0 0 1 0 0 0 0 0 0 0 0 0]
- [0 0 0 1 0 0 0 0 0 1 1 1 0 0 0 0 0 3 0 0]
- [0 3 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 2 0 0]
- [0 1 0 0 0 2 0 0 0 0 2 2 1 0 0 0 0 2 0 0]
- [0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 1 1 0 0]
- [0 0 0 0 0 0 0 0 0 0 3 0 2 0 0 0 0 1 0 0]
- [0 2 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 1 0 0 0]
- [0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0]
- [0 1 0 2 0 1 0 0 0 0 0 0 0 0 1 0 0 2 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0]
- [0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0]
- [0 0 0 0 0 2 0 0 0 0 0 1 0 0 0 0 1 2 0 0]]
-split 6
-
-size train: 1509
-size val: 168
-size test: 186
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-[1,    23] loss: 58.182 validation loss: 44.908 acc: 0.188 f1: 0.159 precision: 0.178 recall: 0.198
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/sample/split_6/checkpoint.pth
-
-training finished, it took 0.2142020066579183 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.171875
-f1_test: 0.16689333240574383
-precision_test: 0.18388781030290463
-recall_test: 0.20803571428571427
-sensitivity_test: 0.20803571428571427
-specificity_test: 0.9564819277567566
-loss_test: 40.62340914818548
-confusion_matrix_test 
-
-[[0 3 1 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 1 4 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]
- [0 2 0 0 2 0 0 0 0 1 0 0 0 1 0 0 1 0 0 1]
- [0 1 1 0 2 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0]
- [0 2 0 1 0 0 0 0 0 0 0 0 2 1 0 0 0 0 0 0]
- [0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]
- [0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 1 2 0 3 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0]
- [0 7 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]
- [0 2 0 0 3 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
- [0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 1]
- [0 2 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]
- [0 4 0 0 3 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]
- [0 3 1 0 1 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0]
- [0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 3 0 0 1 0 0 0 0 0 0 0 0 2 0 0 1 0 0 0]
- [0 1 1 0 2 0 0 0 0 0 0 0 0 2 1 0 0 0 0 1]
- [0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 1]
- [0 2 0 0 2 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1]]
-split 7
-
-size train: 1509
-size val: 168
-size test: 186
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
 Traceback (most recent call last):
-  File "train.py", line 93, in <module>
-    net, history = train(
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 324, in train
-    optimizer.step()
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/autograd/grad_mode.py", line 26, in decorate_context
-    return func(*args, **kwargs)
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/optim/adam.py", line 108, in step
-    F.adam(params_with_grad,
-  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/optim/functional.py", line 98, in adam
-    param.addcdiv_(exp_avg, denom, value=-step_size)
+  File "train.py", line 112, in <module>
+    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 611, in save_XAI
+    plt.savefig(os.path.join(examples_path,fname))
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/pyplot.py", line 860, in savefig
+    fig.canvas.draw_idle()   # need this if 'transparent=True' to reset colors
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/backend_bases.py", line 2012, in draw_idle
+    self.draw(*args, **kwargs)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/backends/backend_agg.py", line 407, in draw
+    self.figure.draw(self.renderer)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/artist.py", line 41, in draw_wrapper
+    return draw(artist, renderer, *args, **kwargs)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/figure.py", line 1863, in draw
+    mimage._draw_list_compositing_images(
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 131, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/artist.py", line 41, in draw_wrapper
+    return draw(artist, renderer, *args, **kwargs)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/cbook/deprecation.py", line 411, in wrapper
+    return func(*inner_args, **inner_kwargs)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/axes/_base.py", line 2747, in draw
+    mimage._draw_list_compositing_images(renderer, self, artists)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 131, in _draw_list_compositing_images
+    a.draw(renderer)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/artist.py", line 41, in draw_wrapper
+    return draw(artist, renderer, *args, **kwargs)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 643, in draw
+    im, l, b, trans = self.make_image(
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 928, in make_image
+    return self._make_image(self._A, bbox, transformed_bbox, clip,
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 550, in _make_image
+    A = _rgb_to_rgba(A)
+  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 207, in _rgb_to_rgba
+    rgba[:, :, :3] = A
 KeyboardInterrupt

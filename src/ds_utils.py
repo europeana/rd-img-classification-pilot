@@ -1,12 +1,19 @@
 from notebook_env import *
-from data_wrangling import *
 import models
 import time
 import sklearn
 import torch
 import datetime
 
+import os
+import pandas as pd
+
 #to do: document
+
+def create_dir(path):
+    if not os.path.exists(path):
+        os.mkdir(path)
+        
 
 
 
@@ -23,9 +30,9 @@ def path2DataFrame(data_dir):
         
     return pd.DataFrame({'file_path':img_path_list,'category':img_category_list})
 
-def path2DataFrame_unlabeled(data_dir):
-    img_path_list = [os.path.join(data_dir,filename) for filename in os.listdir(data_dir)]
-    return pd.DataFrame({'file_path':img_path_list})
+# def path2DataFrame_unlabeled(data_dir):
+#     img_path_list = [os.path.join(data_dir,filename) for filename in os.listdir(data_dir)]
+#     return pd.DataFrame({'file_path':img_path_list})
 
 def drop_categories_df(df,categories):
     """categories can be str or list of str"""
@@ -39,27 +46,21 @@ def drop_categories_df(df,categories):
     df_.index = np.arange(df_.shape[0])
     return df_
 
-def downsample_df(df, cat_name, size):
-
-    rem_df = df.loc[df['category'].map(lambda x: x != cat_name)]
-    cat_df = df.loc[df['category'].map(lambda x: x == cat_name)]
-    cat_df = cat_df.iloc[np.random.randint(0,cat_df.shape[0],size)]
-    df = pd.concat((rem_df,cat_df))
-    return df
+# def downsample_df(df, cat_name, size):
+#     rem_df = df.loc[df['category'].map(lambda x: x != cat_name)]
+#     cat_df = df.loc[df['category'].map(lambda x: x == cat_name)]
+#     cat_df = cat_df.iloc[np.random.randint(0,cat_df.shape[0],size)]
+#     df = pd.concat((rem_df,cat_df))
+#     return df
 
 def get_class_weights(y_encoded,encoding_dict):
     """Calculates the weights for the Cross Entropy loss """
     data_dict = get_imgs_per_cat(y_encoded)       
     N = sum(data_dict.values())
-    print('Percentage of images in each category:\n')              
     #calculate weights as the inverse of the frequency of each class
     weights = []
-    for k in range(len(data_dict)):
-        v = data_dict[k]
-        weights.append(N/v)
-        print('{}: {:.6g} %'.format(encoding_dict[k],100.0*v/N))    
-    print('Weights: {}\n'.format(weights))
-    print('\n')      
+    for k in data_dict.keys(): 
+        weights.append(N/data_dict[k])
     return weights
 
 def get_imgs_per_cat(y_encoded):
@@ -79,11 +80,10 @@ def label_encoding(y):
     for cat in le.classes_:
         label = le.transform(np.array([cat]))[0]
         encoding_dict.update({int(label):cat}) 
-
     return y_encoded, encoding_dict
 
-def time_stamp():
-    return str(datetime.datetime.now()).replace(' ','_')[:-7]
+# def time_stamp():
+#     return str(datetime.datetime.now()).replace(' ','_')[:-7]
 
 class Experiment():
     def __init__(self):
@@ -99,9 +99,6 @@ class Experiment():
             print(f'{k}: {v}\n')
 
     def save(self,dest_path):
-
-        # ts = time_stamp()
-        # experiment_id = ts.replace('-','').replace(':','')
         filename = 'training_info.pth'
         info_file_path = os.path.join(dest_path,filename)
         torch.save(self.info, info_file_path)
@@ -117,9 +114,7 @@ def save_experiment(**kwargs):
     learning_rate = kwargs.get('learning_rate',None)
     trainloader = kwargs.get('trainloader',None)
     testloader = kwargs.get('testloader',None)
-
     execution_path = kwargs.get('execution_path',None)
-
     experiment_id = kwargs.get('experiment_id',None)
 
     if not experiment_id:
@@ -160,19 +155,6 @@ def save_experiment(**kwargs):
     print(info_file_path)
     torch.save(data_dict, info_file_path)
     
-
-
-
-    # 'img_aug': self.img_aug,
-
-    # info_file_path = os.path.join(experiment_path,f'training_info_{experiment_id}.json')
-    # with open(info_file_path,'w') as f:
-    #     json.dump(data_dict,f)
-
-
-    #train and test data
-    #metrics: accuracy, confusion matrix
-
     return 
 
 
