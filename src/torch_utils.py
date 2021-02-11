@@ -278,7 +278,7 @@ def train(**kwargs):
     return model, history
 
 
-def validate_test(net,testloader,device,loss_function,encoding_dict):
+def validate_test(model,testloader,device,loss_function,encoding_dict):
     """Returns metrics of predictions on test data"""
 
     n_labels = len(list(set(testloader.dataset.y)))
@@ -290,7 +290,7 @@ def validate_test(net,testloader,device,loss_function,encoding_dict):
         for i,(images, labels) in enumerate(testloader):
             labels = torch.from_numpy(np.array(labels))
             images, labels = images.to(device), labels.to(device)
-            outputs = net(images)
+            outputs = model(images)
             probabilities, predicted = torch.max(outputs.data, 1)
             loss += loss_function(outputs, labels.long()).item()
 
@@ -323,7 +323,7 @@ def validate_test(net,testloader,device,loss_function,encoding_dict):
 
   
 
-def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,encoding_dict):
+def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict):
     
     XAI_path = os.path.join(split_path,'XAI')
     create_dir(XAI_path)
@@ -332,29 +332,21 @@ def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,e
     n_correct = 0
     n_incorrect = 0
     save = True
-    for img_path,ground,pred in zip(X_test,ground_truth_list,predictions_list):
-
-        fname = os.path.split(img_path)[1]
+    for img_path,ground,pred in zip(test_image_list,ground_truth_list,predictions_list):
+        
+        #get an equal amount of correctly classified and missclassifications
         if ground == pred:
             label = f'correct_{encoding_dict[ground.item()]}'
             n_correct += 1
             if n_correct > N:
                 save = False
-
         else:
             label = f'true_{encoding_dict[ground.item()]}_pred_{encoding_dict[pred.item()]}'
             n_incorrect += 1
             if n_incorrect > N:
                 save = False
 
-
         if save:
-
-
-            fname = '_'.join((label,fname))
-
-            #load img
-            image = Image.open(img_path).convert('RGB')
 
             transform = transforms.Compose([
             transforms.Resize((224,224)),
@@ -362,10 +354,15 @@ def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,e
             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
                 ])
 
+            #load img
+            image = Image.open(img_path).convert('RGB')
+            #layer for the visualization
             heatmap_layer = model.net.layer4[2].conv2
+            #apply gradcam
             image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
-
-
+            #save XAI
+            fname = os.path.split(img_path)[1]
+            fname = '_'.join((label,fname))
             fig,ax = plt.subplots(1,2,figsize=(20,20))
             ax[0].imshow(image)
             ax[0].axis('off')

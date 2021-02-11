@@ -96,54 +96,40 @@ if __name__ == '__main__':
 
         metrics_dict, ground_truth_list, predictions_list = validate_test(model,testloader,device,loss_function,encoding_dict)
 
-        acc_test = metrics_dict['accuracy']
-        f1_test = metrics_dict['f1']
-        precision_test = metrics_dict['precision']
-        recall_test = metrics_dict['recall']
-        sensitivity_test = metrics_dict['sensitivity']
-        specificity_test = metrics_dict['specificity']
-        confusion_matrix_test = metrics_dict['confusion_matrix']
-        loss_test = metrics_dict['loss']
 
         #generate heatmaps using GradCAM for some test images
-        save_XAI(model,testloader.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+        test_image_list = testloader.dataset.X
+        save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict)
 
-        print(f'acc_test: {acc_test}')
-        print(f'f1_test: {f1_test}')
-        print(f'precision_test: {precision_test}')
-        print(f'recall_test: {recall_test}')
-        print(f'sensitivity_test: {sensitivity_test}')
-        print(f'specificity_test: {specificity_test}')
-        print(f'loss_test: {loss_test}')
-        print('confusion_matrix_test \n')
-        print(confusion_matrix_test)
+        
+        for k,v in metrics_dict.items():
+            print(f'{k}_test: {v}')
+
         
         experiment = Experiment()
         experiment.add('learning_rate',learning_rate)
         experiment.add('optimizer',optimizer)
         experiment.add('loss_function',loss_function)
 
+        experiment.add('batch_size',batch_size)
+        experiment.add('num_workers',num_workers)
+
         experiment.add('epochs',epochs)
         experiment.add('encoding_dict',encoding_dict)
         experiment.add('weights',weights)
+
         experiment.add('model',model)
-
-        experiment.add('resnet_size',resnet_size)
-
         experiment.add('optimizer',optimizer)
         experiment.add('loss_function',loss_function)
-        experiment.add('batch_size',batch_size)
-        experiment.add('num_workers',num_workers)
-        experiment.add('acc_test',acc_test)
-        experiment.add('loss_test',loss_test)
-        experiment.add('f1_test',f1_test)
-        experiment.add('precision_test',precision_test)
-        experiment.add('recall_test',recall_test)
-        experiment.add('sensitivity_test',sensitivity_test)
-        experiment.add('specificity_test',specificity_test)
-        experiment.add('confusion_matrix_test',confusion_matrix_test)
+        experiment.add('resnet_size',resnet_size)
+
+
+        for k,v in metrics_dict.items():
+            experiment.add(f'{k}_test',v)
+
         for k,v in history.items():
             experiment.add(k,v)
+
         experiment.save(split_path)
         
 
