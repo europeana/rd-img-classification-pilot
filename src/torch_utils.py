@@ -1,12 +1,12 @@
 from notebook_env import *
 from ds_utils import *
-from data_wrangling import *
 import models
 import torch
 from PIL import Image
 import time
 from torch.utils.data import Dataset
 import imblearn
+import sklearn
 from sklearn.preprocessing import label_binarize
 from itertools import cycle
 from sklearn.metrics import roc_curve, auc
@@ -51,10 +51,8 @@ class TrainingDataset(Dataset):
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        img_path = self.X[idx]
-        img = Image.open(img_path).convert('RGB')
-        label = self.y[idx]
-                
+        img, label = Image.open(self.X[idx]), self.y[idx]
+        img = img.convert('RGB')
         if self.transform:
             img = self.transform(img)
 
@@ -85,18 +83,7 @@ class InferenceDataset(Dataset):
 
         return img,img_path
 
-def check_cuda():
-    multi_gpu = False
-    number_devices = torch.cuda.device_count()
-    if number_devices > 1:
-        multi_gpu = True
-        #to do: for more than two GPUs
-        device = torch.device('cuda:0,1')
-        print('Using {} devices \n'.format(number_devices))
-    else:
-        device = torch.device('cuda:0')
-        print('Using a single device \n')
-    return device,multi_gpu
+
 
 def prepare_dataset(**kwargs):
     
@@ -118,11 +105,11 @@ def prepare_dataset(**kwargs):
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
     ])
 
-    if y is None:
-        test_dataset = InferenceDataset(X,transform=base_transform)
-        testloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=False, num_workers=num_workers,drop_last=False)
-        trainloader = None
-        return [{'trainloader':trainloader, 'testloader':testloader}]
+    # if y is None:
+    #     test_dataset = InferenceDataset(X,transform=base_transform)
+    #     testloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,shuffle=False, num_workers=num_workers,drop_last=False)
+    #     trainloader = None
+    #     return [{'trainloader':trainloader, 'testloader':testloader}]
 
     
     if img_aug:
@@ -172,64 +159,8 @@ def prepare_dataset(**kwargs):
 
     return splits_list
     
-        
-def build_model(model_name, device, multi_gpu, output_size=None, show=False):
 
-    print(f'Building model {model_name}')
-    if model_name == "CNN":
-        net = models.ConvNet(output_size)
 
-    elif model_name.startswith("resnet"):
-        size = int(model_name.replace("resnet",""))
-        net = models.ResNet(size,output_size)
-
-    #multiprocessing model
-    if multi_gpu:
-        net = nn.DataParallel(net)
-    net = net.to(device)
-    
-    if show:
-        print(net)
-
-    return net
-
-def load_model(model_name,model_path,device,multi_gpu,output_size = None):
-    net = build_model(model_name, device, multi_gpu, output_size=output_size, show=False)
-    print(f'Loading model from {model_path}')
-    net.load_state_dict(torch.load(model_path))
-    print(f'Finished loading model {model_name}')
-    return net
-
-def get_best_model_path(training_results_path,monitor = 'val_loss',mode = 'min'):
-    """
-    monitor must be in ['train_loss','val_loss', 'val_acc',  'val_f1','val_precision', 'val_recall' ]
-    mode must be in ['min', 'max']
-    """
-    import regex as re
-    index = None
-    if mode == 'min':
-        ref_metric = 1e6
-    else:
-        ref_metric = -1e6
-    model_path_list = os.listdir(training_results_path)
-    model_path_list = [model_path for model_path in model_path_list if model_path.startswith('best')]
-    for i,_model_path in enumerate(model_path_list):
-        metrics = [float(n) for n in re.findall('\d+\.\d+',_model_path)]
-        #print(metrics)
-        metrics_dict = {'train_loss':metrics[0], 'val_loss':metrics[1],'val_acc':metrics[2],
-                        'val_f1':metrics[3],'val_precision':metrics[4],'val_recall':metrics[5]}
-
-        m = metrics_dict[monitor]
-        if mode == 'min':
-            if m < ref_metric:
-                ref_metric = m
-                model_path = _model_path
-        else:
-            if m > ref_metric:
-                ref_metric = m
-                model_path = _model_path
-                
-    return os.path.join(training_results_path,model_path)
 
 class CallBack():
     def __init__(self,**kwargs):
@@ -274,11 +205,10 @@ def train(**kwargs):
     epochs = kwargs.get('epochs',10)
     weighted_loss = kwargs.get('weighted_loss',True)
     learning_rate = kwargs.get('learning_rate',0.0001)
-    net = kwargs.get('net',None)
+    model = kwargs.get('model',None)
     loss_function = kwargs.get('loss_function',None)
     optimizer = kwargs.get('optimizer',None)
     device = kwargs.get('device',None)
-    multi_gpu = kwargs.get('multi_gpu',None)
     encoding_dict = kwargs.get('encoding_dict',None)
     model_name = kwargs.get('model_name',None)
     trainloader = kwargs.get('trainloader',None)
@@ -300,9 +230,6 @@ def train(**kwargs):
     sensitivity_test_list = []
     recall_test_list = []
     cm_test_list = []
-    auc_test_list = []
-    ppv_test_list = []
-    npv_test_list = []
         
     print(f'Training for {epochs} epochs \n')
     start_train = time.time()
@@ -316,7 +243,7 @@ def train(**kwargs):
             # zero the parameter gradients
             optimizer.zero_grad()
             #print(inputs.shape[0])
-            loss = loss_function(net(inputs), labels.long())/inputs.shape[0]
+            loss = loss_function(model(inputs), labels.long())/inputs.shape[0]
             #backpropagate and update
             loss.backward()
             optimizer.step()
@@ -327,7 +254,7 @@ def train(**kwargs):
         loss_train_list.append(train_loss)
         
         if callback.validate:
-            val_metrics_dict = validate_test(net,valloader,device,loss_function,encoding_dict)
+            val_metrics_dict = validate_test(model,valloader,device,loss_function,encoding_dict)
             
             acc_test = val_metrics_dict['accuracy']
             f1_test = val_metrics_dict['f1']
@@ -337,10 +264,6 @@ def train(**kwargs):
             specificity_test = val_metrics_dict['specificity']
             cm = val_metrics_dict['confusion_matrix']
             test_loss = val_metrics_dict['loss']
-            auc_test = val_metrics_dict['auc']
-            ppv_test = val_metrics_dict['ppv']
-            npv_test = val_metrics_dict['npv']
-            ROC_fig = val_metrics_dict['ROC_fig']
             
             #update test metrics
             loss_test_list.append(test_loss)
@@ -351,10 +274,6 @@ def train(**kwargs):
             specificity_test_list.append(specificity_test)
             sensitivity_test_list.append(sensitivity_test)
             cm_test_list.append(cm)
-            auc_test_list.append(auc_test)
-            ppv_test_list.append(ppv_test)
-            npv_test_list.append(npv_test)
-
 
             print('[%d, %5d] loss: %.3f validation loss: %.3f acc: %.3f f1: %.3f precision: %.3f recall: %.3f' %
             (epoch + 1, i + 1, train_loss,test_loss,acc_test,f1_test,precision_test,recall_test))
@@ -362,16 +281,15 @@ def train(**kwargs):
             #callback
             callback = callback.check(test_loss)
             #save best model
-            # to do: include minimal training info in the checkpoint
             if callback.save:
-                #checkpoint_filename = f'best_model_epoch_{epoch}_loss_train_{train_loss:.3f}_val_loss_{test_loss:.3f}_acc_{acc_test:.3f}_f1_{f1_test:.3f}_precision_{precision_test:.3f}_recall_{recall_test:.3f}.pth'
                 checkpoint_filename = 'checkpoint.pth'
-                best_model_path = save_checkpoint(net,experiment_path,checkpoint_filename)
+                best_model_path = save_checkpoint(model,experiment_path,checkpoint_filename)
             if callback.stop:
                 print(f'Early stopping at epoch {epoch}')
                 if callback.return_best:
                     print(f'Loading best model from {best_model_path}')
-                    net = load_model(model_name,best_model_path,device,multi_gpu,output_size = len(encoding_dict))
+                    model.load_state_dict(torch.load(best_model_path))
+
                 break
 
         else:
@@ -387,10 +305,9 @@ def train(**kwargs):
                'acc_val':acc_test_list,'confusion_matrix_val':cm_test_list,
                'f1_val':f1_test_list,'precision_val':precision_test_list,
                'recall_val':recall_test_list,'sensitivity_val':sensitivity_test_list,
-               'specificity_val':specificity_test_list,'auc_val':auc_test_list, 
-               'ppv_val':ppv_test_list,'npv_val':npv_test_list,  }
+               'specificity_val':specificity_test_list, }
 
-    return net, history
+    return model, history
 
 
 def validate_test(net,testloader,device,loss_function,encoding_dict):
@@ -416,138 +333,28 @@ def validate_test(net,testloader,device,loss_function,encoding_dict):
 
         
     acc = sklearn.metrics.accuracy_score(ground_truth_list,predictions_list)
-    if n_labels > 2:
-        f1 = sklearn.metrics.f1_score(ground_truth_list,predictions_list,average='macro')
-        precision = sklearn.metrics.precision_score(ground_truth_list,predictions_list,average='macro')
-        recall = sklearn.metrics.recall_score(ground_truth_list,predictions_list,average='macro')
-        sensitivity = imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list, average='macro')
-        specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list, average='macro')
-        cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
-        #ppv = None
-        #npv = None
-    else:
-        pass
-        # f1 = sklearn.metrics.f1_score(ground_truth_list,predictions_list)
-        # precision = sklearn.metrics.precision_score(ground_truth_list,predictions_list)
-        # recall = sklearn.metrics.recall_score(ground_truth_list,predictions_list)
-        # sensitivity = imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list)
-        # specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list)
-        # cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
-        #ppv = cm[1,1]/(cm[1,1]+cm[0,1])
-        #npv = cm[0,0]/(cm[0,0]+cm[1,0])
+    f1 = sklearn.metrics.f1_score(ground_truth_list,predictions_list,average='macro')
+    precision = sklearn.metrics.precision_score(ground_truth_list,predictions_list,average='macro')
+    recall = sklearn.metrics.recall_score(ground_truth_list,predictions_list,average='macro')
+    sensitivity = imblearn.metrics.sensitivity_score(ground_truth_list, predictions_list, average='macro')
+    specificity = imblearn.metrics.specificity_score(ground_truth_list, predictions_list, average='macro')
+    cm = sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels))
 
-    #ROC_fig,auc = compute_ROC(ground_truth_list, predictions_list,encoding_dict)
-    
-    metrics_dict = {'accuracy':acc,'f1':f1,'precision':precision, 'recall':recall,  'loss':loss,
-                    'sensitivity':sensitivity,'specificity':specificity,'confusion_matrix': cm, 
-                    'ground_truth_list':ground_truth_list,'predictions_list':predictions_list}
+    return {
+        'accuracy':acc,
+        'f1':f1,
+        'precision':precision, 
+        'recall':recall,  
+        'loss':loss,
+        'sensitivity':sensitivity,
+        'specificity':specificity,
+        'confusion_matrix': cm, 
+        'ground_truth_list':ground_truth_list,
+        'predictions_list':predictions_list}
 
-    return metrics_dict
+    #return metrics_dict
 
-# def compute_ROC(ground_truth_list, predictions_list,encoding_dict):
-#     # code adapted from https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
 
-#     n_labels = len(encoding_dict)
-#     #print(n_labels)
-
-#     ground_truth_list_binarized = label_binarize(ground_truth_list, classes=range(n_labels))
-#     predictions_list_binarized = label_binarize(predictions_list, classes=range(n_labels))
-
-#     #print(predictions_list_binarized.shape)
-
-#     if n_labels == 2:
-#         fpr = dict()
-#         tpr = dict()
-#         roc_auc = dict()
-#         fpr[0], tpr[0], _ = roc_curve(ground_truth_list_binarized, predictions_list_binarized)
-#         roc_auc[0] = auc(fpr[0], tpr[0])
-
-#         auc_value = roc_auc[0]
-
-#         fpr["micro"], tpr["micro"], _ = roc_curve(ground_truth_list_binarized.ravel(), predictions_list_binarized.ravel())
-#         roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
-
-#         fig,ax = plt.subplots(figsize = (7,7))
-#         fontsize = 20
-
-#         lw = 2
-#         ax.plot(fpr[0], tpr[0], color='darkorange',
-#                 lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[0])
-#         ax.plot([0, 1], [0, 1], 'k--', lw=lw)
-#         ax.set_xlim([0.0, 1.0])
-#         ax.set_ylim([0.0, 1.05])
-#         ax.set_xlabel('False Positive Rate',fontsize = fontsize)
-#         ax.set_ylabel('True Positive Rate',fontsize = fontsize)
-#         ax.set_title('Receiver Operating Characteristic',fontsize = fontsize)
-#         ax.legend(loc="lower right",fontsize = fontsize)
-#         ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-#         ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-#         #plt.show()
-#         return fig,auc_value
-
-#     else:
-
-#         # Compute ROC curve and ROC area for each class
-#         fpr = dict()
-#         tpr = dict()
-#         roc_auc = dict()
-        
-#         for i in range(n_labels):
-#             fpr[i], tpr[i], _ = roc_curve(ground_truth_list_binarized[:,i], predictions_list_binarized[:,i])
-#             roc_auc[i] = auc(fpr[i], tpr[i])
-
-#         # Compute micro-average ROC curve and ROC area
-#         fpr["micro"], tpr["micro"], _ = roc_curve(ground_truth_list_binarized.ravel(), predictions_list_binarized.ravel())
-#         roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
-#         auc_value = roc_auc["micro"]
-#         # First aggregate all false positive rates
-#         all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_labels)]))
-
-#         # Then interpolate all ROC curves at this points
-#         mean_tpr = np.zeros_like(all_fpr)
-#         for i in range(n_labels):
-#             mean_tpr += np.interp(all_fpr, fpr[i], tpr[i])
-
-#         # Finally average it and compute AUC
-#         mean_tpr /= n_labels
-
-#         fpr["macro"] = all_fpr
-#         tpr["macro"] = mean_tpr
-#         roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
-
-#         # Plot all ROC curves
-#         lw = 2
-#         fontsize = 20
-#         #plt.figure()
-        
-#         fig,ax = plt.subplots()
-#         ax.plot(fpr["micro"], tpr["micro"],
-#                 label='micro-average ROC curve (area = {0:0.2f})'
-#                     ''.format(roc_auc["micro"]),
-#                 color='deeppink', linestyle=':', linewidth=4)
-
-#         ax.plot(fpr["macro"], tpr["macro"],
-#                 label='macro-average ROC curve (area = {0:0.2f})'
-#                     ''.format(roc_auc["macro"]),
-#                 color='navy', linestyle=':', linewidth=4)
-
-#         colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
-#         for i, color in zip(range(n_labels), colors):
-#             ax.plot(fpr[i], tpr[i], color=color, lw=lw,
-#                     label='ROC curve of class {0} (area = {1:0.2f})'
-#                     ''.format(encoding_dict[i], roc_auc[i]))
-
-#         ax.plot([0, 1], [0, 1], 'k--', lw=lw)
-#         ax.set_xlim([0.0, 1.0])
-#         ax.set_ylim([0.0, 1.05])
-#         ax.set_xlabel('False Positive Rate',fontsize = fontsize)
-#         ax.set_ylabel('True Positive Rate',fontsize = fontsize)
-#         ax.set_title('ROC multi-class',fontsize = fontsize)
-#         ax.legend(loc="lower right",fontsize = fontsize)
-#         ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-#         ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-#         #plt.show()
-#         return fig,auc_value
     
 
 def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,encoding_dict):
@@ -607,59 +414,7 @@ def save_XAI(model,X_test,ground_truth_list,predictions_list,split_path,device,e
 
 
 
-        
-        # save = True
-        # fname = os.path.split(img_path)[1]
-        # if ground == pred:
-        #     if ground == 0:
-        #         fname = 'tn_'+fname
-        #         n_tn += 1
-        #         if n_tn> N:
-        #             save = False
-        #     else:
-        #         fname = 'tp_'+fname
-        #         n_tp += 1
-        #         if n_tp> N:
-        #             save = False
-        # else:
-        #     if ground == 0:
-        #         fname = 'fp_'+fname
-        #         n_fp += 1
-        #         if n_fp> N:
-        #             save = False
-        #     else:
-        #         fname = 'fn_'+fname
-        #         n_fn += 1
-        #         if n_fn> N:
-        #             save = False
-
-        # if save:
-        #     #load img
-        #     image = Image.open(img_path).convert('RGB')
-
-        #     transform = transforms.Compose([
-        #     transforms.Resize((224,224)),
-        #     transforms.ToTensor(),
-        #     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-        #         ])
-
-        #     heatmap_layer = model.module.net.layer4[2].conv2
-        #     #print(heatmap_layer)
-        #     image_interpretable = grad_cam(model, image, heatmap_layer, transform)
-
-        #     fig,ax = plt.subplots(1,2,figsize=(20,20))
-
-        #     ax[0].imshow(image)
-        #     #ax[0].set_title('input',fontsize=25)
-        #     ax[0].axis('off')
-
-        #     ax[1].imshow(image_interpretable)
-        #     #ax[1].set_title('input',fontsize=25)
-        #     ax[1].axis('off')
-            
-        #     plt.savefig(os.path.join(examples_path,fname))
-        # else:
-        #     continue
+    
 
 
 

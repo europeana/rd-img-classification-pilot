@@ -3,375 +3,264 @@ split 0
 size train: 1508
 size val: 168
 size test: 187
-Using a single device 
+Training for 20 epochs 
 
-Building model resnet34
-Training for 1 epochs 
+[1,    23] loss: 65.776 validation loss: 50.151 acc: 0.188 f1: 0.124 precision: 0.120 recall: 0.157
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[2,    23] loss: 63.133 validation loss: 47.202 acc: 0.234 f1: 0.168 precision: 0.190 recall: 0.228
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[3,    23] loss: 61.212 validation loss: 48.584 acc: 0.328 f1: 0.222 precision: 0.213 recall: 0.291
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[4,    23] loss: 59.578 validation loss: 46.276 acc: 0.406 f1: 0.306 precision: 0.347 recall: 0.370
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[5,    23] loss: 58.175 validation loss: 45.909 acc: 0.438 f1: 0.328 precision: 0.353 recall: 0.399
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[6,    23] loss: 57.112 validation loss: 47.592 acc: 0.477 f1: 0.361 precision: 0.405 recall: 0.424
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[7,    23] loss: 56.185 validation loss: 45.963 acc: 0.531 f1: 0.408 precision: 0.432 recall: 0.462
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[8,    23] loss: 55.172 validation loss: 44.801 acc: 0.484 f1: 0.403 precision: 0.452 recall: 0.448
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[9,    23] loss: 54.439 validation loss: 44.710 acc: 0.555 f1: 0.450 precision: 0.463 recall: 0.515
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[10,    23] loss: 53.610 validation loss: 44.252 acc: 0.531 f1: 0.452 precision: 0.442 recall: 0.501
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[11,    23] loss: 53.028 validation loss: 43.959 acc: 0.570 f1: 0.520 precision: 0.553 recall: 0.564
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[12,    23] loss: 52.388 validation loss: 43.990 acc: 0.617 f1: 0.553 precision: 0.575 recall: 0.595
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[13,    23] loss: 51.701 validation loss: 44.093 acc: 0.609 f1: 0.554 precision: 0.596 recall: 0.584
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[14,    23] loss: 51.136 validation loss: 44.206 acc: 0.672 f1: 0.612 precision: 0.614 recall: 0.646
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[15,    23] loss: 50.719 validation loss: 42.891 acc: 0.633 f1: 0.586 precision: 0.588 recall: 0.624
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[16,    23] loss: 50.380 validation loss: 42.528 acc: 0.617 f1: 0.579 precision: 0.564 recall: 0.621
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[17,    23] loss: 49.993 validation loss: 42.031 acc: 0.633 f1: 0.588 precision: 0.584 recall: 0.633
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[18,    23] loss: 49.682 validation loss: 41.777 acc: 0.695 f1: 0.635 precision: 0.622 recall: 0.671
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[19,    23] loss: 49.602 validation loss: 40.884 acc: 0.680 f1: 0.627 precision: 0.616 recall: 0.673
+checkpoint saved at ../results/testing/split_0/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[20,    23] loss: 49.352 validation loss: 41.343 acc: 0.742 f1: 0.668 precision: 0.650 recall: 0.715
 
-[1,    23] loss: 67.714 validation loss: 52.924 acc: 0.156 f1: 0.055 precision: 0.037 recall: 0.131
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
-
-training finished, it took 0.2083797772725423 minutes
+training finished, it took 4.007824842135111 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:549: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:550: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/cbook/__init__.py:682: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray
-  x = np.array(x, subok=True, copy=copy)
-Traceback (most recent call last):
-  File "train.py", line 112, in <module>
-    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 609, in save_XAI
-    ax[1].imshow(image_interpretable)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/__init__.py", line 1447, in inner
-    return func(ax, *map(sanitize_sequence, args), **kwargs)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/axes/_axes.py", line 5523, in imshow
-    im.set_data(X)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 702, in set_data
-    raise TypeError("Image data of dtype {} cannot be converted to "
-TypeError: Image data of dtype object cannot be converted to float
-split 0
-
-size train: 1508
-size val: 168
-size test: 187
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-[1,    23] loss: 67.202 validation loss: 50.457 acc: 0.266 f1: 0.176 precision: 0.178 recall: 0.269
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
-
-training finished, it took 0.20885566075642903 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-TypeError: only size-1 arrays can be converted to Python scalars
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "train.py", line 112, in <module>
-    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 607, in save_XAI
-    ax[1].imshow(np.array(image_interpretable,dtype=float))
-ValueError: setting an array element with a sequence.
-split 0
-
-size train: 1508
-size val: 168
-size test: 187
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-[1,    23] loss: 67.900 validation loss: 54.542 acc: 0.125 f1: 0.082 precision: 0.160 recall: 0.124
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
-
-training finished, it took 0.19802997509638467 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-Traceback (most recent call last):
-  File "train.py", line 112, in <module>
-    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 607, in save_XAI
-    ax[1].imshow(image_interpretable.astype(float))
-AttributeError: 'tuple' object has no attribute 'astype'
-split 0
-
-size train: 1508
-size val: 168
-size test: 187
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-[1,    23] loss: 67.978 validation loss: 55.266 acc: 0.195 f1: 0.135 precision: 0.146 recall: 0.205
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
-
-training finished, it took 0.20060874223709108 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-Traceback (most recent call last):
-  File "train.py", line 112, in <module>
-    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 599, in save_XAI
-    image_interpretable,pred = grad_cam(model, image, heatmap_layer, transform,device)
-ValueError: too many values to unpack (expected 2)
-split 0
-
-size train: 1508
-size val: 168
-size test: 187
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-[1,    23] loss: 66.293 validation loss: 50.546 acc: 0.250 f1: 0.159 precision: 0.175 recall: 0.239
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_0/checkpoint.pth
-
-training finished, it took 0.23321853478749593 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.2109375
-f1_test: 0.13996503496503496
-precision_test: 0.13718644509085684
-recall_test: 0.20839285714285713
-sensitivity_test: 0.20839285714285713
-specificity_test: 0.9586315057643521
-loss_test: 47.112163686497325
+acc_test: 0.7109375
+f1_test: 0.6444984255510571
+precision_test: 0.6273051948051948
+recall_test: 0.6950396825396825
+sensitivity_test: 0.6950396825396825
+specificity_test: 0.9847938096599981
+loss_test: 38.57551256475602
 confusion_matrix_test 
 
-[[1 0 2 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 3]
- [0 0 1 0 0 1 1 0 0 2 0 3 0 0 0 0 0 1 0 1]
- [0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]
- [0 0 0 0 0 0 0 0 0 4 0 1 0 0 1 0 0 1 0 0]
- [0 0 0 0 1 0 0 0 0 1 0 1 0 0 1 0 0 0 0 2]
- [0 0 2 0 0 5 1 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 1 0 0 0 1 0 0 4 0 0 0 0 1 0 0 0 0 1]
- [0 0 0 0 0 0 0 0 0 2 0 0 0 0 1 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 1 0 4 0 0 0 0 0 1 0 1]
- [0 0 0 0 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1]
- [1 0 2 0 0 1 0 0 0 4 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 4 0 1 0 0 0 0 0 0 0 0]
- [0 0 1 0 0 1 0 0 0 2 0 3 0 0 0 0 0 1 0 2]
- [0 0 0 0 0 0 1 0 0 2 0 2 0 0 0 0 0 0 0 2]
- [0 0 2 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0]
- [0 0 0 0 1 0 1 0 0 2 0 1 0 0 0 0 0 1 0 3]
- [1 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1]
- [0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 1]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 7]]
+[[8 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 5 0 0 0 1 0 0 0 0 0 0 1 0 0 1 0 0 0]
+ [0 0 0 6 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 5 1 0 0 0 0 1 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 4 0 0 1 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 1 0 5 0 0 2 0 0 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 8 0 0 0 0 0 0 0 0 0 0]
+ [2 1 0 0 0 1 1 0 0 0 0 0 0 1 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0]
+ [1 1 0 0 1 0 0 0 0 1 0 1 0 0 0 0 1 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 0 0 0 5 0 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 6 0 1 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 1]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 1]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 4]]
 split 1
 
 size train: 1508
 size val: 168
 size test: 187
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
+Training for 20 epochs 
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:601: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:403: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
   fig,ax = plt.subplots(1,2,figsize=(20,20))
-[1,    23] loss: 67.098 validation loss: 53.935 acc: 0.164 f1: 0.102 precision: 0.096 recall: 0.146
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_1/checkpoint.pth
+[1,    23] loss: 65.889 validation loss: 50.620 acc: 0.109 f1: 0.091 precision: 0.115 recall: 0.138
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[2,    23] loss: 63.842 validation loss: 49.992 acc: 0.164 f1: 0.136 precision: 0.202 recall: 0.190
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[3,    23] loss: 62.203 validation loss: 48.390 acc: 0.250 f1: 0.201 precision: 0.264 recall: 0.260
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[4,    23] loss: 60.465 validation loss: 48.325 acc: 0.430 f1: 0.376 precision: 0.486 recall: 0.419
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[5,    23] loss: 58.343 validation loss: 46.806 acc: 0.477 f1: 0.438 precision: 0.582 recall: 0.486
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[6,    23] loss: 57.179 validation loss: 44.314 acc: 0.445 f1: 0.355 precision: 0.374 recall: 0.427
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[7,    23] loss: 56.287 validation loss: 45.992 acc: 0.406 f1: 0.360 precision: 0.401 recall: 0.421
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[8,    23] loss: 55.564 validation loss: 45.609 acc: 0.508 f1: 0.450 precision: 0.503 recall: 0.489
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[9,    23] loss: 54.861 validation loss: 46.505 acc: 0.547 f1: 0.478 precision: 0.510 recall: 0.523
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[10,    23] loss: 53.964 validation loss: 43.327 acc: 0.578 f1: 0.517 precision: 0.508 recall: 0.571
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[11,    23] loss: 53.410 validation loss: 46.161 acc: 0.586 f1: 0.517 precision: 0.512 recall: 0.577
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[12,    23] loss: 52.671 validation loss: 44.926 acc: 0.617 f1: 0.546 precision: 0.555 recall: 0.590
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[13,    23] loss: 52.024 validation loss: 44.117 acc: 0.648 f1: 0.579 precision: 0.599 recall: 0.611
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[14,    23] loss: 51.664 validation loss: 43.303 acc: 0.664 f1: 0.650 precision: 0.635 recall: 0.708
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[15,    23] loss: 51.149 validation loss: 42.721 acc: 0.672 f1: 0.604 precision: 0.597 recall: 0.635
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[16,    23] loss: 50.657 validation loss: 44.392 acc: 0.648 f1: 0.608 precision: 0.605 recall: 0.648
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[17,    23] loss: 50.404 validation loss: 43.444 acc: 0.648 f1: 0.601 precision: 0.600 recall: 0.643
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[18,    23] loss: 50.183 validation loss: 41.821 acc: 0.633 f1: 0.600 precision: 0.606 recall: 0.644
+checkpoint saved at ../results/testing/split_1/checkpoint.pth
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[19,    23] loss: 49.978 validation loss: 42.315 acc: 0.672 f1: 0.654 precision: 0.669 recall: 0.676
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[20,    23] loss: 49.690 validation loss: 43.034 acc: 0.742 f1: 0.704 precision: 0.719 recall: 0.729
 
-training finished, it took 0.21714588801066081 minutes
+training finished, it took 4.1090924620628355 minutes
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.2421875
-f1_test: 0.17197438224207734
-precision_test: 0.16365291571173926
-recall_test: 0.22130952380952382
-sensitivity_test: 0.22130952380952382
-specificity_test: 0.9600307236061358
-loss_test: 48.312849891377006
+acc_test: 0.6796875
+f1_test: 0.6417947442134749
+precision_test: 0.639455266955267
+recall_test: 0.6918452380952382
+sensitivity_test: 0.6918452380952382
+specificity_test: 0.983056426627367
+loss_test: 38.48604612299465
 confusion_matrix_test 
 
-[[3 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0]
- [1 4 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 1 7 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 1 0 0 0 3 0 0 0 0 0 0 1 0 0 1 0]
- [0 0 0 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 0 0 0 0 1 1 0 0 0 3 0 0 0 1 0 0]
- [0 0 2 0 0 0 0 0 2 0 0 0 0 0 0 3 0 0 0 0]
- [0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0]
- [0 0 0 0 1 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 1 5 0 1 0 0 0 0 0 0 0 0]
- [0 1 0 0 0 0 0 0 6 0 0 0 0 0 0 0 0 0 0 0]
- [0 2 0 0 0 0 0 0 2 0 0 2 0 0 0 0 1 1 1 0]
- [1 0 0 0 0 0 0 2 2 1 0 1 0 0 0 0 0 0 0 0]
- [0 0 1 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0]
- [1 0 0 0 1 0 0 0 2 0 0 1 0 0 0 0 0 0 1 0]
- [0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0]
- [0 0 0 0 0 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 2 0 1 1 0]
- [0 0 0 0 1 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0]
- [0 1 0 0 3 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0]]
+[[ 4  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  0]
+ [ 0  7  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0 10  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  5  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  5  0  0  0  1  0  0  0  0  1  0  0  0  0  0  0]
+ [ 0  0  0  0  0  6  0  0  0  0  1  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  3  0  0  1  0  1  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  3  0  0  0  0  0  0  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  6  0  0  1  0  0  0  0  0  1  1  0]
+ [ 0  0  0  0  0  0  1  0  0  4  0  1  0  0  0  0  0  0  0  0]
+ [ 0  2  1  0  0  0  0  0  0  2  3  0  0  1  0  0  0  0  0  1]
+ [ 0  0  0  0  0  0  0  0  0  0  0  7  0  0  0  0  0  0  0  0]
+ [ 1  1  0  0  0  1  0  0  0  0  2  2  0  0  0  0  0  0  0  0]
+ [ 0  1  0  0  1  0  0  0  0  0  1  1  0  2  0  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  8  0  0  0  0  0]
+ [ 0  0  0  0  0  0  0  0  0  0  2  0  0  0  0  1  0  0  0  0]
+ [ 0  0  0  1  2  0  0  0  1  0  0  1  0  0  0  0  0  1  0  1]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  6  0  1]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  5  0]
+ [ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  2]]
 split 2
 
 size train: 1508
 size val: 168
 size test: 187
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
+Training for 20 epochs 
 
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-[1,    23] loss: 66.582 validation loss: 51.850 acc: 0.250 f1: 0.168 precision: 0.167 recall: 0.237
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_2/checkpoint.pth
-
-training finished, it took 0.22147886355717977 minutes
-
+[1,    23] loss: 65.713 validation loss: 48.698 acc: 0.234 f1: 0.164 precision: 0.180 recall: 0.196
+checkpoint saved at ../results/testing/split_2/checkpoint.pth
 /home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-acc_test: 0.3125
-f1_test: 0.22920746933931518
-precision_test: 0.2416666666666667
-recall_test: 0.3031150793650793
-sensitivity_test: 0.3031150793650793
-specificity_test: 0.9636970426347189
-loss_test: 44.44192717037099
-confusion_matrix_test 
-
-[[0 0 0 0 0 2 0 0 0 1 1 0 0 1 1 0 0 0 1 0]
- [0 0 0 0 0 0 0 0 0 1 2 0 0 1 0 1 0 0 2 0]
- [0 0 3 0 0 0 0 0 0 0 2 0 0 0 0 0 1 0 1 0]
- [0 0 0 4 0 0 0 0 0 0 0 0 0 1 0 1 1 0 0 0]
- [0 0 0 0 0 1 0 1 0 0 1 0 0 2 1 1 0 0 1 0]
- [0 0 0 0 0 7 0 0 0 0 1 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 4 0 0 1 1 0 0 2 0 1 0 0 0 0]
- [0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 1 0 0 3 0 0 0 0 2 0 0 1 0 0 1 0 0 0]
- [0 0 0 0 0 1 1 0 0 1 2 0 0 0 0 0 0 0 2 0]
- [0 0 0 0 0 2 0 0 0 0 6 0 0 1 0 0 0 0 0 0]
- [0 0 0 0 0 1 0 0 0 0 5 0 0 0 2 0 1 0 0 0]
- [0 0 0 0 0 1 0 0 0 0 2 0 0 0 3 1 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 1 0 0 4 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 0 0 0]
- [0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0]
- [0 0 0 2 0 0 0 1 0 1 1 0 0 1 1 0 0 0 0 0]
- [0 0 0 0 0 1 0 0 0 1 1 0 0 2 0 0 0 0 1 0]
- [0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0]
- [0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1]]
-split 3
-
-size train: 1509
-size val: 168
-size test: 186
-Using a single device 
-
-Building model resnet34
-Training for 1 epochs 
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-[1,    23] loss: 66.818 validation loss: 52.359 acc: 0.156 f1: 0.064 precision: 0.046 recall: 0.136
-checkpoint saved at /home/jcejudo/rd-img-classification-pilot/results/testing/split_3/checkpoint.pth
-
-training finished, it took 0.23759289185206095 minutes
-
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Sensitivity is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
   _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/.local/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
-  _warn_prf(average, modifier, msg_start, len(result))
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:547: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_xticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
-/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py:548: UserWarning: FixedFormatter should only be used together with FixedLocator
-  ax.set_yticklabels([0.0,0.2,0.4,0.6,0.8,1.0],fontsize=fontsize)
 Traceback (most recent call last):
-  File "train.py", line 112, in <module>
-    save_XAI(net,test_data.dataset.X,ground_truth_list,predictions_list,split_path,device,encoding_dict)
-  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 611, in save_XAI
-    plt.savefig(os.path.join(examples_path,fname))
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/pyplot.py", line 860, in savefig
-    fig.canvas.draw_idle()   # need this if 'transparent=True' to reset colors
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/backend_bases.py", line 2012, in draw_idle
-    self.draw(*args, **kwargs)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/backends/backend_agg.py", line 407, in draw
-    self.figure.draw(self.renderer)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/artist.py", line 41, in draw_wrapper
-    return draw(artist, renderer, *args, **kwargs)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/figure.py", line 1863, in draw
-    mimage._draw_list_compositing_images(
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 131, in _draw_list_compositing_images
-    a.draw(renderer)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/artist.py", line 41, in draw_wrapper
-    return draw(artist, renderer, *args, **kwargs)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/cbook/deprecation.py", line 411, in wrapper
-    return func(*inner_args, **inner_kwargs)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/axes/_base.py", line 2747, in draw
-    mimage._draw_list_compositing_images(renderer, self, artists)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 131, in _draw_list_compositing_images
-    a.draw(renderer)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/artist.py", line 41, in draw_wrapper
-    return draw(artist, renderer, *args, **kwargs)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 643, in draw
-    im, l, b, trans = self.make_image(
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 928, in make_image
-    return self._make_image(self._A, bbox, transformed_bbox, clip,
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 550, in _make_image
-    A = _rgb_to_rgba(A)
-  File "/home/jcejudo/.local/lib/python3.8/site-packages/matplotlib/image.py", line 207, in _rgb_to_rgba
-    rgba[:, :, :3] = A
+  File "train.py", line 91, in <module>
+    epochs = epochs, 
+  File "/home/jcejudo/rd-img-classification-pilot/src/torch_utils.py", line 241, in train
+    for i, (inputs,labels) in enumerate(trainloader):
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 435, in __next__
+    data = self._next_data()
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1068, in _next_data
+    idx, data = self._get_data()
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 1034, in _get_data
+    success, data = self._try_get_data()
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/site-packages/torch/utils/data/dataloader.py", line 872, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/queues.py", line 107, in get
+    if not self._poll(timeout):
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/connection.py", line 257, in poll
+    return self._poll(timeout)
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/connection.py", line 424, in _poll
+    r = wait([self], timeout)
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/multiprocessing/connection.py", line 931, in wait
+    ready = selector.select(timeout)
+  File "/opt/miniconda3/envs/class_env/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
 KeyboardInterrupt

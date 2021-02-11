@@ -1,10 +1,6 @@
 from notebook_env import *
-import models
-import time
-import sklearn
-import torch
-import datetime
 
+import torch
 import os
 import pandas as pd
 
@@ -14,9 +10,6 @@ def create_dir(path):
     if not os.path.exists(path):
         os.mkdir(path)
         
-
-
-
 def path2DataFrame(data_dir):
     """reads a directory structured in classes into a dataframe"""
     category_list = os.listdir(data_dir)
@@ -30,10 +23,6 @@ def path2DataFrame(data_dir):
         
     return pd.DataFrame({'file_path':img_path_list,'category':img_category_list})
 
-# def path2DataFrame_unlabeled(data_dir):
-#     img_path_list = [os.path.join(data_dir,filename) for filename in os.listdir(data_dir)]
-#     return pd.DataFrame({'file_path':img_path_list})
-
 def drop_categories_df(df,categories):
     """categories can be str or list of str"""
     if isinstance(categories,str):
@@ -45,13 +34,6 @@ def drop_categories_df(df,categories):
     # re-index the dataframe
     df_.index = np.arange(df_.shape[0])
     return df_
-
-# def downsample_df(df, cat_name, size):
-#     rem_df = df.loc[df['category'].map(lambda x: x != cat_name)]
-#     cat_df = df.loc[df['category'].map(lambda x: x == cat_name)]
-#     cat_df = cat_df.iloc[np.random.randint(0,cat_df.shape[0],size)]
-#     df = pd.concat((rem_df,cat_df))
-#     return df
 
 def get_class_weights(y_encoded,encoding_dict):
     """Calculates the weights for the Cross Entropy loss """
@@ -82,9 +64,6 @@ def label_encoding(y):
         encoding_dict.update({int(label):cat}) 
     return y_encoded, encoding_dict
 
-# def time_stamp():
-#     return str(datetime.datetime.now()).replace(' ','_')[:-7]
-
 class Experiment():
     def __init__(self):
         self.info = {}
@@ -104,58 +83,7 @@ class Experiment():
         torch.save(self.info, info_file_path)
 
 
-# to do: include into Experiment class
-def save_experiment(**kwargs):
 
-    #to do: model name
-
-    time_train = kwargs.get('time_train',0)
-    epochs = kwargs.get('epochs',0)
-    learning_rate = kwargs.get('learning_rate',None)
-    trainloader = kwargs.get('trainloader',None)
-    testloader = kwargs.get('testloader',None)
-    execution_path = kwargs.get('execution_path',None)
-    experiment_id = kwargs.get('experiment_id',None)
-
-    if not experiment_id:
-        #date and time, 
-        ts = time_stamp()
-        experiment_id = ts.replace('-','').replace(':','')
-
-    
-    #make directory for saving the experiment
-    experiment_path = os.path.join(self.execution_path, f'training_{experiment_id}')
-    if not os.path.exists(experiment_path):
-        os.mkdir(experiment_path)
-    
-    
-    data_dict = { 
-                'trainloader': trainloader,
-                'testloader': testloader,
-
-                'encoding_dict': self.encoding_dict,
-                'weights': self.weights,
-
-                'epochs': epochs,
-                'model': self.net,
-                'optimizer': self.optimizer,
-                'loss_function': self.criterion,
-                'learning_rate': learning_rate,
-                'batch_size': self.batch_size,
-                'num_workers': self.num_workers,
-
-                'training_time_minutes':time_train,
-                'loss_train_list':self.loss_train_list,
-                'loss_test_list':self.loss_test_list,
-                'acc_test_list':self.acc_test_list,
-                }
-    
-    filename = f'training_info_{experiment_id}.pth'
-    info_file_path = os.path.join(experiment_path,filename)
-    print(info_file_path)
-    torch.save(data_dict, info_file_path)
-    
-    return 
 
 
 
