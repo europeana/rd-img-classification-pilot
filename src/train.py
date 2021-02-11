@@ -1,8 +1,8 @@
-from notebook_env import *
-
-import torch
 import os
 import pandas as pd
+import torch
+import torch.nn as nn
+import torch.optim as optim
 
 from ds_utils import *
 from torch_utils import *
@@ -15,29 +15,25 @@ if __name__ == '__main__':
     experiment_name = 'testing'
     learning_rate = 0.00001
     epochs = 5
+    patience = 1
     resnet_size = 34 # allowed sizes: 18,34,50,101,152
     num_workers = 4
     batch_size = 64
     weighted_loss = True
     img_aug = None
 
-    patience = 1
-
-    device = torch.device('cuda:0')
-
-
     results_path = '../results'
     create_dir(results_path)
     experiment_path = os.path.join(results_path,experiment_name)
     create_dir(experiment_path)
 
+    #load data
+
     #to do: load from a unique directory
     data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/ec'
     ec_df = path2DataFrame(data_path)
-
     data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/getty'
     getty_df = path2DataFrame(data_path)
-
     df = pd.concat((ec_df,getty_df))
     
     #remove after testing
@@ -47,6 +43,9 @@ if __name__ == '__main__':
     y = df['category'].values
     y_encoded, encoding_dict = label_encoding(y)
     n_classes = len(encoding_dict)
+
+    # GPU
+    device = torch.device('cuda:0')
 
     #set loss
     if weighted_loss:
@@ -104,15 +103,14 @@ if __name__ == '__main__':
         for k,v in metrics_dict.items():
             print(f'{k}_test: {v}')
 
-        
+        #save training history
         experiment = Experiment()
+
         #experiment.add('learning_rate',learning_rate)
         #experiment.add('optimizer',optimizer)
         #experiment.add('loss_function',loss_function)
-
         #experiment.add('batch_size',batch_size)
         #experiment.add('num_workers',num_workers)
-
         #experiment.add('epochs',epochs)
         #experiment.add('weights',weights)
 

@@ -1,15 +1,13 @@
+import os
 import requests
 import json
 from PIL import Image
 from io import BytesIO
 import matplotlib.pyplot as plt
-import os
-
 import torch
 import torchvision.transforms as transforms
 
 from .models import ResNet
-
 from .gradcam import grad_cam
 
 # Europeana API
@@ -49,9 +47,6 @@ def load_pytorch_model(device):
 
     model = ResNet(34,20)
 
-    # if not device:
-    #     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
     if not torch.cuda.is_available():
         model.load_state_dict(torch.load(os.path.join(root_path,'checkpoint.pth'),map_location=torch.device('cpu')))
     else:
@@ -65,13 +60,7 @@ def load_pytorch_model(device):
 
     return model, class_index_dict
 
-
- 
-
-
 def make_prediction(model,img,device):
-
-
 
     transform = transforms.Compose([
         transforms.Resize((224,224)),
@@ -81,8 +70,6 @@ def make_prediction(model,img,device):
 
     heatmap_layer = model.net.layer4[1].conv2
     image_interpretable,idx_pred,conf = grad_cam(model, img, heatmap_layer, transform, device)
-    #pred =  class_index_dict[str(idx_pred.item())]
-
 
     return idx_pred.item(), conf, image_interpretable
 

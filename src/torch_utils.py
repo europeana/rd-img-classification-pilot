@@ -1,33 +1,25 @@
-#to do: clean dependencies
-
-from notebook_env import *
-from ds_utils import *
-import models
-import torch
-from PIL import Image
 import time
-from torch.utils.data import Dataset
-import imblearn
-import sklearn
-from sklearn.preprocessing import label_binarize
-from itertools import cycle
-from sklearn.metrics import roc_curve, auc
-from torchvision import transforms, datasets
+import os
+import pandas as pd
+import numpy as np
+from PIL import Image
+
 import torch
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
-import torch.optim as optim
-import matplotlib.pyplot as plt
-from gradcam import *
-from sklearn import preprocessing
+
+import imblearn
+import sklearn
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import confusion_matrix
 
 import seaborn as sn
-import pandas as pd
 import matplotlib.pyplot as plt
 
+from ds_utils import *
+from gradcam import *
+import models
 
 class ImgAugTransform:
     """Class for including image augmentation in pytorch transforms"""
@@ -62,32 +54,6 @@ class TrainingDataset(Dataset):
             img = self.transform(img)
 
         return img,label
-
-# class InferenceDataset(Dataset):
-#     """
-#     Pytorch inference dataset class
-#     X: Numpy array containing the paths to the images
-#     """
-#     def __init__(self, X, transform=None):
-#         self.transform = transform
-#         self.X = X
-#         self.N = X.shape[0]   
-
-#     def __len__(self):
-#         return self.N
-
-#     def __getitem__(self, idx):
-#         if torch.is_tensor(idx):
-#             idx = idx.tolist()
-
-#         img_path = str(self.X[idx])
-#         img = Image.open(img_path).convert('RGB')
-                
-#         if self.transform:
-#             img = self.transform(img)
-
-#         return img,img_path
-
 
 
 def make_train_val_test_splits(X,y,**kwargs):
