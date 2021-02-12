@@ -30,14 +30,21 @@ if __name__ == '__main__':
     #load data
 
     #to do: load from a unique directory
-    data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/ec'
-    ec_df = path2DataFrame(data_path)
-    data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/getty'
-    getty_df = path2DataFrame(data_path)
-    df = pd.concat((ec_df,getty_df))
+    # data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/ec'
+    # ec_df = path2DataFrame(data_path)
+    # data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/getty'
+    # getty_df = path2DataFrame(data_path)
+    # df = pd.concat((ec_df,getty_df))
+
+
+    data_path = '../new_training'
+    df = path2DataFrame(data_path)
+
+
+
     
     #remove after testing
-    df = df.sample(frac=0.1)
+    #df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values

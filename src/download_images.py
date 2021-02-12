@@ -19,47 +19,29 @@ def url2img(url):
 
 
 if __name__ == "__main__":
-
-    data = 'ec'
-    data_path = os.path.join('/home/jcejudo/rd-img-classification-pilot/data_sample',data)
-    dest_path = '/home/jcejudo/rd-img-classification-pilot/training_sample'
+    
+    
+    dest_path = '../new_training'
     create_dir(dest_path)
-    dest_path = os.path.join(dest_path,data)
-    create_dir(dest_path)
-
-    exclude_cat = os.listdir(dest_path)
-
-    if data == 'getty':
-        exclude_cat += ['print','tapestry','drawing','tool','jewellery','photograph','poster','painting','ceramics','textile','specimen','woodwork','machinery','building','furniture','cartoon','toy','map','postcard','sculpture','food','glassware','metalwork','medal','memorabilia','mineral','musical_instrument','tableware','stamp']
-
-    for cat in os.listdir(data_path):
-
-        if cat.replace('.csv','') in exclude_cat:
-            continue
-
-        print(cat)
+    
+    df = pd.read_csv('../new_data/small_dataset.csv')
+    
+    for cat in df.category.unique():
+        #subset 
+        df_category = df.loc[df['category'] == cat]
         
-        cat_path = os.path.join(data_path,cat)
+        cat_path = os.path.join(dest_path,cat)
+        create_dir(cat_path)
         
-        df = pd.read_csv(cat_path)
-        
-        # if cat.replace('.csv','') in ['ceramics_data','map_data']:
-        #     continue
-        
-        dest_cat_path = os.path.join(dest_path,cat.replace('.csv',''))
-        create_dir(dest_cat_path)
-        for i in range(df.shape[0]):
-            ID = df['ID'].iloc[i]
-            url = df['URL'].iloc[i]
-            img = url2img(url)
+        for i in range(df_category.shape[0]):
+            ID = df_category['ID'].iloc[i]
+            img = url2img(df_category['URL'].iloc[i])
             
-            #replacement = "%2F"
-            replacement = "__placeholder__"
-            filename = f'{ID}.jpg'.replace("/",replacement)
             if img:
                 try:
-                    img.save(os.path.join(dest_cat_path,filename))
+                    img.save(os.path.join(cat_path,f'{ID}.jpg'.replace("/","[ph]")))
                 except:
                     pass
+
     
     

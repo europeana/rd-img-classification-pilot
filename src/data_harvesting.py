@@ -2,25 +2,55 @@ import pandas as pd
 import requests
 import os
 
-def make_dir(path):
+def create_dir(path):
   if not os.path.exists(path):
     os.mkdir(path)
+    
+def query_single_category(skos_concept, N):  
+  CHO_list = []
+  response = {'nextCursor':'*'}
+  while 'nextCursor' in response:
+    
+    if len(CHO_list)>N:
+      break
 
+    params = {
+        'reusability':'open',
+        'media':True,
+        'cursor':response['nextCursor'],
+        'qf':f'(skos_concept:"{skos_concept}" AND TYPE:IMAGE )', 
+        'query':'*', 
+        'wskey':'api2demo'
+    }
+    response = requests.get('https://www.europeana.eu/api/v2/search.json', params = params).json()
+
+    for item in response['items']:
+      ID = item['id']
+      URI = 'http://data.europeana.eu/item'+ID
+      try:
+        URL = item['edmIsShownBy'][0]
+        CHO_list.append({'category':category,'skos_concept':skos_concept,'URI':URI,'ID':ID,'URL':URL})
+      except:
+        pass
+    
+  return pd.DataFrame(CHO_list[:N])
+    
+ 
 
 ec_vocab = {
                  'building':'http://data.europeana.eu/concept/base/29',
                  'ceramics':'http://data.europeana.eu/concept/base/31',
                  'drawing':'http://data.europeana.eu/concept/base/35',
-                 'map':'http://data.europeana.eu/concept/base/43',
                  'furniture':'http://data.europeana.eu/concept/base/37',
-                 'textile':'http://data.europeana.eu/concept/base/55',
                  'jewellery':'http://data.europeana.eu/concept/base/41',
+                 'map':'http://data.europeana.eu/concept/base/43',
                  'painting':'http://data.europeana.eu/concept/base/47',
                  'photograph':'http://data.europeana.eu/concept/base/48',
                  'postcard':'http://data.europeana.eu/concept/base/50',
                  'sculpture':'http://data.europeana.eu/concept/base/51',
                  'specimen':'http://data.europeana.eu/concept/base/167',
                  'tapestry':'http://data.europeana.eu/concept/base/54',
+                 'textile':'http://data.europeana.eu/concept/base/55',
                  'toy':'http://data.europeana.eu/concept/base/56',
                  'woodwork':'http://data.europeana.eu/concept/base/59',
                  }
@@ -62,49 +92,24 @@ getty_vocab = {
                 'woodwork': 'http://vocab.getty.edu/aat/300015348' ,
                 'stamp': 'http://vocab.getty.edu/aat/300037321' }
 
+if __name__ == '__main__':
 
-vocab_dict = {
-  'ec':ec_vocab,
-  'getty':getty_vocab
-}
+    #select some categories from getty vocab
+    getty_categories = ['archaeological_site','clothing','costume_accessories','inscription','weaponry']
+    vocab_dict = {k:getty_vocab[k] for k in getty_categories}
+    
+    #merge ec and getty
+    vocab_dict.update(ec_vocab)
 
-data = 'ec'
-
-N = 5
-
-
-concepts_dict = vocab_dict[ data]
-dest_path = os.path.join('../data_sample',data)
-make_dir(dest_path)
-
-
-for category in concepts_dict.keys():
-
-  skos_concept = concepts_dict[category]
-
-  data_list = []
-  response = {'nextCursor':'*'}
-  while 'nextCursor' in response:
-    qf_str = f'(skos_concept:"{skos_concept}" AND TYPE:IMAGE )'
-    params = { 'reusability':'open','media':True,'cursor':response['nextCursor'] ,'qf':qf_str, 'query':'*', 'wskey':'api2demo'}
-    response = requests.get('https://www.europeana.eu/api/v2/search.json', params = params).json()
-
-    #print(len(data_list))
-    #print(response['totalResults'])
-    if len(data_list)>N:
-      break
-
-    for item in response['items']:
-      ID = item['id']
-      URI = 'http://data.europeana.eu/item'+ID
-      try:
-        URL = item['edmIsShownBy'][0]
-        data_dict = {'category':category,'skos_concept':skos_concept,'URI':URI,'ID':ID,'URL':URL}
-        data_list.append(data_dict)
-      except:
-        pass
-
-  df = pd.DataFrame(data_list)
-  filename = f'{category}.csv'
-  file_path = os.path.join(dest_path,filename)
-  df.to_csv(file_path,index=False)
+    data_path = '../new_data'
+    create_dir(data_path)
+    N = 20
+    
+    df = pd.DataFrame()
+    for category in vocab_dict.keys():
+      print(category)
+      skos_concept = vocab_dict[category]
+      df_category = query_single_category(skos_concept, N)
+      df = pd.concat((df,df_category))
+      #save after each category
+      df.to_csv(os.path.join(data_path,'small_dataset.csv'),index=False)
