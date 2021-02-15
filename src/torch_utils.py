@@ -48,12 +48,13 @@ class TrainingDataset(Dataset):
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        img, label = Image.open(self.X[idx]), self.y[idx]
+        img_path = self.X[idx]
+        img, label = Image.open(img_path), self.y[idx]
         img = img.convert('RGB')
         if self.transform:
             img = self.transform(img)
 
-        return img,label
+        return img,label,img_path
 
 
 def make_train_val_test_splits(X,y,**kwargs):
@@ -114,6 +115,8 @@ def make_train_val_test_splits(X,y,**kwargs):
 
 def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,encoding_dict,epochs = 100, patience = 10):
 
+    #to do: add kwargs
+
     best_loss = 1e6
     counter = 0
     experiment_path = saving_dir
@@ -138,7 +141,7 @@ def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,
     for epoch in range(epochs):
         train_loss = 0.0
         # loop over batches
-        for i, (inputs,labels) in enumerate(trainloader):
+        for i, (inputs,labels,_) in enumerate(trainloader):
             inputs, labels = inputs.to(device), labels.to(device)
             # zero the parameter gradients
             optimizer.zero_grad()
@@ -150,11 +153,13 @@ def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,
 
         train_loss /= len(trainloader.dataset)
     
-        val_metrics_dict, _, _ = validate(model,valloader,device,loss_function,encoding_dict)
+        val_metrics_dict, _, _,_ = validate(model,valloader,device,loss_function,encoding_dict)
 
         history['loss_train'].append(train_loss)
         for k,v in val_metrics_dict.items():
             history[f'{k}_val'].append(v)
+
+        #to do: improve history plotting
         
         print('[%d, %5d] loss: %.3f validation loss: %.3f acc: %.3f f1: %.3f precision: %.3f recall: %.3f' %
         (epoch + 1, i + 1, history['loss_train'][-1],history['loss_val'][-1],history['accuracy_val'][-1],history['f1_val'][-1],history['precision_val'][-1],history['recall_val'][-1]))
@@ -168,6 +173,7 @@ def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,
             counter = 0
         else:
             counter += 1
+
         #early stopping
         if counter > patience:
             print(f'Early stopping at epoch: {epoch}')
@@ -184,15 +190,17 @@ def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,
 
 
 def validate(model,testloader,device,loss_function,encoding_dict):
+    #to do: add kwargs
     """Returns metrics of predictions on test data"""
 
     n_labels = len(list(set(testloader.dataset.y)))
 
     ground_truth_list = []
     predictions_list = []
+    img_path_list = []
     loss = 0.0
     with torch.no_grad():
-        for i,(images, labels) in enumerate(testloader):
+        for i,(images, labels,img_path) in enumerate(testloader):
             labels = torch.from_numpy(np.array(labels))
             images, labels = images.to(device), labels.to(device)
             outputs = model(images)
@@ -201,6 +209,7 @@ def validate(model,testloader,device,loss_function,encoding_dict):
 
             ground_truth_list += list(labels.cpu())
             predictions_list += list(predicted.cpu())
+            img_path_list += list(img_path)
 
     loss /= len(testloader.dataset)
 
@@ -215,9 +224,7 @@ def validate(model,testloader,device,loss_function,encoding_dict):
         'confusion_matrix': sklearn.metrics.confusion_matrix(ground_truth_list,predictions_list,labels = np.arange(n_labels)), 
         }
 
-    return metrics_dict, ground_truth_list, predictions_list
-
-  
+    return metrics_dict, ground_truth_list, predictions_list, img_path_list
 
 def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict):
     
@@ -268,6 +275,7 @@ def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path
 
         else:
             continue
+
 
 def save_model(net,model_path):
     torch.save(net.state_dict(), model_path)

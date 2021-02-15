@@ -13,22 +13,32 @@ description
 
 ## Assembling the dataset
 
-`cd src`
+`python src/data_harvesting.py`
 
-`python data_harvesting.py`
+The result should be (point to the csv file)
 
-Download images
+Download images. This step is required for training the model
 
-`python download_images.py`
+`python src/download_images.py`
+
 
 
 ## Training the model
 
-`python train.py`
+Once the images are downloaded
+
+`python src/train.py`
+
+Jupyter notebook
 
 
 ## Inference
 
-Notebook
+Checkpoint (point to checkpoint)
+
+
+
+Jupyter notebook
+
 
 

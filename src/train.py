@@ -34,7 +34,7 @@ if __name__ == '__main__':
     df = path2DataFrame(data_path)
     
     #remove after testing
-    #df = df.sample(frac=0.1)
+    df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values
@@ -88,12 +88,12 @@ if __name__ == '__main__':
             split_path,
             encoding_dict,
             epochs = epochs,
-            patience = 1)
+            patience = patience)
 
         # evaluate on test data
-        metrics_dict, ground_truth_list, predictions_list = validate(model,testloader,device,loss_function,encoding_dict)
+        metrics_dict, ground_truth_list, predictions_list, test_image_list = validate(model,testloader,device,loss_function,encoding_dict)
         #generate heatmaps using GradCAM for some test images
-        test_image_list = testloader.dataset.X
+        #test_image_list = testloader.dataset.X
         save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict)
 
         #print test metrics

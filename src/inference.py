@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import torch
 import torchvision.transforms as transforms
 
-from .models import ResNet
-from .gradcam import grad_cam
+from models import ResNet
+from gradcam import grad_cam
 
 # Europeana API
 
