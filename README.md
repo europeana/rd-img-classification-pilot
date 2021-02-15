@@ -2,15 +2,33 @@
 
 description
 
-# Installation
+## Installation
+
+`git clone https://github.com/europeana/rd-img-classification-pilot.git`
+
+`cd rd-img-classification-pilot`
+
+`pip install -r requirements.txt`
 
 
-# Dataset
+## Assembling the dataset
+
+`cd src`
+
+`python data_harvesting.py`
+
+Download images
+
+`python download_images.py`
 
 
-# Training
+## Training the model
+
+`python train.py`
 
 
-# Inference
+## Inference
+
+Notebook
 
 

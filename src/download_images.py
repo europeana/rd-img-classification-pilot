@@ -16,13 +16,16 @@ def url2img(url):
 
 
 if __name__ == "__main__":
-    
-    dest_path = '../new_training'
+
+    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+
+    dest_path = os.path.join(ROOT_DIR,'training_data')
     create_dir(dest_path)
     
-    df = pd.read_csv('../dataset.csv')
+    df = pd.read_csv(os.path.join(ROOT_DIR,'dataset.csv'))
     
     for cat in df.category.unique():
+        print(cat)
         #subset 
         df_category = df.loc[df['category'] == cat]
         

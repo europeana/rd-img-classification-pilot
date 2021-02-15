@@ -92,6 +92,9 @@ getty_vocab = {
 
 if __name__ == '__main__':
 
+    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+
+
     #select some categories from getty vocab
     getty_categories = ['archaeological_site','clothing','costume_accessories','inscription','weaponry']
     vocab_dict = {k:getty_vocab[k] for k in getty_categories}
@@ -99,8 +102,6 @@ if __name__ == '__main__':
     #merge ec and getty
     vocab_dict.update(ec_vocab)
 
-    data_path = '../'
-    create_dir(data_path)
     N = 1000
     
     df = pd.DataFrame()
@@ -110,4 +111,4 @@ if __name__ == '__main__':
       df_category = query_single_category(skos_concept, N)
       df = pd.concat((df,df_category))
       #save after each category
-      df.to_csv(os.path.join(data_path,'dataset.csv'),index=False)
+      df.to_csv(os.path.join(ROOT_DIR,'dataset.csv'),index=False)

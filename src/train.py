@@ -11,7 +11,8 @@ from imgaug import augmenters as iaa
 if __name__ == '__main__':
 
     #to do: change encoding dict by class_index_dict
-    #to do: get base_dir from file path
+
+    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
 
     experiment_name = 'testing'
     learning_rate = 0.00001
@@ -23,22 +24,13 @@ if __name__ == '__main__':
     weighted_loss = True
     img_aug = None
 
-    results_path = '../results'
+    results_path = os.path.join(ROOT_DIR,'results')
     create_dir(results_path)
     experiment_path = os.path.join(results_path,experiment_name)
     create_dir(experiment_path)
 
     #load data
-
-    #to do: load from a unique directory
-    # data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/ec'
-    # ec_df = path2DataFrame(data_path)
-    # data_path = '/home/jcejudo/rd-img-classification-pilot/training_data/getty'
-    # getty_df = path2DataFrame(data_path)
-    # df = pd.concat((ec_df,getty_df))
-
-
-    data_path = '../new_training'
+    data_path = os.path.join(ROOT_DIR,'new_training')
     df = path2DataFrame(data_path)
     
     #remove after testing
@@ -110,15 +102,6 @@ if __name__ == '__main__':
 
         #save training history
         experiment = Experiment()
-
-        #experiment.add('learning_rate',learning_rate)
-        #experiment.add('optimizer',optimizer)
-        #experiment.add('loss_function',loss_function)
-        #experiment.add('batch_size',batch_size)
-        #experiment.add('num_workers',num_workers)
-        #experiment.add('epochs',epochs)
-        #experiment.add('weights',weights)
-
         experiment.add('encoding_dict',encoding_dict)
         experiment.add('model',model)
         experiment.add('resnet_size',resnet_size)
