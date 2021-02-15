@@ -227,6 +227,8 @@ def validate(model,testloader,device,loss_function,encoding_dict):
     return metrics_dict, ground_truth_list, predictions_list, img_path_list
 
 def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict):
+
+    model.eval()
     
     XAI_path = os.path.join(split_path,'XAI')
     create_dir(XAI_path)
