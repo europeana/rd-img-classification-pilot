@@ -16,8 +16,8 @@ if __name__ == '__main__':
 
     experiment_name = 'testing'
     learning_rate = 0.00001
-    epochs = 5
-    patience = 1
+    epochs = 60
+    patience = 10
     resnet_size = 34 # allowed sizes: 18,34,50,101,152
     num_workers = 4
     batch_size = 64
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     df = path2DataFrame(data_path)
     
     #remove after testing
-    df = df.sample(frac=0.1)
+    #df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values

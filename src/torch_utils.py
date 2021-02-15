@@ -260,7 +260,7 @@ def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path
             #load img
             image = Image.open(img_path).convert('RGB')
             #layer for the visualization
-            heatmap_layer = model.net.layer4[2].conv2
+            heatmap_layer = model.net.layer4[1].conv2
             #apply gradcam
             image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
             #save XAI

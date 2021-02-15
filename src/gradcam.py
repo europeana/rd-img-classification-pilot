@@ -3,6 +3,8 @@ import torch
 import numpy as np
 from PIL import Image
 
+# to do: reference the original implementation
+
 class InfoHolder():
 
     def __init__(self, heatmap_layer):
