@@ -272,38 +272,6 @@ def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path
 def save_model(net,model_path):
     torch.save(net.state_dict(), model_path)
 
-# def predict(net,dataloader,device,encoding_dict,dest_path=None):
-#     img_path_list = []
-#     predicted_label_list = []
-#     confidence_list = []
-#     with torch.no_grad():
-#         for i,(images, img_path) in enumerate(dataloader):
-#             images = images.to(device)
-#             outputs = net(images)
-#             conf, predicted = torch.max(outputs.data, 1)
-
-#             img_path_list += list(img_path)
-#             predicted_label_list += list(predicted.cpu().numpy())
-#             confidence_list += list(conf.cpu().numpy())
-
-#     predicted_cat_list = [encoding_dict[label] for label in predicted_label_list]         
-#     df = pd.DataFrame(
-#         {'img_path':img_path_list,
-#         'category':predicted_cat_list,
-#         'label':predicted_label_list, 
-#         'confidence':confidence_list}
-#         )
-    
-#     if dest_path:
-#         #save dataframe
-#         filename = 'predictions'+time_stamp()+'.csv'
-#         file_path = os.path.join(dest_path,filename)
-#         df.to_csv(file_path,index=False)
-#         print(f'Results at {file_path}')
-
-#     return df
-
-
 #plotting
 def mean_std_metric(metric):
     mean = np.mean(metric,axis=0)

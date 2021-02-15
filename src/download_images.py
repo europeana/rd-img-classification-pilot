@@ -4,10 +4,7 @@ import requests
 from PIL import Image
 import pandas as pd
 from io import BytesIO
-
-def create_dir(path):
-    if not os.path.exists(path):
-        os.mkdir(path)
+from ds_utils import create_dir
 
 def url2img(url):
     try:
@@ -20,11 +17,10 @@ def url2img(url):
 
 if __name__ == "__main__":
     
-    
     dest_path = '../new_training'
     create_dir(dest_path)
     
-    df = pd.read_csv('../new_data/small_dataset.csv')
+    df = pd.read_csv('../dataset.csv')
     
     for cat in df.category.unique():
         #subset 

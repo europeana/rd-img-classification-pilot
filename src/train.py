@@ -11,6 +11,7 @@ from imgaug import augmenters as iaa
 if __name__ == '__main__':
 
     #to do: change encoding dict by class_index_dict
+    #to do: get base_dir from file path
 
     experiment_name = 'testing'
     learning_rate = 0.00001
@@ -39,9 +40,6 @@ if __name__ == '__main__':
 
     data_path = '../new_training'
     df = path2DataFrame(data_path)
-
-
-
     
     #remove after testing
     #df = df.sample(frac=0.1)
@@ -97,7 +95,7 @@ if __name__ == '__main__':
             device,
             split_path,
             encoding_dict,
-            epochs = 10,
+            epochs = epochs,
             patience = 1)
 
         # evaluate on test data

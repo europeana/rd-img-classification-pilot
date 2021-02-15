@@ -2,9 +2,7 @@ import pandas as pd
 import requests
 import os
 
-def create_dir(path):
-  if not os.path.exists(path):
-    os.mkdir(path)
+from ds_utils import create_dir
     
 def query_single_category(skos_concept, N):  
   CHO_list = []
@@ -101,9 +99,9 @@ if __name__ == '__main__':
     #merge ec and getty
     vocab_dict.update(ec_vocab)
 
-    data_path = '../new_data'
+    data_path = '../'
     create_dir(data_path)
-    N = 20
+    N = 1000
     
     df = pd.DataFrame()
     for category in vocab_dict.keys():
@@ -112,4 +110,4 @@ if __name__ == '__main__':
       df_category = query_single_category(skos_concept, N)
       df = pd.concat((df,df_category))
       #save after each category
-      df.to_csv(os.path.join(data_path,'small_dataset.csv'),index=False)
+      df.to_csv(os.path.join(data_path,'dataset.csv'),index=False)
