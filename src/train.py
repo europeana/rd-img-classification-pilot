@@ -12,12 +12,14 @@ if __name__ == '__main__':
 
     #to do: change encoding dict by class_index_dict
 
+    #to do: add command line interface?
+
     ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
 
     experiment_name = 'testing'
     learning_rate = 0.00001
-    epochs = 60
-    patience = 10
+    epochs = 2
+    patience = 1
     resnet_size = 34 # allowed sizes: 18,34,50,101,152
     num_workers = 4
     batch_size = 64
@@ -52,7 +54,7 @@ if __name__ == '__main__':
     df = path2DataFrame(data_path)
     
     #remove after testing
-    df = df.sample(frac=0.1)
+    #df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values
@@ -110,7 +112,7 @@ if __name__ == '__main__':
             patience = patience)
 
         # evaluate on test data
-        metrics_dict, ground_truth_list, predictions_list, test_image_list = validate(
+        metrics_dict, ground_truth_list, predictions_list, test_images_list = validate(
             model = model,
             testloader = testloader,
             device = device,
@@ -121,7 +123,16 @@ if __name__ == '__main__':
 
         #generate heatmaps using GradCAM for some test images
         #test_image_list = testloader.dataset.X
-        save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,class_index_dict)
+        #save_XAI(model,test_images_list,ground_truth_list,predictions_list,split_path,device,class_index_dict)
+
+        save_XAI(
+            model = model,
+            test_images_list = test_images_list,
+            ground_truth_list = ground_truth_list,
+            predictions_list = predictions_list,
+            split_path = split_path,
+            device = device,
+            encoding_dict = class_index_dict)
 
         #print test metrics
         for k,v in metrics_dict.items():

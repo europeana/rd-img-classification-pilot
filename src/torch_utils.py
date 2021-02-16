@@ -272,43 +272,38 @@ def validate(**kwargs):
 
     return metrics_dict, ground_truth_list, predictions_list, img_path_list
 
-def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict):
+def save_XAI(N = 20, **kwargs):
+    
+    requ_args = ['model','test_images_list','ground_truth_list','predictions_list','split_path','device','encoding_dict']
+    check_args(kwargs,requ_args)
+    
+    model = kwargs.get('model')
+    test_images_list = kwargs.get('test_images_list')
+    ground_truth_list = kwargs.get('ground_truth_list')
+    predictions_list = kwargs.get('predictions_list')
+    split_path = kwargs.get('split_path')
+    device = kwargs.get('device')
+    encoding_dict = kwargs.get('encoding_dict')
 
-    #to do:
-    #sample a random subset of index
-    #format output file [gt:,pred:]
-
+    
     model.eval()
     
+    transform = transforms.Compose([
+    transforms.Resize((224,224)),
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ])
+
     XAI_path = os.path.join(split_path,'XAI')
     create_dir(XAI_path)
-
-    N = 20
-    n_correct = 0
-    n_incorrect = 0
-    save = True
-    for img_path,ground,pred in zip(test_image_list,ground_truth_list,predictions_list):
-        
-        #get an equal amount of correctly classified and missclassifications
-        if ground == pred:
-            label = f'correct_{encoding_dict[ground.item()]}'
-            n_correct += 1
-            if n_correct > N:
-                save = False
-        else:
-            label = f'true_{encoding_dict[ground.item()]}_pred_{encoding_dict[pred.item()]}'
-            n_incorrect += 1
-            if n_incorrect > N:
-                save = False
-
-        if save:
-
-            transform = transforms.Compose([
-            transforms.Resize((224,224)),
-            transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-                ])
-
+    
+    #sample of test images
+    rand_idx = np.random.randint(len(test_images_list),size = N)
+    sample_img_path_list = [test_images_list[idx] for idx in rand_idx]
+    sample_gt_list = [ground_truth_list[idx] for idx in rand_idx]
+    sample_pred_list = [predictions_list[idx] for idx in rand_idx]
+    
+    for img_path,label,pred in zip(sample_img_path_list,sample_gt_list,sample_pred_list):
             #load img
             image = Image.open(img_path).convert('RGB')
             #layer for the visualization
@@ -317,17 +312,77 @@ def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path
             image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
             #save XAI
             fname = os.path.split(img_path)[1]
-            fname = '_'.join((label,fname))
+            
+            ground_truth = encoding_dict[label.item()]
+            prediction = encoding_dict[pred.item()]
+            
             fig,ax = plt.subplots(1,2,figsize=(20,20))
             ax[0].imshow(image)
             ax[0].axis('off')
+            ax[0].title.set_text(f'Ground truth: {ground_truth}')
             ax[1].imshow(image_interpretable)
             ax[1].axis('off')
-            plt.savefig(os.path.join(XAI_path,fname))
-            plt.close()
+            ax[1].title.set_text(f'Prediction: {prediction}')
+            
+            plt.savefig(os.path.join(XAI_path,'_'.join((f'[gt:{ground_truth},pred:{prediction}]',fname))))
+            plt.show()
 
-        else:
-            continue
+# def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict):
+
+#     #to do:
+#     #sample a random subset of index
+#     #format output file [gt:,pred:]
+
+#     model.eval()
+    
+#     XAI_path = os.path.join(split_path,'XAI')
+#     create_dir(XAI_path)
+
+#     N = 20
+#     n_correct = 0
+#     n_incorrect = 0
+#     save = True
+#     for img_path,ground,pred in zip(test_image_list,ground_truth_list,predictions_list):
+        
+#         #get an equal amount of correctly classified and missclassifications
+#         if ground == pred:
+#             label = f'correct_{encoding_dict[ground.item()]}'
+#             n_correct += 1
+#             if n_correct > N:
+#                 save = False
+#         else:
+#             label = f'true_{encoding_dict[ground.item()]}_pred_{encoding_dict[pred.item()]}'
+#             n_incorrect += 1
+#             if n_incorrect > N:
+#                 save = False
+
+#         if save:
+
+#             transform = transforms.Compose([
+#             transforms.Resize((224,224)),
+#             transforms.ToTensor(),
+#             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+#                 ])
+
+#             #load img
+#             image = Image.open(img_path).convert('RGB')
+#             #layer for the visualization
+#             heatmap_layer = model.net.layer4[1].conv2
+#             #apply gradcam
+#             image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
+#             #save XAI
+#             fname = os.path.split(img_path)[1]
+#             fname = '_'.join((label,fname))
+#             fig,ax = plt.subplots(1,2,figsize=(20,20))
+#             ax[0].imshow(image)
+#             ax[0].axis('off')
+#             ax[1].imshow(image_interpretable)
+#             ax[1].axis('off')
+#             plt.savefig(os.path.join(XAI_path,fname))
+#             plt.close()
+
+#         else:
+#             continue
 
 
 def save_model(net,model_path):
