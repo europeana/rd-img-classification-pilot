@@ -21,6 +21,11 @@ from ds_utils import *
 from gradcam import *
 import models
 
+def check_args(kwargs,requ_args):
+    for arg_name in requ_args:
+        if not kwargs.get(arg_name):
+            raise ValueError(f'{arg_name} needs to be provided')
+
 class ImgAugTransform:
     """Class for including image augmentation in pytorch transforms"""
     def __init__(self,img_aug):
@@ -120,13 +125,25 @@ def make_train_val_test_splits(X,y,**kwargs):
     return splits_list
     
 
-def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,encoding_dict,epochs = 100, patience = 10):
-
+def train(epochs = 100, patience = 10,**kwargs):
+    """    
+    Trains the model
+    Required arguments:
+    model: 
+    loss_function:
+    ...
+    """
     requ_args = ['model','loss_function','optimizer','trainloader','valloader','device','saving_dir','encoding_dict']
+    check_args(kwargs,requ_args)
 
-    
-
-    #to do: add kwargs
+    model = kwargs.get('model')
+    loss_function = kwargs.get('loss_function')
+    optimizer = kwargs.get('optimizer')
+    trainloader = kwargs.get('trainloader')
+    valloader = kwargs.get('valloader')
+    device = kwargs.get('device')
+    saving_dir = kwargs.get('saving_dir')
+    encoding_dict = kwargs.get('encoding_dict')
 
     best_loss = 1e6
     counter = 0
@@ -163,24 +180,33 @@ def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,
             train_loss += loss.item()*inputs.shape[0]
 
         train_loss /= len(trainloader.dataset)
-    
-        val_metrics_dict, _, _,_ = validate(model,valloader,device,loss_function,encoding_dict)
+        
+        #evaluate model on validation data
+        val_metrics_dict, _, _,_ = validate(
+            model = model,
+            testloader = valloader,
+            device = device,
+            loss_function = loss_function,
+            encoding_dict = encoding_dict)
 
         history['loss_train'].append(train_loss)
         for k,v in val_metrics_dict.items():
             history[f'{k}_val'].append(v)
 
-        #to do: improve history plotting
-        
-        print('[%d, %5d] loss: %.3f validation loss: %.3f acc: %.3f f1: %.3f precision: %.3f recall: %.3f' %
-        (epoch + 1, i + 1, history['loss_train'][-1],history['loss_val'][-1],history['accuracy_val'][-1],history['f1_val'][-1],history['precision_val'][-1],history['recall_val'][-1]))
-        val_loss = history['loss_val'][-1]
+
+        loss_train = history['loss_train'][-1]
+        loss_val = history['loss_val'][-1]
+        accuracy_val = history['accuracy_val'][-1]
+        f1_val = history['f1_val'][-1]
+        precision_val = history['precision_val'][-1]
+        recall_val = history['recall_val'][-1]
+        print(f'[{epoch}] train loss: {loss_train:.3f} validation loss: {loss_val:.3f} acc: {accuracy_val:.3f} f1: {f1_val:.3f} precision: {precision_val:.3f} recall: {recall_val:.3f}')
 
         #save checkpoint if model improves
-        if  val_loss < best_loss:
+        if  loss_val < best_loss:
             checkpoint_path = os.path.join(experiment_path,'checkpoint.pth')
             torch.save(model.state_dict(),checkpoint_path)
-            best_loss = val_loss
+            best_loss = loss_val
             counter = 0
         else:
             counter += 1
@@ -200,9 +226,18 @@ def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,
     return model, history
 
 
-def validate(model,testloader,device,loss_function,encoding_dict):
-    #to do: add kwargs
+def validate(**kwargs):
     """Returns metrics of predictions on test data"""
+
+    requ_args = ['model','loss_function','testloader','device','encoding_dict']
+    check_args(kwargs,requ_args)
+
+    model = kwargs.get('model')
+    loss_function = kwargs.get('loss_function')
+    testloader = kwargs.get('testloader')
+    device = kwargs.get('device')
+    encoding_dict = kwargs.get('encoding_dict')
+    
 
     n_labels = len(list(set(testloader.dataset.y)))
 
@@ -319,9 +354,9 @@ def plot_mean_std(metrics_dict,title,fontsize=20,y_lim = 100):
         plt.legend(fontsize=fontsize)
         ax.grid()
         
-def plot_conf_matrix(array,columns,font_scale=2):
+def plot_conf_matrix(cm_array,columns,font_scale=2):
 
-    df_cm = pd.DataFrame(array, index = columns,
+    df_cm = pd.DataFrame(cm_array, index = columns,
                       columns = columns)
 
     sn.set(font_scale=font_scale)  

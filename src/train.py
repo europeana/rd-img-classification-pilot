@@ -22,7 +22,25 @@ if __name__ == '__main__':
     num_workers = 4
     batch_size = 64
     weighted_loss = True
-    img_aug = None
+    
+    
+    prob_aug = 0.5
+    sometimes = lambda augmentation: iaa.Sometimes(prob_aug, augmentation)
+    img_aug = iaa.Sequential([
+        iaa.Fliplr(prob_aug),
+        sometimes(iaa.Crop(percent=(0, 0.2))),
+        sometimes(iaa.ChangeColorTemperature((1100, 10000))),
+
+        sometimes(iaa.OneOf([
+            iaa.GaussianBlur(sigma=(0, 2.0)),
+            iaa.AddToHueAndSaturation((-10, 10))
+
+        ]))
+
+    ])
+
+    #img_aug = None
+
 
     results_path = os.path.join(ROOT_DIR,'results')
     create_dir(results_path)
@@ -34,19 +52,19 @@ if __name__ == '__main__':
     df = path2DataFrame(data_path)
     
     #remove after testing
-    #df = df.sample(frac=0.1)
+    df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values
-    y_encoded, encoding_dict = label_encoding(y)
-    n_classes = len(encoding_dict)
+    y_encoded, class_index_dict = label_encoding(y)
+    n_classes = len(class_index_dict)
 
     # GPU or CPU
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     #set loss
     if weighted_loss:
-        weights = get_class_weights(y_encoded,encoding_dict)
+        weights = get_class_weights(y_encoded,class_index_dict)
         loss_function = nn.CrossEntropyLoss(reduction ='sum',weight=torch.FloatTensor(weights).to(device))           
     else:
         loss_function = nn.CrossEntropyLoss(reduction='sum')
@@ -80,22 +98,30 @@ if __name__ == '__main__':
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
         
         model, history = train(
-            model,
-            loss_function,
-            optimizer,
-            trainloader,
-            valloader,
-            device,
-            split_path,
-            encoding_dict,
+            model = model,
+            loss_function = loss_function,
+            optimizer = optimizer,
+            trainloader = trainloader,
+            valloader = valloader,
+            device = device,
+            saving_dir = split_path,
+            encoding_dict = class_index_dict,
             epochs = epochs,
             patience = patience)
 
         # evaluate on test data
-        metrics_dict, ground_truth_list, predictions_list, test_image_list = validate(model,testloader,device,loss_function,encoding_dict)
+        metrics_dict, ground_truth_list, predictions_list, test_image_list = validate(
+            model = model,
+            testloader = testloader,
+            device = device,
+            loss_function = loss_function,
+            encoding_dict = class_index_dict
+            )
+
+
         #generate heatmaps using GradCAM for some test images
         #test_image_list = testloader.dataset.X
-        save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict)
+        save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,class_index_dict)
 
         #print test metrics
         for k,v in metrics_dict.items():
@@ -103,7 +129,7 @@ if __name__ == '__main__':
 
         #save training history
         experiment = Experiment()
-        experiment.add('encoding_dict',encoding_dict)
+        experiment.add('encoding_dict',class_index_dict)
         experiment.add('model',model)
         experiment.add('resnet_size',resnet_size)
 

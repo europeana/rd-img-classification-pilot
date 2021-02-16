@@ -5,6 +5,9 @@ import os
 from ds_utils import create_dir
     
 def query_single_category(skos_concept, N):  
+  """
+  
+  """
   CHO_list = []
   response = {'nextCursor':'*'}
   while 'nextCursor' in response:
