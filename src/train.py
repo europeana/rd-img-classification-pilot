@@ -54,7 +54,7 @@ if __name__ == '__main__':
     df = path2DataFrame(data_path)
     
     #remove after testing
-    #df = df.sample(frac=0.1)
+    df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values
@@ -112,12 +112,11 @@ if __name__ == '__main__':
             patience = patience)
 
         # evaluate on test data
-        metrics_dict, ground_truth_list, predictions_list, test_images_list = validate(
+        metrics_dict, ground_truth_list, predictions_list, test_images_list = evaluate(
             model = model,
-            testloader = testloader,
+            dataloader = testloader,
             device = device,
-            loss_function = loss_function,
-            encoding_dict = class_index_dict
+            loss_function = loss_function
             )
 
 

@@ -182,12 +182,11 @@ def train(epochs = 100, patience = 10,**kwargs):
         train_loss /= len(trainloader.dataset)
         
         #evaluate model on validation data
-        val_metrics_dict, _, _,_ = validate(
+        val_metrics_dict, _, _,_ = evaluate(
             model = model,
-            testloader = valloader,
+            dataloader = valloader,
             device = device,
-            loss_function = loss_function,
-            encoding_dict = encoding_dict)
+            loss_function = loss_function)
 
         history['loss_train'].append(train_loss)
         for k,v in val_metrics_dict.items():
@@ -226,27 +225,27 @@ def train(epochs = 100, patience = 10,**kwargs):
     return model, history
 
 
-def validate(**kwargs):
+def evaluate(**kwargs):
     """Returns metrics of predictions on test data"""
 
-    requ_args = ['model','loss_function','testloader','device','encoding_dict']
+    requ_args = ['model','loss_function','dataloader','device']
     check_args(kwargs,requ_args)
 
     model = kwargs.get('model')
     loss_function = kwargs.get('loss_function')
-    testloader = kwargs.get('testloader')
+    dataloader = kwargs.get('dataloader')
     device = kwargs.get('device')
-    encoding_dict = kwargs.get('encoding_dict')
+    #encoding_dict = kwargs.get('class_index_dict')
     
 
-    n_labels = len(list(set(testloader.dataset.y)))
+    n_labels = len(list(set(dataloader.dataset.y)))
 
     ground_truth_list = []
     predictions_list = []
     img_path_list = []
     loss = 0.0
     with torch.no_grad():
-        for i,(images, labels,img_path) in enumerate(testloader):
+        for i,(images, labels,img_path) in enumerate(dataloader):
             labels = torch.from_numpy(np.array(labels))
             images, labels = images.to(device), labels.to(device)
             outputs = model(images)
@@ -257,7 +256,7 @@ def validate(**kwargs):
             predictions_list += list(predicted.cpu())
             img_path_list += list(img_path)
 
-    loss /= len(testloader.dataset)
+    loss /= len(dataloader.dataset)
 
     metrics_dict = {
         'loss':loss,
@@ -273,6 +272,14 @@ def validate(**kwargs):
     return metrics_dict, ground_truth_list, predictions_list, img_path_list
 
 def save_XAI(N = 20, **kwargs):
+    """
+    Comment
+    """
+
+    #to do: change name of function
+
+    #to do: return list of path to original images, gt, pred, and XAI images
+    
     
     requ_args = ['model','test_images_list','ground_truth_list','predictions_list','split_path','device','encoding_dict']
     check_args(kwargs,requ_args)
@@ -327,62 +334,6 @@ def save_XAI(N = 20, **kwargs):
             plt.savefig(os.path.join(XAI_path,'_'.join((f'[gt:{ground_truth},pred:{prediction}]',fname))))
             plt.show()
 
-# def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict):
-
-#     #to do:
-#     #sample a random subset of index
-#     #format output file [gt:,pred:]
-
-#     model.eval()
-    
-#     XAI_path = os.path.join(split_path,'XAI')
-#     create_dir(XAI_path)
-
-#     N = 20
-#     n_correct = 0
-#     n_incorrect = 0
-#     save = True
-#     for img_path,ground,pred in zip(test_image_list,ground_truth_list,predictions_list):
-        
-#         #get an equal amount of correctly classified and missclassifications
-#         if ground == pred:
-#             label = f'correct_{encoding_dict[ground.item()]}'
-#             n_correct += 1
-#             if n_correct > N:
-#                 save = False
-#         else:
-#             label = f'true_{encoding_dict[ground.item()]}_pred_{encoding_dict[pred.item()]}'
-#             n_incorrect += 1
-#             if n_incorrect > N:
-#                 save = False
-
-#         if save:
-
-#             transform = transforms.Compose([
-#             transforms.Resize((224,224)),
-#             transforms.ToTensor(),
-#             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-#                 ])
-
-#             #load img
-#             image = Image.open(img_path).convert('RGB')
-#             #layer for the visualization
-#             heatmap_layer = model.net.layer4[1].conv2
-#             #apply gradcam
-#             image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
-#             #save XAI
-#             fname = os.path.split(img_path)[1]
-#             fname = '_'.join((label,fname))
-#             fig,ax = plt.subplots(1,2,figsize=(20,20))
-#             ax[0].imshow(image)
-#             ax[0].axis('off')
-#             ax[1].imshow(image_interpretable)
-#             ax[1].axis('off')
-#             plt.savefig(os.path.join(XAI_path,fname))
-#             plt.close()
-
-#         else:
-#             continue
 
 
 def save_model(net,model_path):

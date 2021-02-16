@@ -6,7 +6,7 @@ from ds_utils import create_dir
     
 def query_single_category(skos_concept, N):  
   """
-  
+
   """
   CHO_list = []
   response = {'nextCursor':'*'}
@@ -96,6 +96,8 @@ getty_vocab = {
 if __name__ == '__main__':
 
     ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+
+    #to do: add command line interface? N as parameter, point to json vocabulary?
 
 
     #select some categories from getty vocab
