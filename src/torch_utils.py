@@ -34,6 +34,7 @@ class TrainingDataset(Dataset):
     Pytorch training dataset class
     X: Numpy array containing the paths to the images
     y: Numpy array with the encoded labels
+    returns batches of images, labels and images paths
     """
     def __init__(self, X, y, transform=None):
         self.transform = transform
@@ -58,7 +59,13 @@ class TrainingDataset(Dataset):
 
 
 def make_train_val_test_splits(X,y,**kwargs):
-    
+    """
+    Function for making train, validation and test splits for crossvalidation
+    X: numpy array with the path to the images
+    y: numpy array with the encoded labels
+    Output: list of dictionaries with pytorch dataloaders for train, validation, test
+    """
+
     input_size = kwargs.get('input_size',224)
     batch_size = kwargs.get('batch_size',16)
     num_workers = kwargs.get('num_workers',4)
@@ -114,6 +121,10 @@ def make_train_val_test_splits(X,y,**kwargs):
     
 
 def train(model,loss_function,optimizer,trainloader,valloader,device,saving_dir,encoding_dict,epochs = 100, patience = 10):
+
+    requ_args = ['model','loss_function','optimizer','trainloader','valloader','device','saving_dir','encoding_dict']
+
+    
 
     #to do: add kwargs
 
@@ -228,6 +239,10 @@ def validate(model,testloader,device,loss_function,encoding_dict):
 
 def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path,device,encoding_dict):
 
+    #to do:
+    #sample a random subset of index
+    #format output file [gt:,pred:]
+
     model.eval()
     
     XAI_path = os.path.join(split_path,'XAI')
@@ -274,6 +289,7 @@ def save_XAI(model,test_image_list,ground_truth_list,predictions_list,split_path
             ax[1].imshow(image_interpretable)
             ax[1].axis('off')
             plt.savefig(os.path.join(XAI_path,fname))
+            plt.close()
 
         else:
             continue

@@ -41,8 +41,8 @@ if __name__ == '__main__':
     y_encoded, encoding_dict = label_encoding(y)
     n_classes = len(encoding_dict)
 
-    # GPU
-    device = torch.device('cuda:0')
+    # GPU or CPU
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     #set loss
     if weighted_loss:
@@ -50,6 +50,7 @@ if __name__ == '__main__':
         loss_function = nn.CrossEntropyLoss(reduction ='sum',weight=torch.FloatTensor(weights).to(device))           
     else:
         loss_function = nn.CrossEntropyLoss(reduction='sum')
+
 
     data_splits = make_train_val_test_splits(
         X,
