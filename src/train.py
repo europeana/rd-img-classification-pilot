@@ -10,7 +10,6 @@ from imgaug import augmenters as iaa
 
 if __name__ == '__main__':
 
-    #to do: change encoding dict by class_index_dict
 
     #to do: add command line interface?
 
@@ -107,7 +106,6 @@ if __name__ == '__main__':
             valloader = valloader,
             device = device,
             saving_dir = split_path,
-            encoding_dict = class_index_dict,
             epochs = epochs,
             patience = patience)
 
@@ -119,19 +117,15 @@ if __name__ == '__main__':
             loss_function = loss_function
             )
 
-
         #generate heatmaps using GradCAM for some test images
-        #test_image_list = testloader.dataset.X
-        #save_XAI(model,test_images_list,ground_truth_list,predictions_list,split_path,device,class_index_dict)
-
         save_XAI(
             model = model,
             test_images_list = test_images_list,
             ground_truth_list = ground_truth_list,
             predictions_list = predictions_list,
-            split_path = split_path,
+            saving_dir = split_path,
             device = device,
-            encoding_dict = class_index_dict)
+            class_index_dict = class_index_dict)
 
         #print test metrics
         for k,v in metrics_dict.items():
@@ -139,7 +133,7 @@ if __name__ == '__main__':
 
         #save training history
         experiment = Experiment()
-        experiment.add('encoding_dict',class_index_dict)
+        experiment.add('class_index_dict',class_index_dict)
         experiment.add('model',model)
         experiment.add('resnet_size',resnet_size)
 

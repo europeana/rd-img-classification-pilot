@@ -133,7 +133,7 @@ def train(epochs = 100, patience = 10,**kwargs):
     loss_function:
     ...
     """
-    requ_args = ['model','loss_function','optimizer','trainloader','valloader','device','saving_dir','encoding_dict']
+    requ_args = ['model','loss_function','optimizer','trainloader','valloader','device','saving_dir']
     check_args(kwargs,requ_args)
 
     model = kwargs.get('model')
@@ -143,7 +143,7 @@ def train(epochs = 100, patience = 10,**kwargs):
     valloader = kwargs.get('valloader')
     device = kwargs.get('device')
     saving_dir = kwargs.get('saving_dir')
-    encoding_dict = kwargs.get('encoding_dict')
+    #encoding_dict = kwargs.get('encoding_dict')
 
     best_loss = 1e6
     counter = 0
@@ -281,16 +281,16 @@ def save_XAI(N = 20, **kwargs):
     #to do: return list of path to original images, gt, pred, and XAI images
     
     
-    requ_args = ['model','test_images_list','ground_truth_list','predictions_list','split_path','device','encoding_dict']
+    requ_args = ['model','test_images_list','ground_truth_list','predictions_list','saving_dir','device','class_index_dict']
     check_args(kwargs,requ_args)
     
     model = kwargs.get('model')
     test_images_list = kwargs.get('test_images_list')
     ground_truth_list = kwargs.get('ground_truth_list')
     predictions_list = kwargs.get('predictions_list')
-    split_path = kwargs.get('split_path')
+    saving_dir = kwargs.get('saving_dir')
     device = kwargs.get('device')
-    encoding_dict = kwargs.get('encoding_dict')
+    class_index_dict = kwargs.get('class_index_dict')
 
     
     model.eval()
@@ -301,7 +301,7 @@ def save_XAI(N = 20, **kwargs):
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
 
-    XAI_path = os.path.join(split_path,'XAI')
+    XAI_path = os.path.join(saving_dir,'XAI')
     create_dir(XAI_path)
     
     #sample of test images
@@ -311,28 +311,30 @@ def save_XAI(N = 20, **kwargs):
     sample_pred_list = [predictions_list[idx] for idx in rand_idx]
     
     for img_path,label,pred in zip(sample_img_path_list,sample_gt_list,sample_pred_list):
-            #load img
-            image = Image.open(img_path).convert('RGB')
-            #layer for the visualization
-            heatmap_layer = model.net.layer4[1].conv2
-            #apply gradcam
-            image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
-            #save XAI
-            fname = os.path.split(img_path)[1]
-            
-            ground_truth = encoding_dict[label.item()]
-            prediction = encoding_dict[pred.item()]
-            
-            fig,ax = plt.subplots(1,2,figsize=(20,20))
-            ax[0].imshow(image)
-            ax[0].axis('off')
-            ax[0].title.set_text(f'Ground truth: {ground_truth}')
-            ax[1].imshow(image_interpretable)
-            ax[1].axis('off')
-            ax[1].title.set_text(f'Prediction: {prediction}')
-            
-            plt.savefig(os.path.join(XAI_path,'_'.join((f'[gt:{ground_truth},pred:{prediction}]',fname))))
-            plt.show()
+        #load img
+        image = Image.open(img_path).convert('RGB')
+        #layer for the visualization
+        heatmap_layer = model.net.layer4[1].conv2
+        #apply gradcam
+        image_interpretable,_,_ = grad_cam(model, image, heatmap_layer, transform,device)
+        #save XAI
+        fname = os.path.split(img_path)[1]
+        
+        ground_truth = class_index_dict[label.item()]
+        prediction = class_index_dict[pred.item()]
+        
+        fig,ax = plt.subplots(1,2,figsize=(20,20))
+        ax[0].imshow(image)
+        ax[0].axis('off')
+        ax[0].title.set_text(f'Ground truth: {ground_truth}')
+        ax[1].imshow(image_interpretable)
+        ax[1].axis('off')
+        ax[1].title.set_text(f'Prediction: {prediction}')
+        
+        plt.savefig(os.path.join(XAI_path,'_'.join((f'[gt:{ground_truth},pred:{prediction}]',fname))))
+        plt.show()
+
+    model.train()
 
 
 
@@ -381,7 +383,7 @@ def read_train_history(results_path,metrics_list,max_epochs):
     for split in os.listdir(results_path):
         training_info_path = os.path.join(results_path,split,'training_info.pth')
         training_info = torch.load(training_info_path)
-        encoding_dict = training_info['encoding_dict']
+        encoding_dict = training_info['class_index_dict']
 
         for metric in ['loss_val','loss_train']:
             loss_arr = np.array(training_info[metric])
@@ -393,7 +395,7 @@ def read_train_history(results_path,metrics_list,max_epochs):
             metric_arr = np.pad(metric_arr,(0,max_epochs-metric_arr.shape[0]),'edge')
             metrics_dict[metric].append(list(metric_arr))
 
-            test_metric = training_info[f'{metric}_test']
-            metrics_dict[f'{metric}_test'].append(test_metric)
+            #test_metric = training_info[f'{metric}_test']
+            #metrics_dict[f'{metric}_test'].append(test_metric)
             
     return metrics_dict
