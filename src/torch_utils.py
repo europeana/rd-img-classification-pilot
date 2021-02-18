@@ -6,6 +6,8 @@ from PIL import Image
 
 import torch
 import torchvision
+import torch.nn as nn
+import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
 
@@ -20,6 +22,7 @@ import matplotlib.pyplot as plt
 from ds_utils import *
 from gradcam import *
 import models
+
 
 def check_args(kwargs,requ_args):
     for arg_name in requ_args:
@@ -61,6 +64,79 @@ class TrainingDataset(Dataset):
             img = self.transform(img)
 
         return img,label,img_path
+
+class ResNet(nn.Module):
+    def __init__(self,size, output_size):
+        super(ResNet, self).__init__()
+
+        if size not in [18,34,50,101,152]:
+            raise Exception('Wrong size for resnet')
+        if size == 18:
+            self.net = torchvision.models.resnet18(pretrained=True)
+        elif size == 34:
+            self.net = torchvision.models.resnet34(pretrained=True)
+        elif size == 50:
+            self.net = torchvision.models.resnet50(pretrained=True)
+        elif size == 101:
+            self.net = torchvision.models.resnet101(pretrained=True)
+        elif size == 152:
+            self.net = torchvision.models.resnet152(pretrained=True)
+
+        #initialize the fully connected layer
+        self.net.fc = nn.Linear(self.net.fc.in_features, output_size)
+        self.sm = nn.Softmax(dim=1)
+
+    def forward(self, x):
+        out = self.net(x)
+        out = self.sm(out)
+        return out
+
+def get_class_weights(y_encoded,encoding_dict):
+    """Calculates the weights for the Cross Entropy loss """
+    data_dict = get_imgs_per_cat(y_encoded)       
+    N = sum(data_dict.values())
+    #calculate weights as the inverse of the frequency of each class
+    weights = []
+    for k in data_dict.keys(): 
+        weights.append(N/data_dict[k])
+    return weights
+
+def get_imgs_per_cat(y_encoded):
+    #count the images in each category
+    data_dict = {}
+    for el in y_encoded:
+        if el not in data_dict.keys():
+            data_dict.update({el:1})
+        else:
+            data_dict[el] += 1
+    return data_dict
+
+def label_encoding(y):
+    le = preprocessing.LabelEncoder()
+    y_encoded = le.fit_transform(y)
+    encoding_dict = {}
+    for cat in le.classes_:
+        label = le.transform(np.array([cat]))[0]
+        encoding_dict.update({int(label):cat}) 
+    return y_encoded, encoding_dict
+
+class Experiment():
+    def __init__(self):
+        self.info = {}
+
+    def add(self,key,value):
+        self.info.update({key:value})
+        return self
+
+    def show(self):
+        print(f'keys: {self.info.keys()}\n')
+        for k,v in self.info.items():
+            print(f'{k}: {v}\n')
+
+    def save(self,dest_path):
+        filename = 'training_info.pth'
+        info_file_path = os.path.join(dest_path,filename)
+        torch.save(self.info, info_file_path)
 
 
 def make_train_val_test_splits(X,y,**kwargs):
@@ -335,6 +411,148 @@ def save_XAI(N = 20, **kwargs):
         plt.show()
 
     model.train()
+
+
+
+def train_crossvalidation(**kwargs):
+
+    check_args(kwargs,['data_dir','saving_dir'])
+
+    data_dir = kwargs.get('data_dir',None)
+    saving_dir = kwargs.get('saving_dir',None)
+
+    experiment_name = kwargs.get('experiment_name','model_training')
+    learning_rate = kwargs.get('learning_rate',0.00001)
+    epochs = kwargs.get('epochs',100)
+    patience = kwargs.get('patience',10)
+    resnet_size = kwargs.get('resnet_size',34) # allowed sizes: 18,34,50,101,152
+    num_workers = kwargs.get('num_workers',4)
+    batch_size = kwargs.get('batch_size',64)
+    weighted_loss = kwargs.get('weighted_loss',True)
+
+    #to do: include image augmentation    
+    
+    # prob_aug = 0.5
+    # sometimes = lambda augmentation: iaa.Sometimes(prob_aug, augmentation)
+    # img_aug = iaa.Sequential([
+    #     iaa.Fliplr(prob_aug),
+    #     sometimes(iaa.Crop(percent=(0, 0.2))),
+    #     sometimes(iaa.ChangeColorTemperature((1100, 10000))),
+
+    #     sometimes(iaa.OneOf([
+    #         iaa.GaussianBlur(sigma=(0, 2.0)),
+    #         iaa.AddToHueAndSaturation((-10, 10))
+
+    #     ]))
+
+    # ])
+
+    img_aug = None
+
+
+    results_path = os.path.join(ROOT_DIR,'results')
+    create_dir(results_path)
+    experiment_path = os.path.join(results_path,experiment_name)
+    create_dir(experiment_path)
+
+    #load data
+    data_path = os.path.join(ROOT_DIR,'new_training')
+    df = path2DataFrame(data_path)
+    
+    #remove after testing
+    df = df.sample(frac=0.1)
+
+    X = df['file_path'].values
+    y = df['category'].values
+    y_encoded, class_index_dict = label_encoding(y)
+    n_classes = len(class_index_dict)
+
+    # GPU or CPU
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    #set loss
+    if weighted_loss:
+        weights = get_class_weights(y_encoded,class_index_dict)
+        loss_function = nn.CrossEntropyLoss(reduction ='sum',weight=torch.FloatTensor(weights).to(device))           
+    else:
+        loss_function = nn.CrossEntropyLoss(reduction='sum')
+
+
+    data_splits = make_train_val_test_splits(
+        X,
+        y_encoded,
+        img_aug = img_aug,
+        num_workers = num_workers,
+        batch_size = batch_size,
+        splits = 10,
+    )
+
+    #crossvalidation
+    for i,split in enumerate(data_splits):
+        print(f'split {i}\n')
+        split_path = os.path.join(experiment_path,f'split_{i}')
+        
+        trainloader = split['trainloader']
+        valloader = split['valloader']
+        testloader = split['testloader']
+
+        print('size train: {}'.format(len(trainloader.dataset)))
+        print('size val: {}'.format(len(valloader.dataset)))
+        print('size test: {}'.format(len(testloader.dataset)))
+        
+        #initialize model
+        model = models.ResNet(resnet_size,n_classes).to(device)
+        #set optimizer
+        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+        
+        model, history = train(
+            model = model,
+            loss_function = loss_function,
+            optimizer = optimizer,
+            trainloader = trainloader,
+            valloader = valloader,
+            device = device,
+            saving_dir = split_path,
+            epochs = epochs,
+            patience = patience)
+
+        # evaluate on test data
+        metrics_dict, ground_truth_list, predictions_list, test_images_list = evaluate(
+            model = model,
+            dataloader = testloader,
+            device = device,
+            loss_function = loss_function
+            )
+
+        #generate heatmaps using GradCAM for some test images
+        save_XAI(
+            model = model,
+            test_images_list = test_images_list,
+            ground_truth_list = ground_truth_list,
+            predictions_list = predictions_list,
+            saving_dir = split_path,
+            device = device,
+            class_index_dict = class_index_dict)
+
+        #print test metrics
+        for k,v in metrics_dict.items():
+            print(f'{k}_test: {v}')
+
+        #save training history
+        experiment = Experiment()
+        experiment.add('class_index_dict',class_index_dict)
+        experiment.add('model',model)
+        experiment.add('resnet_size',resnet_size)
+
+        for k,v in metrics_dict.items():
+            experiment.add(f'{k}_test',v)
+
+        for k,v in history.items():
+            experiment.add(k,v)
+
+        experiment.save(split_path)
+
+    return 
 
 
 

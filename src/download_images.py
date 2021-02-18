@@ -15,7 +15,7 @@ def url2img(url):
         print('Failed to get media image')
         pass
 
-def download_main(csv_path,saving_dir):
+def download_images(csv_path,saving_dir):
 
     create_dir(saving_dir)
     df = pd.read_csv(csv_path)
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     parser.add_argument('--saving_dir', required=True)
     args = parser.parse_args()
 
-    download_main(args.csv_path,args.saving_dir)
+    download_images(args.csv_path,args.saving_dir)
 
 
 

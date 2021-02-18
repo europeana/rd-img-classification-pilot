@@ -34,52 +34,6 @@ def drop_categories_df(df,categories):
     df_.index = np.arange(df_.shape[0])
     return df_
 
-def get_class_weights(y_encoded,encoding_dict):
-    """Calculates the weights for the Cross Entropy loss """
-    data_dict = get_imgs_per_cat(y_encoded)       
-    N = sum(data_dict.values())
-    #calculate weights as the inverse of the frequency of each class
-    weights = []
-    for k in data_dict.keys(): 
-        weights.append(N/data_dict[k])
-    return weights
-
-def get_imgs_per_cat(y_encoded):
-    #count the images in each category
-    data_dict = {}
-    for el in y_encoded:
-        if el not in data_dict.keys():
-            data_dict.update({el:1})
-        else:
-            data_dict[el] += 1
-    return data_dict
-
-def label_encoding(y):
-    le = preprocessing.LabelEncoder()
-    y_encoded = le.fit_transform(y)
-    encoding_dict = {}
-    for cat in le.classes_:
-        label = le.transform(np.array([cat]))[0]
-        encoding_dict.update({int(label):cat}) 
-    return y_encoded, encoding_dict
-
-class Experiment():
-    def __init__(self):
-        self.info = {}
-
-    def add(self,key,value):
-        self.info.update({key:value})
-        return self
-
-    def show(self):
-        print(f'keys: {self.info.keys()}\n')
-        for k,v in self.info.items():
-            print(f'{k}: {v}\n')
-
-    def save(self,dest_path):
-        filename = 'training_info.pth'
-        info_file_path = os.path.join(dest_path,filename)
-        torch.save(self.info, info_file_path)
 
 
 
