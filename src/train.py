@@ -3,44 +3,53 @@ import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import argparse
 
 from ds_utils import *
 from torch_utils import *
 from imgaug import augmenters as iaa
 
-if __name__ == '__main__':
+
+def check_args(kwargs,requ_args):
+    for arg_name in requ_args:
+        if not kwargs.get(arg_name):
+            raise ValueError(f'{arg_name} needs to be provided')
 
 
-    #to do: add command line interface?
+def train_crossvalidation(**kwargs):
 
-    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+    check_args(kwargs,['data_dir','saving_dir'])
 
-    experiment_name = 'testing'
-    learning_rate = 0.00001
-    epochs = 2
-    patience = 1
-    resnet_size = 34 # allowed sizes: 18,34,50,101,152
-    num_workers = 4
-    batch_size = 64
-    weighted_loss = True
+    data_dir = kwargs.get('data_dir',None)
+    saving_dir = kwargs.get('saving_dir',None)
+
+    experiment_name = kwargs.get('experiment_name','model_training')
+    learning_rate = kwargs.get('learning_rate',0.00001)
+    epochs = kwargs.get('epochs',100)
+    patience = kwargs.get('patience',10)
+    resnet_size = kwargs.get('resnet_size',34) # allowed sizes: 18,34,50,101,152
+    num_workers = kwargs.get('num_workers',4)
+    batch_size = kwargs.get('batch_size',64)
+    weighted_loss = kwargs.get('weighted_loss',True)
+
+    #to do: include image augmentation    
     
-    
-    prob_aug = 0.5
-    sometimes = lambda augmentation: iaa.Sometimes(prob_aug, augmentation)
-    img_aug = iaa.Sequential([
-        iaa.Fliplr(prob_aug),
-        sometimes(iaa.Crop(percent=(0, 0.2))),
-        sometimes(iaa.ChangeColorTemperature((1100, 10000))),
+    # prob_aug = 0.5
+    # sometimes = lambda augmentation: iaa.Sometimes(prob_aug, augmentation)
+    # img_aug = iaa.Sequential([
+    #     iaa.Fliplr(prob_aug),
+    #     sometimes(iaa.Crop(percent=(0, 0.2))),
+    #     sometimes(iaa.ChangeColorTemperature((1100, 10000))),
 
-        sometimes(iaa.OneOf([
-            iaa.GaussianBlur(sigma=(0, 2.0)),
-            iaa.AddToHueAndSaturation((-10, 10))
+    #     sometimes(iaa.OneOf([
+    #         iaa.GaussianBlur(sigma=(0, 2.0)),
+    #         iaa.AddToHueAndSaturation((-10, 10))
 
-        ]))
+    #     ]))
 
-    ])
+    # ])
 
-    #img_aug = None
+    img_aug = None
 
 
     results_path = os.path.join(ROOT_DIR,'results')
@@ -144,6 +153,57 @@ if __name__ == '__main__':
             experiment.add(k,v)
 
         experiment.save(split_path)
+
+    return 
+
+
+if __name__ == '__main__':
+
+    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data_dir', required=True)
+    parser.add_argument('--saving_dir', required=False)
+
+    parser.add_argument('--experiment_name', required=False, nargs = '?', const = 'model_training')
+    parser.add_argument('--learning_rate', required=False, nargs = '?', type=float)
+    parser.add_argument('--epochs', required=False, nargs = '?', type = int, const = 2)
+    parser.add_argument('--patience', required=False, nargs = '?', const = 1)
+    parser.add_argument('--resnet_size', required=False, nargs = '?', const = 34)
+    parser.add_argument('--num_workers', required=False, nargs = '?', const = 4)
+    parser.add_argument('--batch_size', required=False, nargs = '?', const = 64)
+    parser.add_argument('--weighted_loss', required=False, nargs = '?', const = True)
+
+
+    args = parser.parse_args()
+
+    if not args.saving_dir:
+      saving_dir = ROOT_DIR
+    else:
+      saving_dir = args.saving_dir
+
+    if not args.learning_rate:
+      learning_rate = 0.00001
+    else:
+      learning_rate = float(args.learning_rate)
+
+
+    train_crossvalidation(
+        data_dir = args.data_dir ,
+        saving_dir = args.saving_dir,
+        experiment_name = args.experiment_name,
+        learning_rate = learning_rate,
+        epochs = int(args.epochs),
+        patience = int(args.patience),
+        resnet_size = int(args.resnet_size),
+        num_workers = int(args.num_workers),
+        batch_size = int(args.batch_size),
+        weighted_loss = args.weighted_loss
+    )
+
+
+
+
         
 
 

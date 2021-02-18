@@ -1,6 +1,7 @@
 #download images
 import os
 import requests
+import argparse
 from PIL import Image
 import pandas as pd
 from io import BytesIO
@@ -14,22 +15,17 @@ def url2img(url):
         print('Failed to get media image')
         pass
 
+def download_main(csv_path,saving_dir):
 
-if __name__ == "__main__":
-
-    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
-
-    dest_path = os.path.join(ROOT_DIR,'training_data')
-    create_dir(dest_path)
-    
-    df = pd.read_csv(os.path.join(ROOT_DIR,'dataset.csv'))
+    create_dir(saving_dir)
+    df = pd.read_csv(csv_path)
     
     for cat in df.category.unique():
         print(cat)
         #subset 
         df_category = df.loc[df['category'] == cat]
         
-        cat_path = os.path.join(dest_path,cat)
+        cat_path = os.path.join(saving_dir,cat)
         create_dir(cat_path)
         
         for i in range(df_category.shape[0]):
@@ -41,6 +37,20 @@ if __name__ == "__main__":
                     img.save(os.path.join(cat_path,f'{ID}.jpg'.replace("/","[ph]")))
                 except:
                     pass
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--saving_dir', required=True)
+    parser.add_argument('--csv_path', required=True)
+    args = parser.parse_args()
+
+    download_main(args.csv_path,args.saving_dir)
+
+
+
+
 
     
     

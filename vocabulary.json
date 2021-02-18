@@ -1,0 +1,22 @@
+{
+    "building":"http://data.europeana.eu/concept/base/29",
+    "ceramics":"http://data.europeana.eu/concept/base/31",
+    "drawing":"http://data.europeana.eu/concept/base/35",
+    "furniture":"http://data.europeana.eu/concept/base/37",
+    "jewellery":"http://data.europeana.eu/concept/base/41",
+    "map":"http://data.europeana.eu/concept/base/43",
+    "painting":"http://data.europeana.eu/concept/base/47",
+    "photograph":"http://data.europeana.eu/concept/base/48",
+    "postcard":"http://data.europeana.eu/concept/base/50",
+    "sculpture":"http://data.europeana.eu/concept/base/51",
+    "specimen":"http://data.europeana.eu/concept/base/167",
+    "tapestry":"http://data.europeana.eu/concept/base/54",
+    "textile":"http://data.europeana.eu/concept/base/55",
+    "toy":"http://data.europeana.eu/concept/base/56",
+    "woodwork":"http://data.europeana.eu/concept/base/59",
+    "archaeological_site": "http://vocab.getty.edu/aat/300266151",
+    "clothing" : "http://vocab.getty.edu/aat/300266639",
+    "costume_accessories": "http://vocab.getty.edu/aat/300209273",
+    "inscription": "http://vocab.getty.edu/aat/300028702",
+    "weaponry": "http://vocab.getty.edu/aat/300036926"
+    }

@@ -1,42 +1,10 @@
 import pandas as pd
 import requests
 import os
+import json
+import argparse
 
 from ds_utils import create_dir
-    
-def query_single_category(skos_concept, N):  
-  """
-
-  """
-  CHO_list = []
-  response = {'nextCursor':'*'}
-  while 'nextCursor' in response:
-    
-    if len(CHO_list)>N:
-      break
-
-    params = {
-        'reusability':'open',
-        'media':True,
-        'cursor':response['nextCursor'],
-        'qf':f'(skos_concept:"{skos_concept}" AND TYPE:IMAGE )', 
-        'query':'*', 
-        'wskey':'api2demo'
-    }
-    response = requests.get('https://www.europeana.eu/api/v2/search.json', params = params).json()
-
-    for item in response['items']:
-      ID = item['id']
-      URI = 'http://data.europeana.eu/item'+ID
-      try:
-        URL = item['edmIsShownBy'][0]
-        CHO_list.append({'category':category,'skos_concept':skos_concept,'URI':URI,'ID':ID,'URL':URL})
-      except:
-        pass
-    
-  return pd.DataFrame(CHO_list[:N])
-    
- 
 
 ec_vocab = {
                  'building':'http://data.europeana.eu/concept/base/29',
@@ -92,28 +60,80 @@ getty_vocab = {
                 'weaponry': 'http://vocab.getty.edu/aat/300036926' ,
                 'woodwork': 'http://vocab.getty.edu/aat/300015348' ,
                 'stamp': 'http://vocab.getty.edu/aat/300037321' }
-
-if __name__ == '__main__':
-
-    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
-
-    #to do: add command line interface? N as parameter, point to json vocabulary?
-
-
-    #select some categories from getty vocab
-    getty_categories = ['archaeological_site','clothing','costume_accessories','inscription','weaponry']
-    vocab_dict = {k:getty_vocab[k] for k in getty_categories}
     
-    #merge ec and getty
-    vocab_dict.update(ec_vocab)
+def query_single_category(category,skos_concept, N):  
+  """
 
-    N = 1000
+  """
+  CHO_list = []
+  response = {'nextCursor':'*'}
+  while 'nextCursor' in response:
     
+    if len(CHO_list)>N:
+      break
+
+    params = {
+        'reusability':'open',
+        'media':True,
+        'cursor':response['nextCursor'],
+        'qf':f'(skos_concept:"{skos_concept}" AND TYPE:IMAGE )', 
+        'query':'*', 
+        'wskey':'api2demo'
+    }
+    response = requests.get('https://www.europeana.eu/api/v2/search.json', params = params).json()
+
+    for item in response['items']:
+      ID = item['id']
+      URI = 'http://data.europeana.eu/item'+ID
+      try:
+        URL = item['edmIsShownBy'][0]
+        CHO_list.append({'category':category,'skos_concept':skos_concept,'URI':URI,'ID':ID,'URL':URL})
+      except:
+        pass
+    
+  return pd.DataFrame(CHO_list[:N])
+
+
+def harvest_categories(vocab_dict,n,fname,saving_dir):
     df = pd.DataFrame()
     for category in vocab_dict.keys():
       print(category)
       skos_concept = vocab_dict[category]
-      df_category = query_single_category(skos_concept, N)
+      df_category = query_single_category(category,skos_concept, int(args.n))
       df = pd.concat((df,df_category))
       #save after each category
-      df.to_csv(os.path.join(ROOT_DIR,'dataset.csv'),index=False)
+      df.to_csv(os.path.join(saving_dir,fname),index=False)
+
+    return df
+
+  
+if __name__ == '__main__':
+
+    ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--vocab_json', required=True)
+    parser.add_argument('--n', required=False, nargs = '?', const = 1000)
+    parser.add_argument('--name', required=False)
+    parser.add_argument('--saving_dir', required=False)
+
+    args = parser.parse_args()
+    
+    with open(args.vocab_json,'r') as f:
+      vocab_dict = json.load(f)
+      
+    if args.name:
+      fname = f'{args.name}.csv'
+    else:
+      fname = 'dataset.csv'
+
+    if not args.saving_dir:
+      saving_dir = ROOT_DIR
+    else:
+      saving_dir = args.saving_dir
+          
+    harvest_categories(vocab_dict,int(args.n),fname,saving_dir)
+
+
+    
+
