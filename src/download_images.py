@@ -42,8 +42,8 @@ def download_main(csv_path,saving_dir):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--saving_dir', required=True)
     parser.add_argument('--csv_path', required=True)
+    parser.add_argument('--saving_dir', required=True)
     args = parser.parse_args()
 
     download_main(args.csv_path,args.saving_dir)
