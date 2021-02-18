@@ -165,17 +165,23 @@ if __name__ == '__main__':
     parser.add_argument('--data_dir', required=True)
     parser.add_argument('--saving_dir', required=False)
 
-    parser.add_argument('--experiment_name', required=False, nargs = '?', const = 'model_training')
-    parser.add_argument('--learning_rate', required=False, nargs = '?', type=float)
-    parser.add_argument('--epochs', required=False, nargs = '?', type = int, const = 2)
-    parser.add_argument('--patience', required=False, nargs = '?', const = 1)
-    parser.add_argument('--resnet_size', required=False, nargs = '?', const = 34)
-    parser.add_argument('--num_workers', required=False, nargs = '?', const = 4)
-    parser.add_argument('--batch_size', required=False, nargs = '?', const = 64)
-    parser.add_argument('--weighted_loss', required=False, nargs = '?', const = True)
+    parser.add_argument('--experiment_name', required=False)
+    parser.add_argument('--learning_rate', required=False)
+    parser.add_argument('--epochs', required=False)
+
+    parser.add_argument('--patience', required=False)
+    parser.add_argument('--resnet_size', required=False)
+    parser.add_argument('--num_workers', required=False)
+    parser.add_argument('--batch_size', required=False)
+    parser.add_argument('--weighted_loss', required=False)
 
 
     args = parser.parse_args()
+
+    if not args.experiment_name:
+      experiment_name = 'model_training'
+    else:
+      experiment_name = args.experiment_name
 
     if not args.saving_dir:
       saving_dir = ROOT_DIR
@@ -187,18 +193,48 @@ if __name__ == '__main__':
     else:
       learning_rate = float(args.learning_rate)
 
+    if not args.epochs:
+      epochs = 2
+    else:
+      epochs = int(args.epochs)
+
+    if not args.resnet_size:
+      resnet_size = 34
+    else:
+      resnet_size = int(args.resnet_size)
+
+    if not args.patience:
+      patience = 1
+    else:
+      patience = int(args.patience)
+
+    if not args.num_workers:
+      num_workers = 4
+    else:
+      num_workers = int(args.num_workers)
+
+    if not args.batch_size:
+      batch_size = 64
+    else:
+      batch_size = int(args.batch_size)
+
+    if not args.weighted_loss:
+      weighted_loss = True
+    else:
+      weighted_loss = bool(args.weighted_loss)
+
 
     train_crossvalidation(
         data_dir = args.data_dir ,
         saving_dir = args.saving_dir,
-        experiment_name = args.experiment_name,
+        experiment_name = experiment_name,
         learning_rate = learning_rate,
-        epochs = int(args.epochs),
-        patience = int(args.patience),
-        resnet_size = int(args.resnet_size),
-        num_workers = int(args.num_workers),
-        batch_size = int(args.batch_size),
-        weighted_loss = args.weighted_loss
+        epochs = epochs,
+        patience = patience,
+        resnet_size = resnet_size,
+        num_workers = num_workers,
+        batch_size = batch_size,
+        weighted_loss = weighted_loss
     )
 
 
