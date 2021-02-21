@@ -3,7 +3,8 @@ import torch
 import numpy as np
 from PIL import Image
 
-# to do: reference the original implementation
+#implementation adapted from:
+# https://github.com/tanjimin/grad-cam-pytorch-light/blob/master/grad_cam.py
 
 class InfoHolder():
 

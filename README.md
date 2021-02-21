@@ -51,7 +51,7 @@ Crossvalidation
 Divide the dataset into train, validation and test splits. 
 
 
-`python src/train.py --data_dir training_data --epochs 100`
+`python src/train.py --data_dir training_data --epochs 100 --patience 10 --experiment_name model_training`
 
 Output: directories for each splits including a model checkpoint, model metadata and XAI images for the test set
 
@@ -67,6 +67,8 @@ Output: directories for each splits including a model checkpoint, model metadata
 ['jupyter notebook inference'](https://github.com/europeana/rd-img-classification-pilot/blob/main/notebooks/inference.ipynb)
 
 #to do: link to colab
+
+#to do: script for inference from a folder with images. Include confidence score
 
 
 

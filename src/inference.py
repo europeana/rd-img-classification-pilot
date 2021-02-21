@@ -10,6 +10,8 @@ import torchvision.transforms as transforms
 from models import ResNet
 from gradcam import grad_cam
 
+#to do: refactor this code for the colab notebook
+
 # Europeana API
 
 class EuropeanaAPI:

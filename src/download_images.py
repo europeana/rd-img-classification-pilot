@@ -10,6 +10,8 @@ import urllib
 from multiprocessing import Process
 import time
 
+#to do: https://stackoverflow.com/questions/62517121/how-to-use-multiprocessing-to-download-images-using-requests
+
 
 def url2img(url):
     try:
@@ -40,6 +42,8 @@ def download_images(csv_path,saving_dir):
         df_category = df.loc[df['category'] == cat]
         cat_path = os.path.join(saving_dir,cat)
         create_dir(cat_path)
+
+        #to do: use .value instead of looping the indexes
         
         for i in range(df_category.shape[0]):
             ID = df_category['ID'].iloc[i]

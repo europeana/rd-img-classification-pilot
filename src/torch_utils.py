@@ -4,12 +4,16 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 import torch
 import torchvision
 import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
+import torch.optim as optim
 
 import imblearn
 import sklearn
@@ -21,7 +25,6 @@ import matplotlib.pyplot as plt
 
 from ds_utils import *
 from gradcam import *
-import models
 
 
 def check_args(kwargs,requ_args):
@@ -450,17 +453,15 @@ def train_crossvalidation(**kwargs):
     img_aug = None
 
 
-    results_path = os.path.join(ROOT_DIR,'results')
-    create_dir(results_path)
-    experiment_path = os.path.join(results_path,experiment_name)
+    create_dir(saving_dir)
+    experiment_path = os.path.join(saving_dir,experiment_name)
     create_dir(experiment_path)
 
     #load data
-    data_path = os.path.join(ROOT_DIR,'new_training')
-    df = path2DataFrame(data_path)
+    df = path2DataFrame(data_dir)
     
     #remove after testing
-    df = df.sample(frac=0.1)
+    #df = df.sample(frac=0.1)
 
     X = df['file_path'].values
     y = df['category'].values
@@ -501,7 +502,7 @@ def train_crossvalidation(**kwargs):
         print('size test: {}'.format(len(testloader.dataset)))
         
         #initialize model
-        model = models.ResNet(resnet_size,n_classes).to(device)
+        model = ResNet(resnet_size,n_classes).to(device)
         #set optimizer
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
         

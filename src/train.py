@@ -1,13 +1,12 @@
-import os
-import pandas as pd
-import torch
-import torch.nn as nn
-import torch.optim as optim
 import argparse
-
-from ds_utils import *
+import os
 from torch_utils import *
-from imgaug import augmenters as iaa
+
+
+#import pandas as pd
+#import torch
+#from ds_utils import *
+#from imgaug import augmenters as iaa
 
 
 
@@ -50,7 +49,7 @@ if __name__ == '__main__':
       learning_rate = float(args.learning_rate)
 
     if not args.epochs:
-      epochs = 2
+      epochs = 100
     else:
       epochs = int(args.epochs)
 
@@ -60,7 +59,7 @@ if __name__ == '__main__':
       resnet_size = int(args.resnet_size)
 
     if not args.patience:
-      patience = 1
+      patience = 10
     else:
       patience = int(args.patience)
 
@@ -82,7 +81,7 @@ if __name__ == '__main__':
 
     train_crossvalidation(
         data_dir = args.data_dir ,
-        saving_dir = args.saving_dir,
+        saving_dir = saving_dir,
         experiment_name = experiment_name,
         learning_rate = learning_rate,
         epochs = epochs,
