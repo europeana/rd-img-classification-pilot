@@ -1,42 +1,54 @@
 #download images
 import os
-import requests
+#import requests
 import argparse
 from PIL import Image
 import pandas as pd
 from io import BytesIO
 from ds_utils import create_dir
+import urllib
+from multiprocessing import Process
+import time
+
 
 def url2img(url):
     try:
-        response = requests.get(url)
-        return Image.open(BytesIO(response.content)).convert('RGB')
+        return Image.open(urllib.request.urlopen(url)).convert('RGB')
     except:
         print('Failed to get media image')
-        pass
+        return None
+
+def download_single_image(url,ID,saving_dir):
+  img = url2img(url)
+  ID = ID.replace("/","[ph]")
+  fname = f'{ID}.jpg'
+  if img:
+      try:
+          img.save(os.path.join(saving_dir,fname))
+      except:
+          pass
 
 def download_images(csv_path,saving_dir):
+    
+    time_limit = 7
 
     create_dir(saving_dir)
     df = pd.read_csv(csv_path)
     
     for cat in df.category.unique():
         print(cat)
-        #subset 
         df_category = df.loc[df['category'] == cat]
-        
         cat_path = os.path.join(saving_dir,cat)
         create_dir(cat_path)
         
         for i in range(df_category.shape[0]):
             ID = df_category['ID'].iloc[i]
-            img = url2img(df_category['URL'].iloc[i])
-            
-            if img:
-                try:
-                    img.save(os.path.join(cat_path,f'{ID}.jpg'.replace("/","[ph]")))
-                except:
-                    pass
+            URL = df_category['URL'].iloc[i]
+
+            action_process = Process(target=download_single_image,args=(URL,ID,cat_path))
+            action_process.start()
+            action_process.join(timeout=time_limit) 
+            action_process.terminate()
 
 
 if __name__ == "__main__":

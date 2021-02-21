@@ -78,7 +78,7 @@ def query_single_category(category,skos_concept, N):
         'cursor':response['nextCursor'],
         'qf':f'(skos_concept:"{skos_concept}" AND TYPE:IMAGE )', 
         'query':'*', 
-        'wskey':'api2demo'
+        'wskey':'api2demo',
     }
     response = requests.get('https://www.europeana.eu/api/v2/search.json', params = params).json()
 
