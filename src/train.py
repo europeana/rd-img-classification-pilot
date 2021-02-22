@@ -6,7 +6,6 @@ from torch_utils import *
 #import pandas as pd
 #import torch
 #from ds_utils import *
-#from imgaug import augmenters as iaa
 
 
 
@@ -29,6 +28,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_workers', required=False)
     parser.add_argument('--batch_size', required=False)
     parser.add_argument('--weighted_loss', required=False)
+    parser.add_argument('--img_aug', required=False)
 
 
     args = parser.parse_args()
@@ -78,6 +78,11 @@ if __name__ == '__main__':
     else:
       weighted_loss = bool(args.weighted_loss)
 
+    if not args.img_aug:
+      img_aug = None
+    else:
+      img_aug = float(args.img_aug)
+
 
     train_crossvalidation(
         data_dir = args.data_dir ,
@@ -89,7 +94,8 @@ if __name__ == '__main__':
         resnet_size = resnet_size,
         num_workers = num_workers,
         batch_size = batch_size,
-        weighted_loss = weighted_loss
+        weighted_loss = weighted_loss,
+        img_aug = img_aug
     )
 
 

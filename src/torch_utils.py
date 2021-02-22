@@ -26,6 +26,9 @@ import matplotlib.pyplot as plt
 from ds_utils import *
 from gradcam import *
 
+from imgaug import augmenters as iaa
+
+
 
 def check_args(kwargs,requ_args):
     for arg_name in requ_args:
@@ -298,8 +301,12 @@ def train(epochs = 100, patience = 10,**kwargs):
     end_train = time.time()
     time_train = (end_train-start_train)/60.0
     print(f'\ntraining finished, it took {time_train} minutes\n')
+
+    # to do: save class_index dict
     #load best model
     model.load_state_dict(torch.load(checkpoint_path))
+
+
 
     return model, history
 
@@ -433,24 +440,31 @@ def train_crossvalidation(**kwargs):
     batch_size = kwargs.get('batch_size',64)
     weighted_loss = kwargs.get('weighted_loss',True)
 
+    img_aug = kwargs.get('img_aug',0.5)
+
+    if not img_aug:
+        img_aug_seq = None
+    else:
+        sometimes = lambda augmentation: iaa.Sometimes(img_aug, augmentation)
+        img_aug_seq = iaa.Sequential([
+            iaa.Fliplr(img_aug),
+            sometimes(iaa.ChangeColorTemperature((1100, 10000))),
+
+            sometimes(iaa.OneOf([
+                iaa.GaussianBlur(sigma=(0, 2.0)),
+                iaa.AddToHueAndSaturation((-10, 10))
+
+            ]))
+
+        ])
+
+
     #to do: include image augmentation    
     
     # prob_aug = 0.5
-    # sometimes = lambda augmentation: iaa.Sometimes(prob_aug, augmentation)
-    # img_aug = iaa.Sequential([
-    #     iaa.Fliplr(prob_aug),
-    #     sometimes(iaa.Crop(percent=(0, 0.2))),
-    #     sometimes(iaa.ChangeColorTemperature((1100, 10000))),
+ 
 
-    #     sometimes(iaa.OneOf([
-    #         iaa.GaussianBlur(sigma=(0, 2.0)),
-    #         iaa.AddToHueAndSaturation((-10, 10))
-
-    #     ]))
-
-    # ])
-
-    img_aug = None
+    #img_aug = None
 
 
     create_dir(saving_dir)
@@ -482,7 +496,7 @@ def train_crossvalidation(**kwargs):
     data_splits = make_train_val_test_splits(
         X,
         y_encoded,
-        img_aug = img_aug,
+        img_aug = img_aug_seq,
         num_workers = num_workers,
         batch_size = batch_size,
         splits = 10,

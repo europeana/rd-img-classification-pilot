@@ -6,4 +6,5 @@ references*
 new_training*
 new_data*
 references*
-model_training*
+model_training_*
+dataset_test*
