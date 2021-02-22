@@ -3,26 +3,58 @@ import os
 from torch_utils import *
 
 
-#import pandas as pd
-#import torch
-#from ds_utils import *
-
-
-
-
-
 if __name__ == '__main__':
+
+    """
+    Script for training crossvalidation
+
+    Usage:
+
+      python src/train.py --data_dir training_data --epochs 100 --patience 10 --experiment_name model_training --img_aug 0.5
+
+    Parameters:
+
+      data_dir: directory containing the dataset organized in 
+                subdirectories for the different categories
+                Required
+
+      saving_dir: directory for saving the training results. 
+                  If not specified this will be the root path of the repository
+
+      experiment_name: tag for the results
+                      Default: results_training
+
+      learning_rate: Default: 0.00001
+
+      epochs: Default: 100
+
+      patience: Number of epochs for early stopping
+                Default: 10
+
+      resnet_size: size of the model. The allowed sizes are 18,34,50,101,152
+                   Default: 34
+
+      num_workers: Default: 4
+
+      batch_size: Default: 64
+
+      weighted_loss: Whether to penalize missclassifications for the minority classes
+                     Recommended for imbalanced datasets.
+                     Default: True
+
+      img_aug: Whether to use image augmentation
+                Default: True
+
+    """
 
     ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_dir', required=True)
     parser.add_argument('--saving_dir', required=False)
-
     parser.add_argument('--experiment_name', required=False)
     parser.add_argument('--learning_rate', required=False)
     parser.add_argument('--epochs', required=False)
-
     parser.add_argument('--patience', required=False)
     parser.add_argument('--resnet_size', required=False)
     parser.add_argument('--num_workers', required=False)
@@ -30,11 +62,10 @@ if __name__ == '__main__':
     parser.add_argument('--weighted_loss', required=False)
     parser.add_argument('--img_aug', required=False)
 
-
     args = parser.parse_args()
 
     if not args.experiment_name:
-      experiment_name = 'model_training'
+      experiment_name = 'results_training'
     else:
       experiment_name = args.experiment_name
 

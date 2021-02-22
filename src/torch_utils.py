@@ -205,6 +205,12 @@ def make_train_val_test_splits(X,y,**kwargs):
         splits_list.append({'trainloader':trainloader,'valloader':valloader,'testloader':testloader})
 
     return splits_list
+
+
+def save_class_index(class_index,path):
+    import json
+    with open(os.path.join(path,'class_index.json'),'w') as f:
+        json.dump(class_index,f)
     
 
 def train(epochs = 100, patience = 10,**kwargs):
@@ -305,8 +311,6 @@ def train(epochs = 100, patience = 10,**kwargs):
     # to do: save class_index dict
     #load best model
     model.load_state_dict(torch.load(checkpoint_path))
-
-
 
     return model, history
 
@@ -459,14 +463,6 @@ def train_crossvalidation(**kwargs):
         ])
 
 
-    #to do: include image augmentation    
-    
-    # prob_aug = 0.5
- 
-
-    #img_aug = None
-
-
     create_dir(saving_dir)
     experiment_path = os.path.join(saving_dir,experiment_name)
     create_dir(experiment_path)
@@ -506,6 +502,7 @@ def train_crossvalidation(**kwargs):
     for i,split in enumerate(data_splits):
         print(f'split {i}\n')
         split_path = os.path.join(experiment_path,f'split_{i}')
+        create_dir(split_path)
         
         trainloader = split['trainloader']
         valloader = split['valloader']
@@ -514,6 +511,8 @@ def train_crossvalidation(**kwargs):
         print('size train: {}'.format(len(trainloader.dataset)))
         print('size val: {}'.format(len(valloader.dataset)))
         print('size test: {}'.format(len(testloader.dataset)))
+
+        save_class_index(class_index_dict,split_path)
         
         #initialize model
         model = ResNet(resnet_size,n_classes).to(device)

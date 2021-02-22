@@ -28,9 +28,13 @@ Install dependencies:
 
 We need a json file containing the concepts and URIs for the items of the vocabulary. For our experiments we used the vocabulary [`vocabulary.json`](https://github.com/europeana/rd-img-classification-pilot/blob/main/vocabulary.json)
 
-to do: include the urls to the vocabularies
 
-Now we can query the EF Search API for the different categories and build a table with information about the resulting CHOs.
+
+to do: include conversion table between the different vocabularies
+
+
+
+Now we can query the EF Search API for the different categories and build a table with information about the resulting Cultural Heritage Objects.
 
 We can do that from the command line by specifying the vocabulary file to consider, the maximum number of CHOs retrieved per category and an optional name for the resulting file:
 

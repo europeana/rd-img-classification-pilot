@@ -48,6 +48,24 @@ def download_images(csv_path,saving_dir):
 
 if __name__ == "__main__":
 
+    """
+    Script for downloading the images of the dataset, 
+    which will be stored in directories corresponding to the different categories
+
+    Usage:
+
+      python src/download_images.py --csv_path dataset_3000.csv --saving_dir training_data
+
+    Parameters:
+
+      csv_path: csv file obtained by the script 'harvest_data.py'
+                  Required
+
+      saving_dir: directory for saving the images. 
+                  Required
+
+    """
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--csv_path', required=True)
     parser.add_argument('--saving_dir', required=True)

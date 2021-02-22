@@ -41,7 +41,7 @@ def query_single_category(category,skos_concept, N):
     response = requests.get('https://www.europeana.eu/api/v2/search.json', params = params).json()
 
     for CHO in response['items']:
-      
+
       ID,URI,URL = parse_CHO(CHO)
 
       if URL:
@@ -69,6 +69,29 @@ def harvest_categories(vocab_dict,n,fname,saving_dir):
 
   
 if __name__ == '__main__':
+
+    """
+    Script for assembling the image classification dataset 
+    in csv format making use of Europeana's Search API 
+
+    Usage:
+
+      python src/harvest_data.py --vocab_json vocabulary.json --n 3000 --name dataset_3000
+
+    Parameters:
+
+      vocab_json: json file with categories as keys and concept URIs as values
+                  Required
+
+      saving_dir: directory for saving the csv file. 
+                  If not specified this will be the root path of the repository
+
+      name: tag for the table
+             Default: dataset
+      
+      n: number of desired Cultural Heritage Objects per category
+         Default: 1000
+    """
 
     ROOT_DIR = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
 
