@@ -9,6 +9,11 @@ Vocabulary
 
 pytorch
 
+This repo:
+
+Assembles a dataset
+Train a model
+
 ## Installation
 
 Clone this repository:
@@ -42,9 +47,10 @@ We can do that from the command line by specifying the vocabulary file to consid
 
 The resulting table should have the columns category, skos_concept,URI,URL,ID
 
+todo: point to the dataset
+
 This allows to uniquely identify the Cultural Heritage Objects and the images, and potentially use EF Record API for retrieving further information about the objects. 
 
-(Include sample of the table and comment on URIs, etc)
 
 Once we have the URL for the images we will save them in disk under directories corresponding to the different categories. This step is required for training the model. 
 
