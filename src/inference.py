@@ -5,9 +5,10 @@ from PIL import Image
 from io import BytesIO
 import matplotlib.pyplot as plt
 import torch
-import torchvision.transforms as transforms
+import torchvision.transforms as transformsa
 
-from models import ResNet
+from torch_utils import ResNet
+
 from gradcam import grad_cam
 
 #to do: refactor this code for the colab notebook
@@ -42,10 +43,10 @@ def img_from_CHO(CHO):
   except:
     return None
 
-def load_pytorch_model(device):
+def load_pytorch_model(device,root_path):
 
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    root_path = os.path.split(dir_path)[0]
+    #dir_path = os.path.dirname(os.path.realpath(__file__))
+    #root_path = os.path.split(dir_path)[0]
 
     model = ResNet(34,20)
 

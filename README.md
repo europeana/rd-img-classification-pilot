@@ -1,18 +1,10 @@
 # Europeana Image Classification pilot
 
-General goal
+Our mission at Europeana Foundation (EF) is to make Cultural Heritage data findable, accessible, reusable and interoperable. The metadata included in our Cultural Heritage Objects allow us to build functionalities such search, browsing and recommendations. We have a history of using automatic enrichments for generating metadata. However, so far we have focused on creating metadata from textual data or metadata. 
 
-Enrichments
+We would like to explore automatic enrichments based on content, and we decided to start a pilot on image classification. We were motivated by the recent advances in computer vision and the easy access to specialized hardware. 
 
-Vocabulary
-
-
-pytorch
-
-This repo:
-
-Assembles a dataset
-Train a model
+This repository builds a training dataset using the EF Search API, and allows to train a model using the deep learning pytorch framework.
 
 ## Installation
 
@@ -31,47 +23,28 @@ Install dependencies:
 
 ## Assembling the dataset
 
-We need a json file containing the concepts and URIs for the items of the vocabulary. For our experiments we used the vocabulary [`vocabulary.json`](https://github.com/europeana/rd-img-classification-pilot/blob/main/vocabulary.json)
+Vocabularies in Cultural Heritage (CH) aim to standarize and relate concepts semantically. This makes metadata referencing standard vocabularies interoperable. We have gathered a list of common concepts in CH together with URIs pointing to different vocabularies in the file `uris_vocabularies.csv`.
 
+For our experiments we will use a selection of terms from EF Entity Collection and the AAT Getty vocabulary, contained in the file [`vocabulary.json`](https://github.com/europeana/rd-img-classification-pilot/blob/main/vocabulary.json)
 
-
-to do: include conversion table between the different vocabularies
-
-
-
-Now we can query the EF Search API for the different categories and build a table with information about the resulting Cultural Heritage Objects.
-
-We can do that from the command line by specifying the vocabulary file to consider, the maximum number of CHOs retrieved per category and an optional name for the resulting file:
+Once the vocabulary is defined we can query the EF Search API for the different categories and build a table with the information necessary to assemble an image classification dataset. We can do that from the command line by specifying the vocabulary file to consider, the maximum number of CHOs retrieved per category and an optional name for the resulting file:
 
 `python src/harvest_data.py --vocab_json vocabulary.json --n 3000 --name dataset_3000`
 
-The resulting table should have the columns category, skos_concept,URI,URL,ID
+The resulting table should have the columns `category`, `skos_concept`, `URI`, `URL`, `ID`. This allows to uniquely identify the Cultural Heritage Objects and the images, and potentially use EF Record API for retrieving further information about the objects. We have included the dataset `dataset.csv` as an example of querying 3000 CHOs per category.
 
-todo: point to the dataset
-
-This allows to uniquely identify the Cultural Heritage Objects and the images, and potentially use EF Record API for retrieving further information about the objects. 
-
-
-Once we have the URL for the images we will save them in disk under directories corresponding to the different categories. This step is required for training the model. 
+Once we have the URL for the images we will save them in disk under directories corresponding to the different categories. This step is required for training the model. We can do that by specifying the path to the dataset in csv format and the directory for the images.
 
 `python src/download_images.py --csv_path dataset_3000.csv --saving_dir training_data`
 
 
 ## Training the model
 
-
-Crossvalidation
-
-Divide the dataset into train, validation and test splits. 
-
+We are ready to proceed with training our model! To make sure that we evaluate the performance of the model fairly, we will consider several train, validation and test splits in a process called crossvalidation. The result will be a set of directories (one per split) containing the training history, model checkpoint and interpretable heatmaps for the test images. We can use the script `train_crossvalidation.py` by specifying the directory to the dataset and some of the training hyperparameters:
 
 `python src/train.py --data_dir training_data --epochs 100 --patience 10 --experiment_name model_training --img_aug 0.5`
 
-Output: directories for each splits including a model checkpoint, model metadata and XAI images for the test set
-
-['jupyter notebook training'](https://github.com/europeana/rd-img-classification-pilot/blob/main/notebooks/train.ipynb)
-
-
+The code for training a single split is in the notebook ['jupyter notebook training'](https://github.com/europeana/rd-img-classification-pilot/blob/main/notebooks/train.ipynb)
 
 
 ## Inference
