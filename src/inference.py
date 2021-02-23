@@ -8,7 +8,6 @@ import torch
 import torchvision.transforms as transformsa
 
 from torch_utils import ResNet
-
 from gradcam import grad_cam
 
 #to do: refactor this code for the colab notebook
@@ -26,12 +25,13 @@ class EuropeanaAPI:
     while 'nextCursor' in response:
       params = { 'reusability':'open','media':True,'cursor':response['nextCursor'] ,'qf':'TYPE:IMAGE', 'query':query, 'wskey':'api2demo'}
       response = requests.get('https://www.europeana.eu/api/v2/search.json', params = params).json()
+      
       CHO_list += response['items']
+
       if len(CHO_list)>n:
-        CHO_list = CHO_list[:n]
         break
 
-    return CHO_list
+    return CHO_list[:n]
 
 
 def img_from_CHO(CHO):
@@ -74,7 +74,7 @@ def make_prediction(model,img,device):
     heatmap_layer = model.net.layer4[1].conv2
     image_interpretable,idx_pred,conf = grad_cam(model, img, heatmap_layer, transform, device)
 
-    return idx_pred.item(), conf, image_interpretable
+    return idx_pred, conf, image_interpretable
 
 def plot_prediction(img,XAI_img):
 

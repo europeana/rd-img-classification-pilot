@@ -59,4 +59,4 @@ def grad_cam(model, image, heatmap_layer, transform, device, truelabel=None):
 
     heatmap = generate_heatmap(weighted_activation)
     
-    return superimpose(np.asarray(image),heatmap), truelabel, output[truelabel].item()
+    return superimpose(np.asarray(image),heatmap), truelabel.item(), output[truelabel].item()
