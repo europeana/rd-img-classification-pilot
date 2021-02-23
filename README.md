@@ -1,6 +1,6 @@
 # Europeana Image Classification pilot
 
-Our mission at Europeana Foundation (EF) is to make Cultural Heritage data findable, accessible, reusable and interoperable. The metadata included in our Cultural Heritage Objects allow us to build functionalities such search, browsing and recommendations. We have a history of using automatic enrichments for generating metadata. However, so far we have focused on creating metadata from textual data or metadata. 
+Our mission at Europeana Foundation (EF) is to make Cultural Heritage data findable, accessible, reusable and interoperable. The metadata included in our Cultural Heritage Objects allow us to build functionalities such as search, browsing and recommendation systems. We have a history of using automatic enrichments for generating metadata. However, so far we have focused on creating metadata from textual data or metadata. 
 
 We would like to explore automatic enrichments based on content, and we decided to start a pilot on image classification. We were motivated by the recent advances in computer vision and the easy access to specialized hardware. 
 
