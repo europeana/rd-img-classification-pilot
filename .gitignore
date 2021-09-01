@@ -1,0 +1,7 @@
+results*
+training_data*
+nohup*
+model_training_*
+dataset_test*
+_experimental*
+lightning_logs*

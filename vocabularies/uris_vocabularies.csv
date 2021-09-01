@@ -1,0 +1,36 @@
+concept,getty_aat,dbpedia,wikidata,ef_entity_collection
+building,http://vocab.getty.edu/aat/300004792,http://dbpedia.org/page/Building,http://www.wikidata.org/entity/Q41176,http://data.europeana.eu/concept/base/29
+archaeological_site,http://vocab.getty.edu/aat/300266151,http://dbpedia.org/page/Archaeological_site,http://www.wikidata.org/entity/Q839954,
+cartoon,http://vocab.getty.edu/aat/300123430,http://dbpedia.org/page/Cartoon,http://www.wikidata.org/entity/Q627603,
+ceramics,http://vocab.getty.edu/aat/300151343,"http://dbpedia.org/resource/Ceramic
+",http://www.wikidata.org/entity/Q45621,http://data.europeana.eu/concept/base/31
+clothing ,http://vocab.getty.edu/aat/300266639,http://dbpedia.org/page/Clothing,http://www.wikidata.org/entity/Q11460,
+costume_accessories,http://vocab.getty.edu/aat/300209273,,http://www.wikidata.org/entity/Q1065579,
+drawing,http://vocab.getty.edu/aat/300033973,http://dbpedia.org/resource/Drawing,http://www.wikidata.org/entity/Q93184,http://data.europeana.eu/concept/base/35
+map,http://vocab.getty.edu/aat/300028094,http://dbpedia.org/resource/Map,http://www.wikidata.org/entity/Q4006,http://data.europeana.eu/concept/base/43
+furniture,http://vocab.getty.edu/aat/300037680,http://dbpedia.org/page/Furniture,http://www.wikidata.org/entity/Q14745,http://data.europeana.eu/concept/base/37
+textile,http://vocab.getty.edu/aat/300231565,http://dbpedia.org/page/Textile,http://www.wikidata.org/entity/Q28823,http://data.europeana.eu/concept/base/55
+food,http://vocab.getty.edu/aat/300254496,http://dbpedia.org/page/Food,http://www.wikidata.org/entity/Q2095,
+glassware,http://vocab.getty.edu/aat/300010898,,http://www.wikidata.org/entity/Q13180610,
+inscription,http://vocab.getty.edu/aat/300028702,,http://www.wikidata.org/entity/Q1640824,
+jewellery,http://vocab.getty.edu/aat/300209286,http://dbpedia.org/resource/Jewellery,http://www.wikidata.org/entity/Q161439,http://data.europeana.eu/concept/base/41
+metalwork,http://vocab.getty.edu/aat/300015336,http://dbpedia.org/page/Metalworking,http://www.wikidata.org/entity/Q953045,
+machinery,http://vocab.getty.edu/aat/300024839,http://dbpedia.org/page/Machine_(mechanical),http://www.wikidata.org/entity/Q1882685,
+medal ,http://vocab.getty.edu/aat/300046025,http://dbpedia.org/page/Medal,http://www.wikidata.org/entity/Q131647,
+memorabilia,http://vocab.getty.edu/aat/300028884,,http://www.wikidata.org/entity/Q11989025,
+mineral,http://vocab.getty.edu/aat/300011068,http://dbpedia.org/page/Mineral,http://www.wikidata.org/entity/Q7946,
+musical_instrument,http://vocab.getty.edu/aat/300041620,http://dbpedia.org/resource/Musical_instrument,http://www.wikidata.org/entity/Q34379,
+painting,http://vocab.getty.edu/aat/300033618,http://dbpedia.org/resource/Painting,http://www.wikidata.org/entity/Q11629,http://data.europeana.eu/concept/base/47
+photograph,http://vocab.getty.edu/aat/300046300,http://dbpedia.org/resource/Photograph,http://www.wikidata.org/entity/Q125191,http://data.europeana.eu/concept/base/48
+postcard,http://vocab.getty.edu/aat/300026816,http://dbpedia.org/resource/Postcard,http://www.wikidata.org/entity/Q192425,http://data.europeana.eu/concept/base/50
+poster,http://vocab.getty.edu/aat/300027221,http://dbpedia.org/resource/Poster,http://www.wikidata.org/entity/Q429785,
+print,http://vocab.getty.edu/aat/300041379,,http://www.wikidata.org/entity/Q11060274,
+sculpture,http://vocab.getty.edu/aat/300047090,http://dbpedia.org/resource/Sculpture,http://www.wikidata.org/entity/Q11634,http://data.europeana.eu/concept/base/51
+specimen,http://vocab.getty.edu/aat/300235576,http://dbpedia.org/page/Biological_specimen,http://www.wikidata.org/entity/Q2075980,http://data.europeana.eu/concept/base/167
+tableware,http://vocab.getty.edu/aat/300043196,http://dbpedia.org/page/Tableware,http://www.wikidata.org/entity/Q851782,
+tool,http://vocab.getty.edu/aat/300024841,http://dbpedia.org/page/Tool,http://www.wikidata.org/entity/Q39546,
+tapestry,http://vocab.getty.edu/aat/300205002,http://dbpedia.org/resource/Tapestry,http://www.wikidata.org/entity/Q184296,http://data.europeana.eu/concept/base/54
+toy,http://vocab.getty.edu/aat/300211037,http://dbpedia.org/resource/Toy,http://www.wikidata.org/entity/Q11422,http://data.europeana.eu/concept/base/56
+weaponry,http://vocab.getty.edu/aat/300036926,http://dbpedia.org/page/Weapon,http://www.wikidata.org/entity/Q728,
+woodwork,http://vocab.getty.edu/aat/300015348,http://dbpedia.org/resource/Woodworking,http://www.wikidata.org/entity/Q816871,http://data.europeana.eu/concept/base/59
+stamp,http://vocab.getty.edu/aat/300037321,http://dbpedia.org/page/Postage_stamp,http://www.wikidata.org/entity/Q37930,

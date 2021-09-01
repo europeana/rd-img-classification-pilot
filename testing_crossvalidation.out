@@ -1,0 +1,77 @@
+nohup: ignoring input
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/model_selection/_split.py:666: UserWarning: The least populated class in y has only 3 members, which is less than n_splits=10.
+  warnings.warn(("The least populated class in y has only %d"
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/model_selection/_split.py:666: UserWarning: The least populated class in y has only 3 members, which is less than n_splits=10.
+  warnings.warn(("The least populated class in y has only %d"
+split 0
+
+size train: 565
+size val: 63
+size test: 70
+Training for 1 epochs 
+
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Sensitivity is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[0] train loss: 55.876 validation loss: 34.685 acc: 0.219 f1: 0.109 precision: 0.097 recall: 0.171
+
+training finished, it took 0.14172805547714235 minutes
+
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Sensitivity is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/model_selection/_split.py:666: UserWarning: The least populated class in y has only 3 members, which is less than n_splits=10.
+  warnings.warn(("The least populated class in y has only %d"
+loss_test: 56.4070068359375
+accuracy_test: 0.125
+f1_test: 0.09088383838383839
+precision_test: 0.1457393483709273
+recall_test: 0.13666666666666666
+sensitivity_test: 0.13666666666666666
+specificity_test: 0.954304716201265
+confusion_matrix_test: [[0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 0 0 0 2 0 0 0 0 0 0 0 0 1 0 0 0 1 0]
+ [0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 2 0 0 1 2 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 2 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0]
+ [0 0 0 0 0 2 0 0 0 1 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 3 0 1 0]
+ [0 3 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 2 0 0 2 0 0 0 0 0 0 0 0 0 0 1 0 0 0]
+ [0 2 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 2 0]
+ [0 0 0 0 0 1 0 0 0 0 0 1 0 1 0 0 0 0 0]
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0]
+ [0 2 0 0 1 0 0 0 0 0 0 1 0 0 0 1 0 0 0]
+ [0 1 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+split 1
+
+size train: 565
+size val: 63
+size test: 70
+Training for 1 epochs 
+
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Sensitivity is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+[0] train loss: 56.212 validation loss: 26.886 acc: 0.188 f1: 0.123 precision: 0.121 recall: 0.235
+
+training finished, it took 0.09888639450073242 minutes
+
+/opt/miniconda3/envs/sort_env/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1245: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/jcejudo/rd-img-classification-pilot/src/gradcam.py:108: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+  fig,ax = plt.subplots(1,len(category_list)+1,figsize = (15,15))
