@@ -1,0 +1,75 @@
+{% extends "visualization/base.html"%}
+
+
+{% load static %}
+ 
+{% block content %}
+
+
+
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col">
+      <input type="submit" class="btn btn-secondary" name="back" value="Back to datasets"></input>
+    </div>
+    </div>
+</form>
+
+<h1>{{dataset.name}}</h1>
+
+{% if img_list %}
+
+<ul class="pagination">
+
+  {% if img_list.has_previous %}
+      <li><a href="?page={{ img_list.previous_page_number }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+  {% else %}
+      <li class="disabled"><span><i class="fa fa-chevron-left" aria-hidden="true"></i></span></li>
+  {% endif %}
+  
+  {% if img_list.number|add:'-4' > 1 %}
+      <li><a href="?page={{ img_list.number|add:'-5' }}">&hellip;</a></li>
+  {% endif %}
+  
+  {% for i in img_list.paginator.page_range %}
+      {% if img_list.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% elif i > img_list.number|add:'-5' and i < img_list.number|add:'5' %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+  {% endfor %}
+  
+  {% if img_list.paginator.num_pages > img_list.number|add:'4' %}
+      <li><a href="?page={{ img_list.number|add:'5' }}">&hellip;</a></li>
+  {% endif %}
+  
+  {% if img_list.has_next %}
+      <li><a href="?page={{ img_list.next_page_number }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+  {% else %}
+      <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+  {% endif %}
+
+
+  
+  </ul>
+
+{% endif %}
+
+{% for img in img_list %}
+<div class="row">
+  <div class="column">
+    <a href="/datasets/{{dataset_id}}/{{category}}/{{ img.img_id}}">
+        <img class="img-fluid" src="{{img.img_url}}" alt="asdf" width="400">
+    </a>
+  </div>
+  <div class="column">
+    <div class="row">
+      <p>Europeana ID: <a href="http://data.europeana.eu/item{{img.id}}">{{img.id}}</a> </p>
+    </div>
+   </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

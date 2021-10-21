@@ -1,0 +1,40 @@
+
+{% extends "visualization/base.html" %}
+
+{% load static %}
+
+ 
+{% block content %}
+
+
+
+
+
+<h1>Datasets</h1>
+
+{% if dataset_list %}
+    <div class="list-group">
+    {% for dataset in dataset_list %}
+        <a href="/visualization/{{ dataset.id }}/" class="list-group-item list-group-item-action">{{dataset}} </a>
+    {% endfor %}
+    </div>
+{% endif %}
+
+
+{% if category_list %}
+    <div class="list-group">
+    {% for model in category_list %}
+        <a href="/visualization/{{ model }}/" class="list-group-item list-group-item-action"> Model name: {{model}} </a>
+    {% endfor %}
+    </div>
+{% endif %}
+
+
+
+
+
+
+
+ 
+
+{% endblock %}

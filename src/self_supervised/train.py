@@ -11,7 +11,7 @@ import pytorch_lightning as pl
 
 import lightly
 
-from ss_models import MoCoModel_benchmarking, BYOLModel_benchmarking
+from ss_models import MoCoModel_benchmarking, BYOLModel_benchmarking,MoCoModel, BYOLModel
 
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -26,9 +26,9 @@ def main(**kwargs):
     knn_k = kwargs.get('knn_k',200)
     max_epochs = kwargs.get('max_epochs',200)
     model_size = kwargs.get('model_size',18) # 18, 34, 50, 101, 152
-    learning_rate = kwargs.get('learning_rate',0.1)
+    learning_rate = kwargs.get('learning_rate',0.01)
     input_size = kwargs.get('input_size',224)
-    num_ftrs = kwargs.get('num_ftrs',64)
+    num_ftrs = kwargs.get('num_ftrs',512)
     batch_size = kwargs.get('batch_size',64)
     num_workers = kwargs.get('num_workers',8)
     memory_bank_size = kwargs.get('memory_bank_size',4096)
@@ -40,7 +40,6 @@ def main(**kwargs):
     cj_prob = kwargs.get('cj_prob',0.0) # color jitter 
     gb_prob = kwargs.get('gb_prob',0.0) # gaussian blur 
     
-    test_knn_data_path = Path(test_knn_data_path)
     saving_dir = Path(saving_dir)
     saving_dir.mkdir(parents=True, exist_ok=True)
     
@@ -99,7 +98,25 @@ def main(**kwargs):
 
     # *** Loading data ***
 
-    collate_fn = lightly.data.BaseCollateFunction(train_transforms)
+    #collate_fn = lightly.data.BaseCollateFunction(train_transforms)
+
+    collate_fn = lightly.data.ImageCollateFunction(
+        input_size=input_size,
+        # require invariance to flips and rotations
+        hf_prob=0.5,
+        #vf_prob=0.5,
+        #rr_prob=0.5,
+        # satellite images are all taken from the same height
+        # so we use only slight random cropping
+        min_scale=0.5,
+        # use a weak color jitter for invariance w.r.t small color changes
+        cj_prob=0.1,
+        cj_bright=0.1,
+        cj_contrast=0.1,
+        cj_hue=0.1,
+        cj_sat=0.1,
+        normalize = lightly.data.collate.imagenet_normalize
+    )
     
     dataset_train = lightly.data.LightlyDataset(
         input_dir=data_path
@@ -119,39 +136,39 @@ def main(**kwargs):
         num_workers=num_workers
     )
 
-    test_collate_fn = lightly.data.BaseCollateFunction(test_transforms)
+    # test_collate_fn = lightly.data.BaseCollateFunction(test_transforms)
 
-    dataset_knn_train = lightly.data.LightlyDataset(
-        input_dir=train_knn_data_path,
-        transform = train_transforms
-    )
+    # dataset_knn_train = lightly.data.LightlyDataset(
+    #     input_dir=train_knn_data_path,
+    #     transform = train_transforms
+    # )
 
-    dataset_knn_test = lightly.data.LightlyDataset(
-        input_dir=test_knn_data_path,
-        transform = test_transforms
-    )
+    # dataset_knn_test = lightly.data.LightlyDataset(
+    #     input_dir=test_knn_data_path,
+    #     transform = test_transforms
+    # )
 
-    dataloader_knn_train = torch.utils.data.DataLoader(
-        dataset_knn_train,
-        batch_size=batch_size,
-        shuffle=True,
-        drop_last=True,
-        num_workers=num_workers
-    )
+    # dataloader_knn_train = torch.utils.data.DataLoader(
+    #     dataset_knn_train,
+    #     batch_size=batch_size,
+    #     shuffle=True,
+    #     drop_last=True,
+    #     num_workers=num_workers
+    # )
 
-    dataloader_knn_test = torch.utils.data.DataLoader(
-        dataset_knn_test,
-        batch_size=batch_size,
-        shuffle=True,
-        drop_last=True,
-        num_workers=num_workers
-    )
+    # dataloader_knn_test = torch.utils.data.DataLoader(
+    #     dataset_knn_test,
+    #     batch_size=batch_size,
+    #     shuffle=True,
+    #     drop_last=True,
+    #     num_workers=num_workers
+    # )
 
     # *** Training ***
 
     gpus = [0] if torch.cuda.is_available() else 0
 
-    num_classes = len(list(test_knn_data_path.iterdir()))
+    #num_classes = len(list(test_knn_data_path.iterdir()))
 
     resnet_dict = {
         18: torchvision.models.resnet18(pretrained=False),
@@ -164,24 +181,38 @@ def main(**kwargs):
 
     if ss_model == 'moco':
 
-        model = MoCoModel_benchmarking(
+        # model = MoCoModel_benchmarking(
+        #     backbone,
+        #     dataloader_knn_train,
+        #     num_classes,
+        #     num_ftrs = num_ftrs,
+        #     knn_k=knn_k,
+        #     learning_rate=learning_rate,
+        #     max_epochs=max_epochs,
+        #     )
+
+        model = MoCoModel(
             backbone,
-            dataloader_knn_train,
-            num_classes,
             num_ftrs = num_ftrs,
-            knn_k=knn_k,
             learning_rate=learning_rate,
             max_epochs=max_epochs,
             )
             
     elif ss_model == 'byol':
 
-        model = BYOLModel_benchmarking(
+        # model = BYOLModel_benchmarking(
+        #     backbone,
+        #     dataloader_knn_train,
+        #     num_classes,
+        #     num_ftrs = num_ftrs,
+        #     knn_k=knn_k,
+        #     learning_rate=learning_rate,
+        #     max_epochs=max_epochs,
+        #     )
+
+        model = BYOLModel(
             backbone,
-            dataloader_knn_train,
-            num_classes,
             num_ftrs = num_ftrs,
-            knn_k=knn_k,
             learning_rate=learning_rate,
             max_epochs=max_epochs,
             )
@@ -194,10 +225,12 @@ def main(**kwargs):
     trainer.fit(
         model,
         train_dataloader = dataloader_train,
-        val_dataloaders = dataloader_knn_test,
+        #val_dataloaders = dataloader_knn_test,
     )
 
-    print('max accuracy: ',model.max_accuracy)
+    print('Finished training')
+
+    #print('max accuracy: ',model.max_accuracy)
     torch.save(model.backbone.state_dict(),saving_dir.joinpath('checkpoint.pth'))
 
 

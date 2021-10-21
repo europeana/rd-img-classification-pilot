@@ -2,8 +2,17 @@
 
 Train self supervised model
 
-`nohup python src/self_supervised/train.py --ss_model byol --data_path /home/jcejudo/projects/image_classification/data/single_label/images_training --saving_dir /home/jcejudo/projects/image_classification/results/self_supervised --train_knn_data_path /home/jcejudo/projects/image_classification/data/single_label/images_training --test_knn_data_path /home/jcejudo/projects/image_classification/data/single_label/images_evaluation --batch_size 64 --input_size 224 --num_ftrs 512 --sample 1.0 --max_epochs 100 --model_size 18 --vf_prob 0.0 --hf_prob 0.5 --cj_prob 0.0 --gb_prob 0.0 &> train_self_supervised.out &`
+`nohup python src/self_supervised/train.py --ss_model byol --data_path /home/jcejudo/projects/image_classification/data/single_label/images_training --saving_dir /home/jcejudo/projects/image_classification/results/self_supervised --batch_size 64 --input_size 224 --num_ftrs 512 --sample 1.0 --max_epochs 100 --model_size 18 &> train_self_supervised.out &`
 
+
+Create embeddings
+
+`python src/self_supervised/create_embeddings.py --pretrained_dir /home/jcejudo/projects/image_classification/results/self_supervised --saving_path /home/jcejudo/projects/image_classification/results/self_supervised/embeddings.csv --data_dir /home/jcejudo/projects/image_classification/data/single_label/images_training --sample 1.0`
+
+
+Set up recommender API
+
+`python src/self_supervised/flask_api.py --embeddings_path /home/jcejudo/projects/image_classification/results/self_supervised/embeddings.csv --data_path /home/jcejudo/projects/image_classification/data/single_label/images_training`
 
 
 Fine tune multilabel

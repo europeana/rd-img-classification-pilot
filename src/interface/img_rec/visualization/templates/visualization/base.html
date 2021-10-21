@@ -1,0 +1,110 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <title>Image similarity interface</title>
+
+        <style>
+
+        .column {
+                float: left;
+                width: 30%;
+                }
+        </style>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/js-image-zoom@0.7.0/js-image-zoom.js" type="application/javascript"></script>
+
+        
+        {% comment %}<link rel="stylesheet" href="{% static 'datasets/style.css' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'experiments/style.css' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'css/styles.css' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'js/main.js' %}">{% endcomment %}
+
+        {% comment %}<link rel="stylesheet" href="{% static 'board/style.css' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'uploader/style.css' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'uploader/main.js' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'torch_model_module/style.css' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'experiments/style.css' %}">{% endcomment %}
+        {% comment %}<link rel="stylesheet" href="{% static 'js/main.js' %}">{% endcomment %}
+
+    </head>
+    <body>
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">  </a>
+              </div>
+              <ul class="nav navbar-nav">
+                
+                {% comment %}<li class="{% if nbar == 'home'%}active{% endif %}"><a href="/board/">Home</a></li>{% comment %}
+                {% comment %}<li class="{% if nbar == 'models'%}active{% endif %}"><a href="/torch_models/">Models</a></li>{% endcomment %}
+                {% comment %}<li class="{% if nbar == 'datasets'%}active{% endif %}"><a href="/datasets/">Datasets</a></li>{% endcomment %}
+                {% comment %}<li class="{% if nbar == 'experiments'%}active{% endif %}"><a href="/experiments/">Experiments</a></li>{% endcomment %}
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                {% comment %}
+                {% if  logged == True %}
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>{{user}}</a></li>
+                <li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                {% else%}
+                <li><a href="/register/"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                {% endif %}
+                {% endcomment %}
+              </ul>
+            </div>
+          </nav>
+          
+
+          <div class="body">
+          <div id="content">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+      </div>
+
+
+        
+        {% comment %}
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+   
+            <ul class="nav navbar-nav" style="float: right">
+                <li class="nav-item text-nowrap ">
+                  <a class="nav-link" href="/logout/">Sign out</a>
+                </li>
+            </ul>
+              
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-mk-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a href="/board/">Home</a></li>
+
+                        </ul>
+
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+        {% endcomment %}
+
+
+    </body>
+</html>
